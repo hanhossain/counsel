@@ -21,6 +21,25 @@ class NFLService {
 		}
 	}
 	
+	func getLastCompletedWeek(completion: @escaping (Int?, String?) -> ()) {
+		getCurrentWeek { (currentWeek, error) in
+			guard let currentWeek = currentWeek else {
+				completion(nil, error)
+				return
+			}
+			
+			self.isWeekComplete(currentWeek) { (isComplete, error) in
+				guard let isComplete = isComplete else {
+					completion(nil, error)
+					return
+				}
+				
+				let completedWeek = isComplete ? currentWeek : currentWeek - 1
+				completion(completedWeek, nil)
+			}
+		}
+	}
+	
 	func getCurrentWeek(completion: @escaping (Int?, String?) -> ()) {
 		guard let url = URL(string: baseAddress + "players/stats") else {
 			completion(nil, "url was invalid")
@@ -45,6 +64,19 @@ class NFLService {
 
 			completion(week, nil)
 		}.resume()
+	}
+	
+	private func isWeekComplete(_ week: Int, completion: @escaping (Bool?, String?) -> ()) {
+		let query = "players/weekstats?week=\(week)"
+		
+		makeRequest(query: query) { (weekStats: NFLWeekStatistics?, error: String?) in
+			guard let weekStats = weekStats else {
+				completion(nil, error)
+				return
+			}
+			
+			completion(weekStats.complete, nil)
+		}
 	}
 	
 	private func makeRequest<T: Decodable>(query: String, completion: @escaping (T?, String?) -> ()) {

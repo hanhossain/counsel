@@ -16,10 +16,10 @@ class ViewController: UIViewController {
 		
 		let service = NFLService()
 		
-		service.getCurrentWeek { (week, error) in
-			guard let week = week, error == nil else { return }
+		service.getLastCompletedWeek { (week, error) in
+			guard let lastCompletedWeek = week else { return }
 			
-			print("week: \(week)")
+			print("last completed week: \(lastCompletedWeek)")
 		}
 	}
 }
