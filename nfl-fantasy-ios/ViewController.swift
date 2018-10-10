@@ -15,5 +15,11 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view, typically from a nib.
 		
 		let service = NFLService()
+		
+		service.getCurrentWeek { (week, error) in
+			guard let week = week, error == nil else { return }
+			
+			print("week: \(week)")
+		}
 	}
 }
