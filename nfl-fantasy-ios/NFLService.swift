@@ -21,26 +21,26 @@ class NFLService {
 		}
 	}
 	
-	func getLastCompletedWeek(completion: @escaping (Int?, String?) -> ()) {
-		getCurrentWeek { (currentWeek, error) in
-			guard let currentWeek = currentWeek else {
+	func getLastCompletedWeek(completion: @escaping ((Int, Int)?, String?) -> ()) {
+		getCurrentWeek { (weekInfo, error) in
+			guard let (currentWeek, currentSeason) = weekInfo else {
 				completion(nil, error)
 				return
 			}
 			
-			self.isWeekComplete(currentWeek) { (isComplete, error) in
+			self.isWeekComplete(currentWeek, season: currentSeason) { (isComplete, error) in
 				guard let isComplete = isComplete else {
 					completion(nil, error)
 					return
 				}
 				
 				let completedWeek = isComplete ? currentWeek : currentWeek - 1
-				completion(completedWeek, nil)
+				completion((completedWeek, currentSeason), nil)
 			}
 		}
 	}
 	
-	func getCurrentWeek(completion: @escaping (Int?, String?) -> ()) {
+	private func getCurrentWeek(completion: @escaping ((Int, Int)?, String?) -> ()) {
 		guard let url = URL(string: baseAddress + "players/stats") else {
 			completion(nil, "url was invalid")
 			return
@@ -56,18 +56,20 @@ class NFLService {
 			// if you don't give it a week in the query
 			guard let json = try? JSONSerialization.jsonObject(with: data),
 				let result = json as? [String : Any],
-				let week = result["week"] as? Int
+				let week = result["week"] as? Int,
+				let seasonString = result["season"] as? String,
+				let season = Int(seasonString)
 				else {
 					completion(nil, "yeah, no...")
 					return
 			}
 
-			completion(week, nil)
+			completion((week, season), nil)
 		}.resume()
 	}
 	
-	private func isWeekComplete(_ week: Int, completion: @escaping (Bool?, String?) -> ()) {
-		let query = "players/weekstats?week=\(week)"
+	private func isWeekComplete(_ week: Int, season: Int, completion: @escaping (Bool?, String?) -> ()) {
+		let query = "players/weekstats?season=\(season)&week=\(week)"
 		
 		makeRequest(query: query) { (weekStats: NFLWeekStatistics?, error: String?) in
 			guard let weekStats = weekStats else {

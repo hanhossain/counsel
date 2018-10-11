@@ -16,10 +16,21 @@ class ViewController: UIViewController {
 		
 		let service = NFLService()
 		
-		service.getLastCompletedWeek { (week, error) in
-			guard let lastCompletedWeek = week else { return }
+		service.getLastCompletedWeek { (weekInfo, error) in
+			guard let (week, season) = weekInfo else { return }
 			
-			print("last completed week: \(lastCompletedWeek)")
+			print("week: \(week)")
+			print("season: \(season)")
+			
+			service.getStatistics(season: season, week: week, completion: { (stats, error) in
+				guard let stats = stats else { return }
+				
+				// get cam newton
+				let query = stats.players.filter { $0.name.localizedCaseInsensitiveContains("newton") }
+				guard let newton = query.first else { return }
+				
+				print(newton.name, newton.weekPoints, newton.seasonPoints)
+			})
 		}
 	}
 }
