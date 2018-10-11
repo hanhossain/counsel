@@ -16,6 +16,7 @@
 		593B0272216C7F2700328633 /* NFLStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B0271216C7F2700328633 /* NFLStatistics.swift */; };
 		5950078F216DB93A00CAC3E0 /* NFLPlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */; };
 		59500791216DD8F900CAC3E0 /* NFLWeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */; };
+		596E75F5216F1EAF00F8850B /* FantasyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E75F4216F1EAF00F8850B /* FantasyCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		593B0271216C7F2700328633 /* NFLStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLStatistics.swift; sourceTree = "<group>"; };
 		5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLPlayerStatistics.swift; sourceTree = "<group>"; };
 		59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLWeekStatistics.swift; sourceTree = "<group>"; };
+		596E75F4216F1EAF00F8850B /* FantasyCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				593B0264216C6AEF00328633 /* Assets.xcassets */,
 				593B0266216C6AEF00328633 /* LaunchScreen.storyboard */,
 				593B0269216C6AEF00328633 /* Info.plist */,
+				596E75F4216F1EAF00F8850B /* FantasyCache.swift */,
 				593B026F216C738F00328633 /* NFLService.swift */,
 				593B0271216C7F2700328633 /* NFLStatistics.swift */,
 				5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */,
@@ -150,6 +153,7 @@
 				593B0260216C6AEE00328633 /* ViewController.swift in Sources */,
 				5950078F216DB93A00CAC3E0 /* NFLPlayerStatistics.swift in Sources */,
 				593B0272216C7F2700328633 /* NFLStatistics.swift in Sources */,
+				596E75F5216F1EAF00F8850B /* FantasyCache.swift in Sources */,
 				59500791216DD8F900CAC3E0 /* NFLWeekStatistics.swift in Sources */,
 				593B0270216C738F00328633 /* NFLService.swift in Sources */,
 				593B025E216C6AEE00328633 /* AppDelegate.swift in Sources */,

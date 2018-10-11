@@ -35,6 +35,12 @@ class NFLService {
 				}
 				
 				let completedWeek = isComplete ? currentWeek : currentWeek - 1
+				
+				guard currentWeek > 0 else {
+					completion(nil, "no completed weeks in season yet")
+					return
+				}
+				
 				completion((completedWeek, currentSeason), nil)
 			}
 		}
