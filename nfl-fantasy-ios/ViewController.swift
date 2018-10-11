@@ -16,13 +16,28 @@ class ViewController: UIViewController {
 		
 		let cache = FantasyCache()
 		
-		cache.getPlayer(id: 2495455) { (playerStats, error) in
+		cache.getPlayer(id: 2495455) { (playerStats) in
 			guard let playerStats = playerStats else { return }
 			
-			let weeks = playerStats.weeks.sorted { $0.week < $1.week }
+			let weeks = playerStats.weeks.values.sorted { $0.week < $1.week }
 			
+			print(playerStats.name)
 			for week in weeks {
 				print("\(week.week) \(week.points)")
+			}
+		}
+		
+		cache.getPlayers(name: "dev") { (playersStats) in
+			guard let playersStats = playersStats else { return }
+			
+			for playerStats in playersStats {
+				let weeks = playerStats.weeks.values.sorted { $0.week < $1.week }
+				
+				print(playerStats.name)
+				for week in weeks {
+					print("\(week.week) \(week.points)")
+				}
+
 			}
 		}
 	}

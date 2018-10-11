@@ -11,16 +11,22 @@ import Foundation
 class FantasyCache {
 	
 	private var statsCache = [Int : PlayerStatistics]() // { id, playerStats }
-	private var playerNameToIdMap = [String : Int]() // { name, id }
 	
-	func getPlayer(id: Int, completion: @escaping (PlayerStatistics?, String?) -> ()) {
+	func getPlayer(id: Int, completion: @escaping (PlayerStatistics?) -> ()) {
 		getFromCache {
 			guard let playerStats = self.statsCache[id] else {
-				completion(nil, "could not find player with id \(id)")
+				completion(nil)
 				return
 			}
 			
-			completion(playerStats, nil)
+			completion(playerStats)
+		}
+	}
+	
+	func getPlayers(name: String, completion: @escaping ([PlayerStatistics]?) -> ()) {
+		getFromCache {
+			let playersStats = self.statsCache.values.filter { $0.name.localizedCaseInsensitiveContains(name) }
+			completion(playersStats)
 		}
 	}
 	
@@ -69,19 +75,16 @@ class FantasyCache {
 				
 				// store player's week in cache
 				if var cachedPlayer = statsCache[playerId] {
-					cachedPlayer.weeks.append(weekStats)
+					cachedPlayer.weeks[weekStats.week] = weekStats
 					statsCache[playerId] = cachedPlayer
 				} else {
 					let playerToCache = PlayerStatistics(id: player.id,
 														 name: player.name,
 														 position: player.position,
 														 team: player.team,
-														 weeks: [weekStats])
+														 weeks: [weekStats.week : weekStats])
 					statsCache[playerId] = playerToCache
 				}
-				
-				// make sure player name to id map is updated
-				playerNameToIdMap[player.name] = playerId
 			}
 		}
 	}

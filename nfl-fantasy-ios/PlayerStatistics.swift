@@ -13,5 +13,5 @@ struct PlayerStatistics {
 	var name: String
 	var position: String
 	var team: String
-	var weeks: [WeekStatistics]
+	var weeks: [Int : WeekStatistics]
 }
