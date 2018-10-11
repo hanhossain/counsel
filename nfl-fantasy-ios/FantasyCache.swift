@@ -13,24 +13,25 @@ class FantasyCache {
 	private var statsCache = [Int : PlayerStatistics]() // { id, playerStats }
 	private var playerNameToIdMap = [String : Int]() // { name, id }
 	
-	func getStatistics(id: Int, completion: @escaping (PlayerStatistics?, String?) -> ()) {
-		// if the cache has been loaded, get the player from the cache
-		// otherwise, load the cache
-		if statsCache.count > 0 {
-			guard let playerStats = statsCache[id] else {
+	func getPlayer(id: Int, completion: @escaping (PlayerStatistics?, String?) -> ()) {
+		getFromCache {
+			guard let playerStats = self.statsCache[id] else {
 				completion(nil, "could not find player with id \(id)")
 				return
 			}
 			
 			completion(playerStats, nil)
+		}
+	}
+	
+	private func getFromCache(completion: @escaping () -> ()) {
+		// if the cache has been loaded, attempt cache hit
+		// otherwise, load the cache
+		if statsCache.count > 0 {
+			completion()
 		} else {
 			loadCache {
-				guard let playerStats = self.statsCache[id] else {
-					completion(nil, "could not find player with id \(id)")
-					return
-				}
-				
-				completion(playerStats, nil)
+				completion()
 			}
 		}
 	}
