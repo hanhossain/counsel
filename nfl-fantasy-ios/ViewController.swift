@@ -15,6 +15,15 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view, typically from a nib.
 		
 		let cache = FantasyCache()
-		cache.loadCache()
+		
+		cache.getStatistics(id: 2495455) { (playerStats, error) in
+			guard let playerStats = playerStats else { return }
+			
+			let weeks = playerStats.weeks.sorted { $0.week < $1.week }
+			
+			for week in weeks {
+				print("\(week.week) \(week.points)")
+			}
+		}
 	}
 }
