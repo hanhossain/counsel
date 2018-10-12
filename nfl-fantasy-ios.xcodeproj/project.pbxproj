@@ -17,6 +17,7 @@
 		5950078F216DB93A00CAC3E0 /* NFLPlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */; };
 		59500791216DD8F900CAC3E0 /* NFLWeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */; };
 		596E75F5216F1EAF00F8850B /* FantasyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E75F4216F1EAF00F8850B /* FantasyCache.swift */; };
+		597929D52170660200E08B99 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597929D42170660200E08B99 /* SearchViewController.swift */; };
 		59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643C216F377B008B4744 /* PlayerStatistics.swift */; };
 		59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643E216F3794008B4744 /* WeekStatistics.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLPlayerStatistics.swift; sourceTree = "<group>"; };
 		59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLWeekStatistics.swift; sourceTree = "<group>"; };
 		596E75F4216F1EAF00F8850B /* FantasyCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyCache.swift; sourceTree = "<group>"; };
+		597929D42170660200E08B99 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59C7643C216F377B008B4744 /* PlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatistics.swift; sourceTree = "<group>"; };
 		59C7643E216F3794008B4744 /* WeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekStatistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +72,7 @@
 			children = (
 				593B025D216C6AEE00328633 /* AppDelegate.swift */,
 				593B025F216C6AEE00328633 /* ViewController.swift */,
+				597929D42170660200E08B99 /* SearchViewController.swift */,
 				593B0261216C6AEE00328633 /* Main.storyboard */,
 				593B0264216C6AEF00328633 /* Assets.xcassets */,
 				593B0266216C6AEF00328633 /* LaunchScreen.storyboard */,
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				597929D52170660200E08B99 /* SearchViewController.swift in Sources */,
 				59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */,
 				593B0260216C6AEE00328633 /* ViewController.swift in Sources */,
 				59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */,
