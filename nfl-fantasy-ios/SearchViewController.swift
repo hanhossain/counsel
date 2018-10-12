@@ -11,8 +11,9 @@ import UIKit
 class SearchViewController: UIViewController {
 
 	let cellId = "searchResultsCell"
+	let cache = FantasyCache()
 	
-	var searchQuery = "hello world"
+	var searchResults = [PlayerStatistics]()
 	
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -21,18 +22,30 @@ class SearchViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-
+	
+	func search(player: String) {
+		cache.getPlayers(name: player) { (players) in
+			guard let players = players else { return }
+			
+			self.searchResults = players.sorted { $0.name < $1.name }
+			
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+	}
 }
 
 extension SearchViewController : UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return Int.random(in: 1...10)
+		return searchResults.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
 		
-		cell.textLabel?.text = searchQuery
+		let player = searchResults[indexPath.row]
+		cell.textLabel?.text = player.name
 		
 		return cell
 	}
@@ -42,8 +55,7 @@ extension SearchViewController : UITextFieldDelegate {
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		
 		if let text = textField.text, !text.isEmpty {
-			searchQuery = text
-			tableView.reloadData()
+			search(player: text)
 		}
 		
 		textField.resignFirstResponder()
