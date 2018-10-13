@@ -23,6 +23,15 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		guard segue.identifier == "searchResultsToDetailSegue",
+			let destination = segue.destination as? PlayerDetailViewController,
+			let indexPath = tableView.indexPathForSelectedRow
+			else { return }
+		
+		destination.playerStatistics = searchResults[indexPath.row]
+	}
+	
 	func search(player: String) {
 		cache.getPlayers(name: player) { (players) in
 			guard let players = players else { return }
