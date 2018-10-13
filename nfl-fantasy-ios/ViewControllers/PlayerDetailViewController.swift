@@ -6,17 +6,39 @@
 //  Copyright © 2018 Han Hossain. All rights reserved.
 //
 
+import Charts
 import UIKit
 
 class PlayerDetailViewController: UIViewController {
 
 	var playerStatistics: PlayerStatistics!
 	
-    override func viewDidLoad() {
+	@IBOutlet weak var chartView: LineChartView!
+	
+	override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-		print(playerStatistics.name)
+		
+		title = playerStatistics.name
+		
+		// display chart data
+		let weeksStats = playerStatistics.weeks
+			.values
+			.sorted { $0.week < $1.week }
+		
+		let points = weeksStats.map { ChartDataEntry(x: Double($0.week), y: $0.points) }
+		let pointsDataSet = LineChartDataSet(values: points, label: "points")
+		pointsDataSet.colors = [.blue]
+		
+		let projectedPoints = weeksStats.map { ChartDataEntry(x: Double($0.week), y: $0.projectedPoints) }
+		let projectedPointsDataSet = LineChartDataSet(values: projectedPoints, label: "projected points")
+		projectedPointsDataSet.colors = [.green]
+		
+		chartView.data = LineChartData(dataSets: [pointsDataSet, projectedPointsDataSet])
+		
+		chartView.xAxis.axisMinimum = 1
+		chartView.leftAxis.axisMinimum = 0
+		chartView.xAxis.labelPosition = .bottom
+		chartView.rightAxis.enabled = false
     }
     
 

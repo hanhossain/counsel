@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Prh-GE-Pbv">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Vy3-Yp-jG2">
-                                <rect key="frame" x="16" y="60" width="343" height="30"/>
+                                <rect key="frame" x="16" y="104" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
@@ -27,7 +27,7 @@
                                 </connections>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OYS-bJ-7gN">
-                                <rect key="frame" x="0.0" y="106" width="375" height="672"/>
+                                <rect key="frame" x="0.0" y="150" width="375" height="628"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchResultsCell" id="8Hi-A8-frU">
@@ -59,13 +59,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="unD-Ar-OJf"/>
                     <connections>
                         <outlet property="tableView" destination="OYS-bJ-7gN" id="Hhn-zX-9MT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="132.26600985221674"/>
+            <point key="canvasLocation" x="1943.2" y="131.52709359605913"/>
         </scene>
         <!--Player Detail View Controller-->
         <scene sceneID="dxz-6f-LRN">
@@ -74,13 +75,49 @@
                     <view key="view" contentMode="scaleToFill" id="WPA-YQ-FC0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZo-dk-hU2" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="104" width="343" height="343"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="wZo-dk-hU2" secondAttribute="height" multiplier="1:1" priority="999" id="DnU-Jq-gv1"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IUC-PA-Tkf" firstAttribute="trailing" secondItem="wZo-dk-hU2" secondAttribute="trailing" constant="16" id="4s0-Ak-hKA"/>
+                            <constraint firstItem="IUC-PA-Tkf" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="wZo-dk-hU2" secondAttribute="bottom" id="BOc-aS-IjR"/>
+                            <constraint firstItem="wZo-dk-hU2" firstAttribute="top" secondItem="IUC-PA-Tkf" secondAttribute="top" constant="16" id="PvL-CJ-8Ei"/>
+                            <constraint firstItem="wZo-dk-hU2" firstAttribute="leading" secondItem="IUC-PA-Tkf" secondAttribute="leading" constant="16" id="gZe-xZ-Xdz"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="IUC-PA-Tkf"/>
                     </view>
+                    <connections>
+                        <outlet property="chartView" destination="wZo-dk-hU2" id="H9o-a6-ODs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pdR-6J-AA0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="999" y="132"/>
+            <point key="canvasLocation" x="2828" y="131.52709359605913"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="l1H-sF-eCe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Prh-GE-Pbv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nil-cO-Sx4">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="49C-pr-ohw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rhe-6O-7FF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1000.8" y="131.52709359605913"/>
         </scene>
     </scenes>
 </document>

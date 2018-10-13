@@ -10,7 +10,6 @@
 		26E8CE42510C418000611129 /* Pods_nfl_fantasy_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 016BB82A0AF2BF0AA7A6F280 /* Pods_nfl_fantasy_ios.framework */; };
 		5901DB402171CE3E00E9AE91 /* PlayerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */; };
 		593B025E216C6AEE00328633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B025D216C6AEE00328633 /* AppDelegate.swift */; };
-		593B0260216C6AEE00328633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B025F216C6AEE00328633 /* ViewController.swift */; };
 		593B0263216C6AEE00328633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 593B0261216C6AEE00328633 /* Main.storyboard */; };
 		593B0265216C6AEF00328633 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 593B0264216C6AEF00328633 /* Assets.xcassets */; };
 		593B0268216C6AEF00328633 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 593B0266216C6AEF00328633 /* LaunchScreen.storyboard */; };
@@ -29,7 +28,6 @@
 		5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailViewController.swift; sourceTree = "<group>"; };
 		593B025A216C6AEE00328633 /* nfl-fantasy-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nfl-fantasy-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		593B025D216C6AEE00328633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		593B025F216C6AEE00328633 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		593B0262216C6AEE00328633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		593B0264216C6AEF00328633 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		593B0267216C6AEF00328633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,7 +76,6 @@
 		5934C7E92171D75C0047EDE9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				593B025F216C6AEE00328633 /* ViewController.swift */,
 				597929D42170660200E08B99 /* SearchViewController.swift */,
 				5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */,
 			);
@@ -269,7 +266,6 @@
 			files = (
 				597929D52170660200E08B99 /* SearchViewController.swift in Sources */,
 				59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */,
-				593B0260216C6AEE00328633 /* ViewController.swift in Sources */,
 				59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */,
 				5950078F216DB93A00CAC3E0 /* NFLPlayerStatistics.swift in Sources */,
 				593B0272216C7F2700328633 /* NFLStatistics.swift in Sources */,
