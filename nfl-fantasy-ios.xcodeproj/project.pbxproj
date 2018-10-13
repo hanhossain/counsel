@@ -75,6 +75,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5934C7E92171D75C0047EDE9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				593B025F216C6AEE00328633 /* ViewController.swift */,
+				597929D42170660200E08B99 /* SearchViewController.swift */,
+				5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		593B0251216C6AEE00328633 = {
 			isa = PBXGroup;
 			children = (
@@ -96,10 +106,8 @@
 		593B025C216C6AEE00328633 /* nfl-fantasy-ios */ = {
 			isa = PBXGroup;
 			children = (
+				5934C7E92171D75C0047EDE9 /* ViewControllers */,
 				593B025D216C6AEE00328633 /* AppDelegate.swift */,
-				593B025F216C6AEE00328633 /* ViewController.swift */,
-				597929D42170660200E08B99 /* SearchViewController.swift */,
-				5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */,
 				593B0261216C6AEE00328633 /* Main.storyboard */,
 				593B0264216C6AEF00328633 /* Assets.xcassets */,
 				593B0266216C6AEF00328633 /* LaunchScreen.storyboard */,
