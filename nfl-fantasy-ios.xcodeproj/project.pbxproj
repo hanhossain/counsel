@@ -85,6 +85,35 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		5934C7EA2171D7C80047EDE9 /* FantasyFootballAPI */ = {
+			isa = PBXGroup;
+			children = (
+				593B026F216C738F00328633 /* NFLService.swift */,
+				593B0271216C7F2700328633 /* NFLStatistics.swift */,
+				5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */,
+				59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */,
+			);
+			path = FantasyFootballAPI;
+			sourceTree = "<group>";
+		};
+		5934C7EB2171D8010047EDE9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59C7643C216F377B008B4744 /* PlayerStatistics.swift */,
+				59C7643E216F3794008B4744 /* WeekStatistics.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5934C7EC2171D8480047EDE9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				593B0261216C6AEE00328633 /* Main.storyboard */,
+				593B0266216C6AEF00328633 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		593B0251216C6AEE00328633 = {
 			isa = PBXGroup;
 			children = (
@@ -106,19 +135,14 @@
 		593B025C216C6AEE00328633 /* nfl-fantasy-ios */ = {
 			isa = PBXGroup;
 			children = (
+				5934C7EA2171D7C80047EDE9 /* FantasyFootballAPI */,
+				5934C7EB2171D8010047EDE9 /* Models */,
+				5934C7EC2171D8480047EDE9 /* Views */,
 				5934C7E92171D75C0047EDE9 /* ViewControllers */,
 				593B025D216C6AEE00328633 /* AppDelegate.swift */,
-				593B0261216C6AEE00328633 /* Main.storyboard */,
-				593B0264216C6AEF00328633 /* Assets.xcassets */,
-				593B0266216C6AEF00328633 /* LaunchScreen.storyboard */,
-				593B0269216C6AEF00328633 /* Info.plist */,
 				596E75F4216F1EAF00F8850B /* FantasyCache.swift */,
-				59C7643C216F377B008B4744 /* PlayerStatistics.swift */,
-				59C7643E216F3794008B4744 /* WeekStatistics.swift */,
-				593B026F216C738F00328633 /* NFLService.swift */,
-				593B0271216C7F2700328633 /* NFLStatistics.swift */,
-				5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */,
-				59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */,
+				593B0264216C6AEF00328633 /* Assets.xcassets */,
+				593B0269216C6AEF00328633 /* Info.plist */,
 			);
 			path = "nfl-fantasy-ios";
 			sourceTree = "<group>";
