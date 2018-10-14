@@ -71,7 +71,7 @@
                     <navigationItem key="navigationItem" id="7pL-X5-oXz">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="9kM-nK-KZl">
                             <connections>
-                                <segue destination="RkH-yd-4iH" kind="presentation" identifier="searchResultsToSearchSegue" modalPresentationStyle="formSheet" id="6kR-CL-up3"/>
+                                <segue destination="idI-5e-3lq" kind="presentation" identifier="searchResultsToSearchSegue" modalPresentationStyle="formSheet" id="6kR-CL-up3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -89,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="player" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="s8g-vo-v4Q">
-                                <rect key="frame" x="10" y="94" width="355" height="30"/>
+                                <rect key="frame" x="10" y="98" width="355" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -97,44 +97,34 @@
                                     <outlet property="delegate" destination="RkH-yd-4iH" id="0zq-Oa-eDJ"/>
                                 </connections>
                             </textField>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="259" translatesAutoresizingMaskIntoConstraints="NO" id="LJc-Ie-XhB">
-                                <rect key="frame" x="10" y="54" width="355" height="30"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykg-iD-XHT">
-                                        <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
-                                        <state key="normal" title="Cancel"/>
-                                        <connections>
-                                            <action selector="cancel" destination="RkH-yd-4iH" eventType="touchUpInside" id="1rR-Gb-rDr"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJv-b1-fBb">
-                                        <rect key="frame" x="307" y="0.0" width="48" height="30"/>
-                                        <state key="normal" title="Search"/>
-                                        <connections>
-                                            <action selector="search" destination="RkH-yd-4iH" eventType="touchUpInside" id="Mwa-CE-IR6"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="s8g-vo-v4Q" firstAttribute="leading" secondItem="IPU-d7-QfD" secondAttribute="leading" constant="10" id="4XL-c4-gsS"/>
-                            <constraint firstItem="LJc-Ie-XhB" firstAttribute="top" secondItem="IPU-d7-QfD" secondAttribute="top" constant="10" id="Bwa-by-KEF"/>
-                            <constraint firstItem="IPU-d7-QfD" firstAttribute="trailing" secondItem="LJc-Ie-XhB" secondAttribute="trailing" constant="10" id="LV4-ex-rr5"/>
-                            <constraint firstItem="IPU-d7-QfD" firstAttribute="trailing" secondItem="s8g-vo-v4Q" secondAttribute="trailing" constant="10" id="NvD-dh-t67"/>
-                            <constraint firstItem="s8g-vo-v4Q" firstAttribute="top" secondItem="LJc-Ie-XhB" secondAttribute="bottom" constant="10" id="XAD-Jy-NcF"/>
-                            <constraint firstItem="LJc-Ie-XhB" firstAttribute="leading" secondItem="IPU-d7-QfD" secondAttribute="leading" constant="10" id="oYB-t1-5Td"/>
+                            <constraint firstItem="s8g-vo-v4Q" firstAttribute="top" secondItem="IPU-d7-QfD" secondAttribute="top" constant="10" id="7s5-44-z3b"/>
+                            <constraint firstItem="s8g-vo-v4Q" firstAttribute="leading" secondItem="IPU-d7-QfD" secondAttribute="leading" constant="10" id="GU2-4z-H0n"/>
+                            <constraint firstItem="IPU-d7-QfD" firstAttribute="trailing" secondItem="s8g-vo-v4Q" secondAttribute="trailing" constant="10" id="wjS-0Q-0Ps"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IPU-d7-QfD"/>
                     </view>
+                    <navigationItem key="navigationItem" id="EF5-Rz-Wah">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ePC-Kg-odL">
+                            <connections>
+                                <action selector="cancel" destination="RkH-yd-4iH" id="NEg-ln-vgg"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="aCb-AE-03Y">
+                            <connections>
+                                <action selector="search" destination="RkH-yd-4iH" id="mb0-dG-8Vu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchField" destination="s8g-vo-v4Q" id="euK-1G-elE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WJN-Eu-JhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2884" y="860"/>
+            <point key="canvasLocation" x="3826.4000000000001" y="859.35960591133005"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IRz-cS-S5U">
@@ -153,6 +143,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lvc-tc-vPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1984.8" y="131.52709359605913"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="155-8E-LjS">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="idI-5e-3lq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3SC-FZ-gGz">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RkH-yd-4iH" kind="relationship" relationship="rootViewController" id="zIR-ru-ZcP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rbg-6j-vxL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2884" y="859.35960591133005"/>
         </scene>
     </scenes>
 </document>

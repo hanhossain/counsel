@@ -43,15 +43,16 @@ class SearchResultsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case segueToDetailController:
-			guard let destination = segue.destination as? PlayerDetailViewController,
+			guard let playerDetailController = segue.destination as? PlayerDetailViewController,
 				let indexPath = tableView.indexPathForSelectedRow
 				else { return }
 			
-			destination.playerStatistics = searchResults[indexPath.row]
+			playerDetailController.playerStatistics = searchResults[indexPath.row]
 		
 		case segueToSearchController:
-			let destination = segue.destination as? SearchViewController
-			destination?.delegate = self
+			let navigationController = segue.destination as? UINavigationController
+			let searchController = navigationController?.topViewController as? SearchViewController
+			searchController?.delegate = self
 			
 		default:
 			return
