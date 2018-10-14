@@ -12,37 +12,16 @@ class FantasyCache {
 	
 	private var statsCache = [Int : PlayerStatistics]() // { id, playerStats }
 	
-	func getPlayer(id: Int, completion: @escaping (PlayerStatistics?) -> ()) {
-		getFromCache {
-			guard let playerStats = self.statsCache[id] else {
-				completion(nil)
-				return
-			}
-			
-			completion(playerStats)
-		}
+	func getPlayer(id: Int) -> PlayerStatistics? {
+		return statsCache[id]
 	}
 	
-	func getPlayers(name: String, completion: @escaping ([PlayerStatistics]?) -> ()) {
-		getFromCache {
-			let playersStats = self.statsCache.values.filter { $0.name.localizedCaseInsensitiveContains(name) }
-			completion(playersStats)
-		}
+	func getPlayers(query: String) -> [PlayerStatistics] {
+		let playerStats = statsCache.values.filter { $0.name.localizedCaseInsensitiveContains(query) }
+		return playerStats
 	}
 	
-	private func getFromCache(completion: @escaping () -> ()) {
-		// if the cache has been loaded, attempt cache hit
-		// otherwise, load the cache
-		if statsCache.count > 0 {
-			completion()
-		} else {
-			loadCache {
-				completion()
-			}
-		}
-	}
-	
-	private func loadCache(completion: @escaping () -> ()) {
+	func loadCache(completion: @escaping () -> ()) {
 		let service = NFLService()
 		
 		service.getLastCompletedWeek { (weekInfo, error) in
