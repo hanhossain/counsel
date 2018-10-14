@@ -21,6 +21,10 @@ class FantasyCache {
 		return playerStats
 	}
 	
+	func getPlayers() -> [PlayerStatistics] {
+		return statsCache.values.sorted { $0.name < $1.name }
+	}
+	
 	func loadCache(completion: @escaping () -> ()) {
 		let service = NFLService()
 		

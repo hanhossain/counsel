@@ -21,6 +21,8 @@
 		597929D52170660200E08B99 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597929D42170660200E08B99 /* SearchViewController.swift */; };
 		59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643C216F377B008B4744 /* PlayerStatistics.swift */; };
 		59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643E216F3794008B4744 /* WeekStatistics.swift */; };
+		59D33A162172F5DF009288C5 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */; };
+		59D33A1821730A35009288C5 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D33A1721730A35009288C5 /* SearchDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		597929D42170660200E08B99 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		59C7643C216F377B008B4744 /* PlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatistics.swift; sourceTree = "<group>"; };
 		59C7643E216F3794008B4744 /* WeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekStatistics.swift; sourceTree = "<group>"; };
+		59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
+		59D33A1721730A35009288C5 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		C11BA520CB8E70AB42027A91 /* Pods-nfl-fantasy-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nfl-fantasy-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nfl-fantasy-ios/Pods-nfl-fantasy-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		D73BB648BC7C8DA7816AC2C7 /* Pods-nfl-fantasy-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nfl-fantasy-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-nfl-fantasy-ios/Pods-nfl-fantasy-ios.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				597929D42170660200E08B99 /* SearchViewController.swift */,
+				59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */,
 				5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */,
 			);
 			path = ViewControllers;
@@ -137,6 +142,7 @@
 				5934C7EC2171D8480047EDE9 /* Views */,
 				5934C7E92171D75C0047EDE9 /* ViewControllers */,
 				593B025D216C6AEE00328633 /* AppDelegate.swift */,
+				59D33A1721730A35009288C5 /* SearchDelegate.swift */,
 				596E75F4216F1EAF00F8850B /* FantasyCache.swift */,
 				593B0264216C6AEF00328633 /* Assets.xcassets */,
 				593B0269216C6AEF00328633 /* Info.plist */,
@@ -265,6 +271,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				597929D52170660200E08B99 /* SearchViewController.swift in Sources */,
+				59D33A1821730A35009288C5 /* SearchDelegate.swift in Sources */,
+				59D33A162172F5DF009288C5 /* SearchResultsTableViewController.swift in Sources */,
 				59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */,
 				59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */,
 				5950078F216DB93A00CAC3E0 /* NFLPlayerStatistics.swift in Sources */,
