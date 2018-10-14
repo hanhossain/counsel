@@ -93,6 +93,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="RkH-yd-4iH" id="0zq-Oa-eDJ"/>
+                                </connections>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="259" translatesAutoresizingMaskIntoConstraints="NO" id="LJc-Ie-XhB">
                                 <rect key="frame" x="10" y="54" width="355" height="30"/>

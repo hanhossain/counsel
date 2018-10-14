@@ -31,14 +31,10 @@ class SearchViewController: UIViewController {
 	
 }
 
-//extension SearchViewController : UITextFieldDelegate {
-//	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//
-//		if let text = textField.text, !text.isEmpty {
-//			search(query: text)
-//		}
-//
-//		textField.resignFirstResponder()
-//		return true
-//	}
-//}
+extension SearchViewController : UITextFieldDelegate {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+		textField.resignFirstResponder()
+		return true
+	}
+}
