@@ -69,12 +69,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="7pL-X5-oXz">
+                        <barButtonItem key="leftBarButtonItem" title="Clear" id="89C-8k-gKR">
+                            <connections>
+                                <action selector="clearFilter:" destination="DxN-XL-Lih" id="jqP-Jo-W8t"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="9kM-nK-KZl">
                             <connections>
                                 <segue destination="idI-5e-3lq" kind="presentation" identifier="searchResultsToSearchSegue" modalPresentationStyle="formSheet" id="6kR-CL-up3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="clearButton" destination="89C-8k-gKR" id="fSi-Tj-yAE"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OvU-YJ-MKf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

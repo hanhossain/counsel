@@ -17,9 +17,20 @@ class SearchResultsTableViewController: UITableViewController {
 
 	var cache: FantasyCache!
 	
-    override func viewDidLoad() {
+	@IBOutlet weak var clearButton: UIBarButtonItem!
+	
+	@IBAction func clearFilter(_ sender: UIBarButtonItem) {
+		clearButton.isEnabled = false
+		searchResults = cache.getPlayers()
+		title = nil
+		
+		tableView.reloadData()
+	}
+	
+	override func viewDidLoad() {
         super.viewDidLoad()
 		
+		clearButton.isEnabled = false
 		searchResults = cache.getPlayers()
     }
 
@@ -70,6 +81,7 @@ extension SearchResultsTableViewController: SearchDelegate {
 			
 			title = "Search: \"\(query)\""
 			tableView.reloadData()
+			clearButton.isEnabled = true
 		}
 		
 		dismiss(animated: true)
