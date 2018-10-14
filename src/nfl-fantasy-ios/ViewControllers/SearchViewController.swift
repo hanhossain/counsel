@@ -9,13 +9,18 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-
-	let cellId = "searchResultsCell"
-	let cache = FantasyCache()
 	
-	var searchResults = [PlayerStatistics]()
+	var delegate: SearchDelegate!
 	
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var searchField: UITextField!
+	
+	@IBAction func search() {
+		delegate.search(query: searchField.text)
+	}
+	
+	@IBAction func cancel() {
+	}
+	
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,44 +28,16 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard segue.identifier == "searchResultsToDetailSegue",
-			let destination = segue.destination as? PlayerDetailViewController,
-			let indexPath = tableView.indexPathForSelectedRow
-			else { return }
-		
-		destination.playerStatistics = searchResults[indexPath.row]
-	}
-	
-	func search(query: String) {
-		let players = cache.getPlayers(query: query)
-		searchResults = players.sorted { $0.name < $1.name }
-	}
 }
 
-extension SearchViewController : UITableViewDataSource {
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return searchResults.count
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-		
-		let player = searchResults[indexPath.row]
-		cell.textLabel?.text = player.name
-		
-		return cell
-	}
-}
-
-extension SearchViewController : UITextFieldDelegate {
-	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		
-		if let text = textField.text, !text.isEmpty {
-			search(query: text)
-		}
-		
-		textField.resignFirstResponder()
-		return true
-	}
-}
+//extension SearchViewController : UITextFieldDelegate {
+//	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//
+//		if let text = textField.text, !text.isEmpty {
+//			search(query: text)
+//		}
+//
+//		textField.resignFirstResponder()
+//		return true
+//	}
+//}

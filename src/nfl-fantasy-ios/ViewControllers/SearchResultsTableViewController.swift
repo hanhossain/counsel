@@ -12,6 +12,7 @@ class SearchResultsTableViewController: UITableViewController {
 
 	private let cellId = "searchResultsCell"
 	private let segueToDetailController = "searchResultsToDetailSegue"
+	private let segueToSearchController = "searchResultsToSearchSegue"
 	private var searchResults = [PlayerStatistics]()
 
 	var cache: FantasyCache!
@@ -40,11 +41,41 @@ class SearchResultsTableViewController: UITableViewController {
     // MARK: - Navigation
 	
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard segue.identifier == segueToDetailController,
-			let destination = segue.destination as? PlayerDetailViewController,
-			let indexPath = tableView.indexPathForSelectedRow
-			else { return }
+		switch segue.identifier {
+		case segueToDetailController:
+			guard let destination = segue.destination as? PlayerDetailViewController,
+				let indexPath = tableView.indexPathForSelectedRow
+				else { return }
+			
+			destination.playerStatistics = searchResults[indexPath.row]
 		
-		destination.playerStatistics = searchResults[indexPath.row]
+		case segueToSearchController:
+			let destination = segue.destination as? SearchViewController
+			destination?.delegate = self
+			
+		default:
+			return
+		}
     }
+	
+}
+
+extension SearchResultsTableViewController: SearchDelegate {
+	
+	func search(query: String?) {
+		
+		if let query = query, !query.isEmpty {
+			searchResults = cache.getPlayers(query: query)
+			
+			title = "Search: \"\(query)\""
+			tableView.reloadData()
+		}
+		
+		dismiss(animated: true)
+	}
+	
+	func cancel() {
+		dismiss(animated: true)
+	}
+	
 }
