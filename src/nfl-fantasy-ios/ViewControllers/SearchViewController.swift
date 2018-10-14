@@ -22,13 +22,6 @@ class SearchViewController: UIViewController {
 		delegate.cancel()
 	}
 	
-	
-	override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-	
 }
 
 extension SearchViewController : UITextFieldDelegate {
