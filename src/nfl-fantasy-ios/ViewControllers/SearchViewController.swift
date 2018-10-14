@@ -19,6 +19,7 @@ class SearchViewController: UIViewController {
 	}
 	
 	@IBAction func cancel() {
+		delegate.cancel()
 	}
 	
 	
