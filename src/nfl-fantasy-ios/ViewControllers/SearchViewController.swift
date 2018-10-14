@@ -32,16 +32,9 @@ class SearchViewController: UIViewController {
 		destination.playerStatistics = searchResults[indexPath.row]
 	}
 	
-	func search(player: String) {
-		cache.getPlayers(name: player) { (players) in
-			guard let players = players else { return }
-			
-			self.searchResults = players.sorted { $0.name < $1.name }
-			
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
-		}
+	func search(query: String) {
+		let players = cache.getPlayers(query: query)
+		searchResults = players.sorted { $0.name < $1.name }
 	}
 }
 
@@ -64,7 +57,7 @@ extension SearchViewController : UITextFieldDelegate {
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		
 		if let text = textField.text, !text.isEmpty {
-			search(player: text)
+			search(query: text)
 		}
 		
 		textField.resignFirstResponder()

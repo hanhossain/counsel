@@ -12,10 +12,21 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
-
-
+	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
+		
+		let group = DispatchGroup()
+		group.enter()
+		
+		let cache = FantasyCache()
+		cache.loadCache {
+			print("cache is loaded")
+			group.leave()
+		}
+		
+		group.wait()
+		
 		return true
 	}
 
