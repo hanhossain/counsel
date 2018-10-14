@@ -45,6 +45,7 @@ class SearchResultsTableViewController: UITableViewController {
 
 		let player = searchResults[indexPath.row]
 		cell.textLabel?.text = player.name
+		cell.detailTextLabel?.text = "\(player.position) - \(player.team)"
 
 		return cell
 	}
