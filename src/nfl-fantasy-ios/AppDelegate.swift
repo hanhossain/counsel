@@ -16,12 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
 		
+		let navigationController = self.window?.rootViewController as? UINavigationController
+		let searchResultsViewController = navigationController?.topViewController as? SearchResultsTableViewController
+		
 		let group = DispatchGroup()
 		group.enter()
 		
 		let cache = FantasyCache()
 		cache.loadCache {
-			print("cache is loaded")
+			searchResultsViewController?.cache = cache
+			
 			group.leave()
 		}
 		
