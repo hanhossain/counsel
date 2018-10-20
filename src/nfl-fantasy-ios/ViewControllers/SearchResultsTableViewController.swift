@@ -58,14 +58,14 @@ class SearchResultsTableViewController: UITableViewController {
 			guard let playerDetailController = segue.destination as? PlayerDetailViewController,
 				let indexPath = tableView.indexPathForSelectedRow
 				else { return }
-			
+
 			playerDetailController.playerStatistics = searchResults[indexPath.row]
-		
+
 		case segueToSearchController:
 			let navigationController = segue.destination as? UINavigationController
 			let searchController = navigationController?.topViewController as? SearchViewController
 			searchController?.delegate = self
-			
+
 		default:
 			return
 		}

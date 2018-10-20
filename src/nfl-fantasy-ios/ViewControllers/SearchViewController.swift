@@ -8,16 +8,16 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UITableViewController {
 	
 	var delegate: SearchDelegate!
 	
 	@IBOutlet weak var searchField: UITextField!
-	
+
 	@IBAction func search() {
 		delegate.search(query: searchField.text)
 	}
-	
+
 	@IBAction func cancel() {
 		delegate.cancel()
 	}
