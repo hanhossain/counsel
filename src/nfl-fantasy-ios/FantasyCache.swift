@@ -12,6 +12,26 @@ class FantasyCache {
 	
 	private var statsCache = [Int : PlayerStatistics]() // { id, playerStats }
 	
+	func getPositions() -> [String] {
+		let positions = Set(statsCache.values.map { $0.position })
+		return positions.sorted { $0 < $1 }
+	}
+	
+	func getTeams() -> [String] {
+		let teams = Set(statsCache.values.map { $0.team })
+		return teams.sorted(by: { (left, right) -> Bool in
+			guard right != "" else {
+				return true
+			}
+			
+			guard left != "" else {
+				return false
+			}
+			
+			return left < right
+		})
+	}
+	
 	func getPlayer(id: Int) -> PlayerStatistics? {
 		return statsCache[id]
 	}
