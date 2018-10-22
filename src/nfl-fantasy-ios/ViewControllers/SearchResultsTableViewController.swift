@@ -13,7 +13,17 @@ class SearchResultsTableViewController: UITableViewController {
 	private let cellId = "searchResultsCell"
 	private let segueToDetailController = "searchResultsToDetailSegue"
 	private let segueToSearchController = "searchResultsToSearchSegue"
+	
 	private var searchResults = [PlayerStatistics]()
+	private var query: String? {
+		didSet {
+			if let query = query {
+				title = "Search: \"\(query)\""
+			} else {
+				title = nil
+			}
+		}
+	}
 
 	var cache: FantasyCache!
 	
@@ -22,7 +32,7 @@ class SearchResultsTableViewController: UITableViewController {
 	@IBAction func clearFilter(_ sender: UIBarButtonItem) {
 		clearButton.isEnabled = false
 		searchResults = cache.getPlayers()
-		title = nil
+		query = nil
 		
 		tableView.reloadData()
 	}
@@ -66,6 +76,7 @@ class SearchResultsTableViewController: UITableViewController {
 			if let searchController = navigationController?.topViewController as? SearchViewController {
 				searchController.delegate = self
 				searchController.cache = cache
+				searchController.existingQuery = query
 			}
 		default:
 			return
@@ -81,7 +92,7 @@ extension SearchResultsTableViewController: SearchDelegate {
 		if let query = query, !query.isEmpty {
 			searchResults = cache.getPlayers(query: query)
 			
-			title = "Search: \"\(query)\""
+			self.query = query
 			tableView.reloadData()
 			clearButton.isEnabled = true
 		}

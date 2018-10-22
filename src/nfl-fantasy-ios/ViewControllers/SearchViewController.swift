@@ -12,6 +12,7 @@ class SearchViewController: UITableViewController {
 	
 	var cache: FantasyCache!
 	var delegate: SearchDelegate!
+	var existingQuery: String?
 	
 	@IBOutlet weak var searchField: UITextField!
 
@@ -21,6 +22,12 @@ class SearchViewController: UITableViewController {
 
 	@IBAction func cancel() {
 		delegate.cancel()
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		searchField.text = existingQuery
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
