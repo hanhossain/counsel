@@ -10,6 +10,7 @@ import UIKit
 
 class SearchViewController: UITableViewController {
 	
+	var cache: FantasyCache!
 	var delegate: SearchDelegate!
 	
 	@IBOutlet weak var searchField: UITextField!
@@ -20,6 +21,13 @@ class SearchViewController: UITableViewController {
 
 	@IBAction func cancel() {
 		delegate.cancel()
+	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		guard let destination = segue.destination as? MultiSelectTableViewController else { return }
+		
+		destination.title = "Positions"
+		destination.data = cache.getPositions()
 	}
 	
 }

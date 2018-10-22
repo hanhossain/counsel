@@ -63,9 +63,10 @@ class SearchResultsTableViewController: UITableViewController {
 
 		case segueToSearchController:
 			let navigationController = segue.destination as? UINavigationController
-			let searchController = navigationController?.topViewController as? SearchViewController
-			searchController?.delegate = self
-
+			if let searchController = navigationController?.topViewController as? SearchViewController {
+				searchController.delegate = self
+				searchController.cache = cache
+			}
 		default:
 			return
 		}
