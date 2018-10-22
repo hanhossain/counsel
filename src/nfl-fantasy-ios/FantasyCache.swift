@@ -36,9 +36,18 @@ class FantasyCache {
 		return statsCache[id]
 	}
 	
-	func getPlayers(query: String) -> [PlayerStatistics] {
-		let playerStats = statsCache.values.filter { $0.name.localizedCaseInsensitiveContains(query) }
-		return playerStats
+	func getPlayers(query: String?, positions: Set<String>) -> [PlayerStatistics] {
+		let playerStats = statsCache.values.filter { player -> Bool in
+			guard positions.contains(player.position) else { return false }
+			
+			// since this is the final filter,
+			// if there is no query everything remaining should return
+			guard let query = query else { return true }
+			
+			return player.name.localizedCaseInsensitiveContains(query)
+		}
+		
+		return playerStats.sorted { $0.name < $1.name }
 	}
 	
 	func getPlayers() -> [PlayerStatistics] {

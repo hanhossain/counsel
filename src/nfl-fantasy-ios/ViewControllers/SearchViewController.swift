@@ -10,6 +10,9 @@ import UIKit
 
 class SearchViewController: UITableViewController {
 	
+	private var selectedPositions: Set<String>!
+	private var allPositions: [String]!
+	
 	var cache: FantasyCache!
 	var delegate: SearchDelegate!
 	var existingQuery: String?
@@ -17,7 +20,12 @@ class SearchViewController: UITableViewController {
 	@IBOutlet weak var searchField: UITextField!
 
 	@IBAction func search() {
-		delegate.search(query: searchField.text)
+		var query = searchField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+		if query?.isEmpty == true {
+			query = nil
+		}
+		
+		delegate.search(query: query, positions: selectedPositions)
 	}
 
 	@IBAction func cancel() {
@@ -28,21 +36,32 @@ class SearchViewController: UITableViewController {
 		super.viewDidLoad()
 		
 		searchField.text = existingQuery
+		allPositions = cache.getPositions()
+		selectedPositions = Set(allPositions)
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		guard let destination = segue.destination as? MultiSelectTableViewController else { return }
 		
 		destination.title = "Positions"
-		destination.data = cache.getPositions()
+		destination.elements = allPositions
+		destination.delegate = self
 	}
 	
 }
 
 extension SearchViewController : UITextFieldDelegate {
+	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
 		textField.resignFirstResponder()
 		return true
+	}
+}
+
+extension SearchViewController : MultiSelectDelegate {
+	
+	func didSelect(_ elements: Set<String>) {
+		selectedPositions = elements
 	}
 }

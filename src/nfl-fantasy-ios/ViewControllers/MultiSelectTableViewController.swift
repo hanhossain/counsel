@@ -10,29 +10,58 @@ import UIKit
 
 class MultiSelectTableViewController: UITableViewController {
 
-	var data: [String]!
+	private var selectedElementsMap = [String : Bool]()
 	
-    // MARK: - Table view data source
+	var elements: [String]!
+	var delegate: MultiSelectDelegate!
+	
+	// MARK: - UIViewController
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		for element in elements {
+			selectedElementsMap[element] = true
+		}
+	}
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		
+		let selectedElements = Set(selectedElementsMap
+			.filter { $0.value }
+			.map { $0.key })
+		
+		delegate.didSelect(selectedElements)
+	}
+	
+    // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return elements.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "multiSelectCell", for: indexPath)
 		
-		cell.textLabel?.text = data[indexPath.row]
-//		cell.accessoryType = .checkmark
+		let element = elements[indexPath.row]
+		cell.textLabel?.text = element
+		cell.accessoryType = selectedElementsMap[element] == true ? .checkmark : .none
 
         return cell
     }
 	
-	// MARK: - Table view delegate
+	// MARK: - UITableViewDelegate
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let cell = tableView.cellForRow(at: indexPath) else { return }
 
-//		cell.accessoryType = cell.accessoryType == .none ? .checkmark : .none
+		let element = elements[indexPath.row]
+		var isSelected = selectedElementsMap[element] ?? false
+		isSelected = !isSelected
+		selectedElementsMap[element] = isSelected
+		
+		cell.accessoryType = isSelected ? .checkmark : .none
 		cell.setSelected(false, animated: false)
 	}
 

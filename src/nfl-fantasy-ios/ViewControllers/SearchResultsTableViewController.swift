@@ -87,15 +87,13 @@ class SearchResultsTableViewController: UITableViewController {
 
 extension SearchResultsTableViewController: SearchDelegate {
 	
-	func search(query: String?) {
+	func search(query: String?, positions: Set<String>) {
 		
-		if let query = query, !query.isEmpty {
-			searchResults = cache.getPlayers(query: query)
-			
-			self.query = query
-			tableView.reloadData()
-			clearButton.isEnabled = true
-		}
+		searchResults = cache.getPlayers(query: query, positions: positions)
+		
+		self.query = query
+		tableView.reloadData()
+		clearButton.isEnabled = true
 		
 		dismiss(animated: true)
 	}
