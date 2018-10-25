@@ -34,21 +34,24 @@ class SearchResultsTableViewController: UITableViewController {
 	@IBOutlet weak var clearButton: UIBarButtonItem!
 	
 	@IBAction func clearFilter(_ sender: UIBarButtonItem) {
-		clearButton.isEnabled = false
-		searchResults = cache.getPlayers()
-		query = nil
+		clear()
 		
 		tableView.reloadData()
 	}
 	
-	override func viewDidLoad() {
-        super.viewDidLoad()
-		
+	func clear() {
 		clearButton.isEnabled = false
 		
 		searchResults = cache.getPlayers()
 		filteredPositions = Set(cache.getPositions())
 		filteredTeams = Set(cache.getTeams())
+		query = nil
+	}
+	
+	override func viewDidLoad() {
+        super.viewDidLoad()
+		
+		clear()
     }
 
     // MARK: - Table view data source
