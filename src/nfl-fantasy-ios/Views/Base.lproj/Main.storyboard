@@ -187,6 +187,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="RIF-pN-25h" kind="show" identifier="teamsSegue" id="Y9U-ZN-LCZ"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -305,4 +308,7 @@
             <point key="canvasLocation" x="2884" y="856"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Y9U-ZN-LCZ"/>
+    </inferredMetricsTieBreakers>
 </document>

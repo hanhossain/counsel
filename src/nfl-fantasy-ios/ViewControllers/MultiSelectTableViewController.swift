@@ -13,8 +13,8 @@ class MultiSelectTableViewController: UITableViewController {
 	private var selectedElementsMap = [String : Bool]()
 	
 	var elements: [String]!
-	var delegate: MultiSelectDelegate!
 	
+	var didSelect: ((Set<String>) -> ())!
 	
 	@IBAction func selectNone() {
 		for element in elements {
@@ -57,7 +57,7 @@ class MultiSelectTableViewController: UITableViewController {
 			.filter { $0.value }
 			.map { $0.key })
 		
-		delegate.didSelect(selectedElements)
+		didSelect(selectedElements)
 	}
 	
     // MARK: - UITableViewDataSource

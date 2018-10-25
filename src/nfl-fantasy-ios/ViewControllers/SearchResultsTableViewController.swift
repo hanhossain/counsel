@@ -87,9 +87,9 @@ class SearchResultsTableViewController: UITableViewController {
 
 extension SearchResultsTableViewController: SearchDelegate {
 	
-	func search(query: String?, positions: Set<String>) {
+	func search(query: String?, positions: Set<String>, teams: Set<String>) {
 		
-		searchResults = cache.getPlayers(query: query, positions: positions)
+		searchResults = cache.getPlayers(query: query, positions: positions, teams: teams)
 		
 		self.query = query
 		tableView.reloadData()
