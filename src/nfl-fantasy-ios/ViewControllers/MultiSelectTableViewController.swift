@@ -14,6 +14,7 @@ class MultiSelectTableViewController: UITableViewController {
 	var elements: [String]!
 	
 	var didSelect: ((Set<String>) -> ())!
+	var textForEmptyElement: String?
 	
 	@IBAction func selectNone() {
 		for element in elements {
@@ -66,6 +67,11 @@ class MultiSelectTableViewController: UITableViewController {
 		
 		let element = elements[indexPath.row]
 		cell.textLabel?.text = element
+		
+		if element.isEmpty, let textForEmptyElement = textForEmptyElement {
+			cell.textLabel?.text = textForEmptyElement
+		}
+		
 		cell.accessoryType = selectedElementsMap[element] == true ? .checkmark : .none
 
         return cell

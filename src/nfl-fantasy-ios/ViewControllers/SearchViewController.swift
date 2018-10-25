@@ -79,6 +79,7 @@ class SearchViewController: UITableViewController {
 			destination.selectedElementsMap = allTeams.reduce(into: [String : Bool]()) { (result, team) in
 				result[team] = existingTeams.contains(team)
 			}
+			destination.textForEmptyElement = "(no team)"
 			
 		default:
 			break
