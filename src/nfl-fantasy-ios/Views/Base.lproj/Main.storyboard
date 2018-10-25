@@ -249,6 +249,20 @@
                             <outlet property="delegate" destination="RIF-pN-25h" id="U9H-bt-CZu"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Select None" id="PPg-vR-wDn">
+                            <connections>
+                                <action selector="selectNone" destination="RIF-pN-25h" id="WAm-lY-l0a"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="UaT-mO-qvJ"/>
+                        <barButtonItem title="Select All" id="7NG-t6-RCY">
+                            <connections>
+                                <action selector="selectAll" destination="RIF-pN-25h" id="GDz-oz-DRZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vGP-qi-AY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

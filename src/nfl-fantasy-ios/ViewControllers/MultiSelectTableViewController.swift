@@ -15,14 +15,39 @@ class MultiSelectTableViewController: UITableViewController {
 	var elements: [String]!
 	var delegate: MultiSelectDelegate!
 	
+	
+	@IBAction func selectNone() {
+		for element in elements {
+			selectedElementsMap[element] = false
+		}
+		
+		tableView.reloadData()
+	}
+	
+	@IBAction func selectAll() {
+		for element in elements {
+			selectedElementsMap[element] = true
+		}
+		
+		tableView.reloadData()
+	}
+	
 	// MARK: - UIViewController
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		navigationController?.setToolbarHidden(false, animated: true)
+		
 		for element in elements {
 			selectedElementsMap[element] = true
 		}
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		navigationController?.setToolbarHidden(true, animated: true)
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
