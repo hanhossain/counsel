@@ -15,6 +15,10 @@ class SearchResultsTableViewController: UITableViewController {
 	private let segueToSearchController = "searchResultsToSearchSegue"
 	
 	private var searchResults = [PlayerStatistics]()
+	
+	private var filteredPositions: Set<String>!
+	private var filteredTeams: Set<String>!
+	
 	private var query: String? {
 		didSet {
 			if let query = query {
@@ -41,7 +45,10 @@ class SearchResultsTableViewController: UITableViewController {
         super.viewDidLoad()
 		
 		clearButton.isEnabled = false
+		
 		searchResults = cache.getPlayers()
+		filteredPositions = Set(cache.getPositions())
+		filteredTeams = Set(cache.getTeams())
     }
 
     // MARK: - Table view data source
@@ -77,6 +84,8 @@ class SearchResultsTableViewController: UITableViewController {
 				searchController.delegate = self
 				searchController.cache = cache
 				searchController.existingQuery = query
+				searchController.existingPositions = filteredPositions
+				searchController.existingTeams = filteredTeams
 			}
 		default:
 			return
@@ -92,6 +101,9 @@ extension SearchResultsTableViewController: SearchDelegate {
 		searchResults = cache.getPlayers(query: query, positions: positions, teams: teams)
 		
 		self.query = query
+		filteredPositions = positions
+		filteredTeams = teams
+		
 		tableView.reloadData()
 		clearButton.isEnabled = true
 		

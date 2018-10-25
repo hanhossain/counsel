@@ -10,6 +10,9 @@ import UIKit
 
 class SearchViewController: UITableViewController {
 	
+	private let positionsSegue = "positionsSegue"
+	private let teamsSegue = "teamsSegue"
+	
 	private var selectedPositions: Set<String>!
 	private var selectedTeams: Set<String>!
 	
@@ -18,6 +21,8 @@ class SearchViewController: UITableViewController {
 	
 	var cache: FantasyCache!
 	var delegate: SearchDelegate!
+	var existingPositions: Set<String>!
+	var existingTeams: Set<String>!
 	var existingQuery: String?
 	
 	@IBOutlet weak var searchField: UITextField!
@@ -51,23 +56,29 @@ class SearchViewController: UITableViewController {
 		allPositions = cache.getPositions()
 		allTeams = cache.getTeams()
 		
-		selectedPositions = Set(allPositions)
-		selectedTeams = Set(allTeams)
+		selectedPositions = existingPositions
+		selectedTeams = existingTeams
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		guard let destination = segue.destination as? MultiSelectTableViewController else { return }
 		
 		switch segue.identifier {
-		case "positionsSegue":
+		case positionsSegue:
 			destination.didSelect = onPositionSelect(_:)
 			destination.title = "Positions"
 			destination.elements = allPositions
+			destination.selectedElementsMap = allPositions.reduce(into: [String : Bool]()) { (result, position) in
+				result[position] = existingPositions.contains(position)
+			}
 			
-		case "teamsSegue":
+		case teamsSegue:
 			destination.didSelect = onTeamSelect(_:)
 			destination.title = "Teams"
 			destination.elements = allTeams
+			destination.selectedElementsMap = allTeams.reduce(into: [String : Bool]()) { (result, team) in
+				result[team] = existingTeams.contains(team)
+			}
 			
 		default:
 			break

@@ -9,9 +9,8 @@
 import UIKit
 
 class MultiSelectTableViewController: UITableViewController {
-
-	private var selectedElementsMap = [String : Bool]()
 	
+	var selectedElementsMap: [String : Bool]!
 	var elements: [String]!
 	
 	var didSelect: ((Set<String>) -> ())!
@@ -38,10 +37,6 @@ class MultiSelectTableViewController: UITableViewController {
 		super.viewDidLoad()
 		
 		navigationController?.setToolbarHidden(false, animated: true)
-		
-		for element in elements {
-			selectedElementsMap[element] = true
-		}
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
