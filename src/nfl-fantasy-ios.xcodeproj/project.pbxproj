@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		26E8CE42510C418000611129 /* Pods_nfl_fantasy_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 016BB82A0AF2BF0AA7A6F280 /* Pods_nfl_fantasy_ios.framework */; };
 		5901DB402171CE3E00E9AE91 /* PlayerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */; };
+		5913AA8C217BEEB000DF1FD5 /* ExtendedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5913AA8B217BEEB000DF1FD5 /* ExtendedTextField.swift */; };
 		593B025E216C6AEE00328633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B025D216C6AEE00328633 /* AppDelegate.swift */; };
 		593B0263216C6AEE00328633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 593B0261216C6AEE00328633 /* Main.storyboard */; };
 		593B0265216C6AEF00328633 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 593B0264216C6AEF00328633 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 		59500791216DD8F900CAC3E0 /* NFLWeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */; };
 		596E75F5216F1EAF00F8850B /* FantasyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E75F4216F1EAF00F8850B /* FantasyCache.swift */; };
 		597929D52170660200E08B99 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597929D42170660200E08B99 /* SearchViewController.swift */; };
+		59977B04217D527800174A60 /* MultiSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59977B03217D527800174A60 /* MultiSelectTableViewController.swift */; };
 		59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643C216F377B008B4744 /* PlayerStatistics.swift */; };
 		59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643E216F3794008B4744 /* WeekStatistics.swift */; };
 		59D33A162172F5DF009288C5 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */; };
@@ -28,6 +30,7 @@
 /* Begin PBXFileReference section */
 		016BB82A0AF2BF0AA7A6F280 /* Pods_nfl_fantasy_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nfl_fantasy_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailViewController.swift; sourceTree = "<group>"; };
+		5913AA8B217BEEB000DF1FD5 /* ExtendedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedTextField.swift; sourceTree = "<group>"; };
 		593B025A216C6AEE00328633 /* nfl-fantasy-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nfl-fantasy-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		593B025D216C6AEE00328633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		593B0262216C6AEE00328633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,6 +43,7 @@
 		59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLWeekStatistics.swift; sourceTree = "<group>"; };
 		596E75F4216F1EAF00F8850B /* FantasyCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyCache.swift; sourceTree = "<group>"; };
 		597929D42170660200E08B99 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		59977B03217D527800174A60 /* MultiSelectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectTableViewController.swift; sourceTree = "<group>"; };
 		59C7643C216F377B008B4744 /* PlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatistics.swift; sourceTree = "<group>"; };
 		59C7643E216F3794008B4744 /* WeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekStatistics.swift; sourceTree = "<group>"; };
 		59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 				597929D42170660200E08B99 /* SearchViewController.swift */,
 				59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */,
 				5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */,
+				59977B03217D527800174A60 /* MultiSelectTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -112,6 +117,7 @@
 			children = (
 				593B0261216C6AEE00328633 /* Main.storyboard */,
 				593B0266216C6AEF00328633 /* LaunchScreen.storyboard */,
+				5913AA8B217BEEB000DF1FD5 /* ExtendedTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,7 +277,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				597929D52170660200E08B99 /* SearchViewController.swift in Sources */,
+				5913AA8C217BEEB000DF1FD5 /* ExtendedTextField.swift in Sources */,
 				59D33A1821730A35009288C5 /* SearchDelegate.swift in Sources */,
+				59977B04217D527800174A60 /* MultiSelectTableViewController.swift in Sources */,
 				59D33A162172F5DF009288C5 /* SearchResultsTableViewController.swift in Sources */,
 				59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */,
 				59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */,

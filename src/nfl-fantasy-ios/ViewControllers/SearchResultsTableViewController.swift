@@ -13,25 +13,45 @@ class SearchResultsTableViewController: UITableViewController {
 	private let cellId = "searchResultsCell"
 	private let segueToDetailController = "searchResultsToDetailSegue"
 	private let segueToSearchController = "searchResultsToSearchSegue"
+	
 	private var searchResults = [PlayerStatistics]()
+	
+	private var filteredPositions: Set<String>!
+	private var filteredTeams: Set<String>!
+	
+	private var query: String? {
+		didSet {
+			if let query = query {
+				title = "Search: \"\(query)\""
+			} else {
+				title = nil
+			}
+		}
+	}
 
 	var cache: FantasyCache!
 	
 	@IBOutlet weak var clearButton: UIBarButtonItem!
 	
 	@IBAction func clearFilter(_ sender: UIBarButtonItem) {
-		clearButton.isEnabled = false
-		searchResults = cache.getPlayers()
-		title = nil
+		clear()
 		
 		tableView.reloadData()
+	}
+	
+	func clear() {
+		clearButton.isEnabled = false
+		
+		searchResults = cache.getPlayers()
+		filteredPositions = Set(cache.getPositions())
+		filteredTeams = Set(cache.getTeams())
+		query = nil
 	}
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
-		clearButton.isEnabled = false
-		searchResults = cache.getPlayers()
+		clear()
     }
 
     // MARK: - Table view data source
@@ -58,14 +78,18 @@ class SearchResultsTableViewController: UITableViewController {
 			guard let playerDetailController = segue.destination as? PlayerDetailViewController,
 				let indexPath = tableView.indexPathForSelectedRow
 				else { return }
-			
+
 			playerDetailController.playerStatistics = searchResults[indexPath.row]
-		
+
 		case segueToSearchController:
 			let navigationController = segue.destination as? UINavigationController
-			let searchController = navigationController?.topViewController as? SearchViewController
-			searchController?.delegate = self
-			
+			if let searchController = navigationController?.topViewController as? SearchViewController {
+				searchController.delegate = self
+				searchController.cache = cache
+				searchController.existingQuery = query
+				searchController.existingPositions = filteredPositions
+				searchController.existingTeams = filteredTeams
+			}
 		default:
 			return
 		}
@@ -75,15 +99,16 @@ class SearchResultsTableViewController: UITableViewController {
 
 extension SearchResultsTableViewController: SearchDelegate {
 	
-	func search(query: String?) {
+	func search(query: String?, positions: Set<String>, teams: Set<String>) {
 		
-		if let query = query, !query.isEmpty {
-			searchResults = cache.getPlayers(query: query)
-			
-			title = "Search: \"\(query)\""
-			tableView.reloadData()
-			clearButton.isEnabled = true
-		}
+		searchResults = cache.getPlayers(query: query, positions: positions, teams: teams)
+		
+		self.query = query
+		filteredPositions = positions
+		filteredTeams = teams
+		
+		tableView.reloadData()
+		clearButton.isEnabled = true
 		
 		dismiss(animated: true)
 	}

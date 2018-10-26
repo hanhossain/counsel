@@ -10,7 +10,7 @@ import Foundation
 
 protocol SearchDelegate {
 	
-	func search(query: String?)
+	func search(query: String?, positions: Set<String>, teams: Set<String>)
 
 	func cancel()
 }
