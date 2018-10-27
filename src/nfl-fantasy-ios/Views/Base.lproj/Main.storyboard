@@ -163,9 +163,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="RIF-pN-25h" kind="show" identifier="positionsSegue" id="DgK-vH-iTB"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -187,9 +184,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="RIF-pN-25h" kind="show" identifier="teamsSegue" id="Y9U-ZN-LCZ"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -218,58 +212,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q6U-tC-zvu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3770" y="856"/>
-        </scene>
-        <!--Multi Select Table View Controller-->
-        <scene sceneID="npg-oE-AcU">
-            <objects>
-                <tableViewController id="RIF-pN-25h" customClass="MultiSelectTableViewController" customModule="nfl_fantasy_ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="iFp-Lp-sJO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="multiSelectCell" textLabel="Zbw-MP-8x1" style="IBUITableViewCellStyleDefault" id="9Ao-NQ-M4h">
-                                <rect key="frame" x="0.0" y="55.333333333333343" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Ao-NQ-M4h" id="bjG-eg-gy3">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zbw-MP-8x1">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.666666666666664"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="RIF-pN-25h" id="GHg-71-Mas"/>
-                            <outlet property="delegate" destination="RIF-pN-25h" id="U9H-bt-CZu"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Select None" id="PPg-vR-wDn">
-                            <connections>
-                                <action selector="selectNone" destination="RIF-pN-25h" id="WAm-lY-l0a"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="UaT-mO-qvJ"/>
-                        <barButtonItem title="Select All" id="7NG-t6-RCY">
-                            <connections>
-                                <action selector="selectAll" destination="RIF-pN-25h" id="GDz-oz-DRZ"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vGP-qi-AY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4660" y="856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IRz-cS-S5U">
@@ -308,7 +250,4 @@
             <point key="canvasLocation" x="2884" y="856"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Y9U-ZN-LCZ"/>
-    </inferredMetricsTieBreakers>
 </document>

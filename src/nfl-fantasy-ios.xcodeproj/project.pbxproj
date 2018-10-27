@@ -20,11 +20,12 @@
 		59500791216DD8F900CAC3E0 /* NFLWeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */; };
 		596E75F5216F1EAF00F8850B /* FantasyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E75F4216F1EAF00F8850B /* FantasyCache.swift */; };
 		597929D52170660200E08B99 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597929D42170660200E08B99 /* SearchViewController.swift */; };
-		59977B04217D527800174A60 /* MultiSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59977B03217D527800174A60 /* MultiSelectTableViewController.swift */; };
 		59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643C216F377B008B4744 /* PlayerStatistics.swift */; };
 		59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7643E216F3794008B4744 /* WeekStatistics.swift */; };
 		59D33A162172F5DF009288C5 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */; };
 		59D33A1821730A35009288C5 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D33A1721730A35009288C5 /* SearchDelegate.swift */; };
+		59FE50AF21844C2400236200 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE50AE21844C2400236200 /* UIView+Extensions.swift */; };
+		59FE50B3218459A400236200 /* CheckBoxListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE50B2218459A400236200 /* CheckBoxListTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,11 +44,12 @@
 		59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLWeekStatistics.swift; sourceTree = "<group>"; };
 		596E75F4216F1EAF00F8850B /* FantasyCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyCache.swift; sourceTree = "<group>"; };
 		597929D42170660200E08B99 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		59977B03217D527800174A60 /* MultiSelectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectTableViewController.swift; sourceTree = "<group>"; };
 		59C7643C216F377B008B4744 /* PlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatistics.swift; sourceTree = "<group>"; };
 		59C7643E216F3794008B4744 /* WeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekStatistics.swift; sourceTree = "<group>"; };
 		59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		59D33A1721730A35009288C5 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
+		59FE50AE21844C2400236200 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		59FE50B2218459A400236200 /* CheckBoxListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxListTableViewController.swift; sourceTree = "<group>"; };
 		C11BA520CB8E70AB42027A91 /* Pods-nfl-fantasy-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nfl-fantasy-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nfl-fantasy-ios/Pods-nfl-fantasy-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		D73BB648BC7C8DA7816AC2C7 /* Pods-nfl-fantasy-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nfl-fantasy-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-nfl-fantasy-ios/Pods-nfl-fantasy-ios.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,7 +89,7 @@
 				597929D42170660200E08B99 /* SearchViewController.swift */,
 				59D33A152172F5DF009288C5 /* SearchResultsTableViewController.swift */,
 				5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */,
-				59977B03217D527800174A60 /* MultiSelectTableViewController.swift */,
+				59FE50B2218459A400236200 /* CheckBoxListTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -149,6 +151,7 @@
 				5934C7E92171D75C0047EDE9 /* ViewControllers */,
 				593B025D216C6AEE00328633 /* AppDelegate.swift */,
 				59D33A1721730A35009288C5 /* SearchDelegate.swift */,
+				59FE50AE21844C2400236200 /* UIView+Extensions.swift */,
 				596E75F4216F1EAF00F8850B /* FantasyCache.swift */,
 				593B0264216C6AEF00328633 /* Assets.xcassets */,
 				593B0269216C6AEF00328633 /* Info.plist */,
@@ -276,10 +279,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59FE50B3218459A400236200 /* CheckBoxListTableViewController.swift in Sources */,
 				597929D52170660200E08B99 /* SearchViewController.swift in Sources */,
 				5913AA8C217BEEB000DF1FD5 /* ExtendedTextField.swift in Sources */,
 				59D33A1821730A35009288C5 /* SearchDelegate.swift in Sources */,
-				59977B04217D527800174A60 /* MultiSelectTableViewController.swift in Sources */,
 				59D33A162172F5DF009288C5 /* SearchResultsTableViewController.swift in Sources */,
 				59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */,
 				59C7643D216F377B008B4744 /* PlayerStatistics.swift in Sources */,
@@ -288,6 +291,7 @@
 				596E75F5216F1EAF00F8850B /* FantasyCache.swift in Sources */,
 				5901DB402171CE3E00E9AE91 /* PlayerDetailViewController.swift in Sources */,
 				59500791216DD8F900CAC3E0 /* NFLWeekStatistics.swift in Sources */,
+				59FE50AF21844C2400236200 /* UIView+Extensions.swift in Sources */,
 				593B0270216C738F00328633 /* NFLService.swift in Sources */,
 				593B025E216C6AEE00328633 /* AppDelegate.swift in Sources */,
 			);

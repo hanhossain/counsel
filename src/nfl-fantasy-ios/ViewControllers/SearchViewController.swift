@@ -10,8 +10,8 @@ import UIKit
 
 class SearchViewController: UITableViewController {
 	
-	private let positionsSegue = "positionsSegue"
-	private let teamsSegue = "teamsSegue"
+	private let positionsSection = 1
+	private let teamsSection = 2
 	
 	private var selectedPositions: Set<String>!
 	private var selectedTeams: Set<String>!
@@ -40,13 +40,7 @@ class SearchViewController: UITableViewController {
 		delegate.cancel()
 	}
 	
-	func onPositionSelect(_ positions: Set<String>) {
-		selectedPositions = positions
-	}
-	
-	func onTeamSelect(_ teams: Set<String>) {
-		selectedTeams = teams
-	}
+	// MARK: - UIView
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -60,32 +54,37 @@ class SearchViewController: UITableViewController {
 		selectedTeams = existingTeams
 	}
 	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard let destination = segue.destination as? MultiSelectTableViewController else { return }
-		
-		switch segue.identifier {
-		case positionsSegue:
-			destination.didSelect = onPositionSelect(_:)
-			destination.title = "Positions"
-			destination.elements = allPositions
-			destination.selectedElementsMap = allPositions.reduce(into: [String : Bool]()) { (result, position) in
+	// MARK: - UITableViewDelegate
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		switch indexPath.section {
+		case positionsSection:
+			let selectedElements = allPositions.reduce(into: [String : Bool]()) { (result, position) in
 				result[position] = existingPositions.contains(position)
 			}
 			
-		case teamsSegue:
-			destination.didSelect = onTeamSelect(_:)
-			destination.title = "Teams"
-			destination.elements = allTeams
-			destination.selectedElementsMap = allTeams.reduce(into: [String : Bool]()) { (result, team) in
+			let checkBoxListTableViewController = CheckBoxListTableViewController(title: "Position", elements: allPositions, selectedElements: selectedElements) { positions in
+				self.selectedPositions = positions
+			}
+
+			navigationController?.pushViewController(checkBoxListTableViewController, animated: true)
+			
+		case teamsSection:
+			let selectedElements = allTeams.reduce(into: [String : Bool]()) { (result, team) in
 				result[team] = existingTeams.contains(team)
 			}
-			destination.textForEmptyElement = "(no team)"
+			
+			let checkBoxListTableViewController = CheckBoxListTableViewController(title: "Teams", elements: allTeams, selectedElements: selectedElements, textForEmptyElement: "(no team)") { teams in
+				self.selectedTeams = teams
+			}
+			
+			navigationController?.pushViewController(checkBoxListTableViewController, animated: true)
+			break;
 			
 		default:
-			break
+			break;
 		}
 	}
-	
 }
 
 extension SearchViewController : UITextFieldDelegate {
