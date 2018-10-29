@@ -20,16 +20,16 @@ extension UIView {
 		return self
 	}
 	
-//	@discardableResult
-//	func constrain(withPriorityConstant priority: Int, constraint: (UIView) -> (NSLayoutConstraint)) -> UIView {
-//		let layoutConstraint = constraint(self)
-//		let originalPriority = layoutConstraint.priority.rawValue
-//		let newPriority = originalPriority + Float(priority)
-//
-//		layoutConstraint.isActive = true
-//		translatesAutoresizingMaskIntoConstraints = false
-//
-//		return self
-//	}
+	@discardableResult
+	func constrain(withPriority priority: UILayoutPriority, constraint: (UIView) -> (NSLayoutConstraint)) -> UIView {
+		let layoutConstraint = constraint(self)
+		
+		layoutConstraint.priority = priority
+		layoutConstraint.isActive = true
+		
+		translatesAutoresizingMaskIntoConstraints = false
+
+		return self
+	}
 	
 }

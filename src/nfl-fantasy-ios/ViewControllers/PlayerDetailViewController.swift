@@ -47,8 +47,8 @@ class PlayerDetailViewController: UIViewController {
 			.constrain { $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16) }
 			.constrain { $0.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16) }
 			.constrain { $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16) }
-			.constrain { $0.heightAnchor.constraint(equalTo: $0.widthAnchor) }
 			.constrain { $0.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor) }
+			.constrain(withPriority: .defaultHigh) { $0.heightAnchor.constraint(equalTo: $0.widthAnchor) }
 		
 		displayChartData()
     }

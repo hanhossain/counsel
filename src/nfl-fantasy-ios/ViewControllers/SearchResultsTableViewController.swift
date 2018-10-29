@@ -11,8 +11,6 @@ import UIKit
 class SearchResultsTableViewController: UITableViewController {
 
 	private let cellId = "searchResultsCell"
-	private let segueToDetailController = "searchResultsToDetailSegue"
-	private let segueToSearchController = "searchResultsToSearchSegue"
 	
 	private var searchResults = [PlayerStatistics]()
 	
@@ -86,23 +84,6 @@ class SearchResultsTableViewController: UITableViewController {
 		let playerDetailController = PlayerDetailViewController(playerStatistics: playerStatistics)
 		navigationController?.pushViewController(playerDetailController, animated: true)
 	}
-
-    // MARK: - Navigation
-	
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//		switch segue.identifier {
-//		case segueToDetailController:
-//			guard let playerDetailController = segue.destination as? PlayerDetailViewController,
-//				let indexPath = tableView.indexPathForSelectedRow
-//				else { return }
-//
-//			playerDetailController.playerStatistics = searchResults[indexPath.row]
-//
-//		default:
-//			return
-//		}
-//    }
-	
 }
 
 extension SearchResultsTableViewController: SearchDelegate {
