@@ -39,6 +39,15 @@ class SearchResultsTableViewController: UITableViewController {
 		tableView.reloadData()
 	}
 	
+	@IBAction func search(_ sender: UIBarButtonItem) {
+		modalPresentationStyle = .formSheet
+		
+		let playerSearchController = PlayerSearchViewController(delegate: self, cache: cache, existingPositions: filteredPositions, existingTeams: filteredTeams, existingQuery: query)
+		let navigationController = UINavigationController(rootViewController: playerSearchController)
+		
+		present(navigationController, animated: true)
+	}
+	
 	func clear() {
 		clearButton.isEnabled = false
 		
@@ -81,15 +90,6 @@ class SearchResultsTableViewController: UITableViewController {
 
 			playerDetailController.playerStatistics = searchResults[indexPath.row]
 
-		case segueToSearchController:
-			let navigationController = segue.destination as? UINavigationController
-			if let searchController = navigationController?.topViewController as? SearchViewController {
-				searchController.delegate = self
-				searchController.cache = cache
-				searchController.existingQuery = query
-				searchController.existingPositions = filteredPositions
-				searchController.existingTeams = filteredTeams
-			}
 		default:
 			return
 		}
