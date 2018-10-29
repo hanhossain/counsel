@@ -63,7 +63,7 @@ class SearchResultsTableViewController: UITableViewController {
 		clear()
     }
 
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return searchResults.count
@@ -78,22 +78,30 @@ class SearchResultsTableViewController: UITableViewController {
 
 		return cell
 	}
+	
+	// MARK: - UITableViewDelegate
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let playerStatistics = searchResults[indexPath.row]
+		let playerDetailController = PlayerDetailViewController(playerStatistics: playerStatistics)
+		navigationController?.pushViewController(playerDetailController, animated: true)
+	}
 
     // MARK: - Navigation
 	
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case segueToDetailController:
-			guard let playerDetailController = segue.destination as? PlayerDetailViewController,
-				let indexPath = tableView.indexPathForSelectedRow
-				else { return }
-
-			playerDetailController.playerStatistics = searchResults[indexPath.row]
-
-		default:
-			return
-		}
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//		switch segue.identifier {
+//		case segueToDetailController:
+//			guard let playerDetailController = segue.destination as? PlayerDetailViewController,
+//				let indexPath = tableView.indexPathForSelectedRow
+//				else { return }
+//
+//			playerDetailController.playerStatistics = searchResults[indexPath.row]
+//
+//		default:
+//			return
+//		}
+//    }
 	
 }
 

@@ -9,16 +9,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Player Detail View Controller-->
+        <!--View Controller-->
         <scene sceneID="dxz-6f-LRN">
             <objects>
-                <viewController id="3K5-eL-zMx" customClass="PlayerDetailViewController" customModule="nfl_fantasy_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3K5-eL-zMx" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WPA-YQ-FC0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZo-dk-hU2" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="16" y="104" width="343" height="343"/>
+                                <rect key="frame" x="16" y="60" width="343" height="343"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="wZo-dk-hU2" secondAttribute="height" multiplier="1:1" priority="999" id="DnU-Jq-gv1"/>
@@ -74,9 +74,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="3K5-eL-zMx" kind="show" identifier="searchResultsToDetailSegue" id="bji-g5-ljH"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
