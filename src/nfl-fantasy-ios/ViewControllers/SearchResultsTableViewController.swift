@@ -11,14 +11,12 @@ import UIKit
 class SearchResultsTableViewController: UITableViewController {
 
 	private let cellId = "searchResultsCell"
-	private let segueToDetailController = "searchResultsToDetailSegue"
-	private let segueToSearchController = "searchResultsToSearchSegue"
-	
+
 	private var searchResults = [PlayerStatistics]()
-	
+
 	private var filteredPositions: Set<String>!
 	private var filteredTeams: Set<String>!
-	
+
 	private var query: String? {
 		didSet {
 			if let query = query {
@@ -28,34 +26,63 @@ class SearchResultsTableViewController: UITableViewController {
 			}
 		}
 	}
+	
+	lazy var clearButton: UIBarButtonItem = {
+		return UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearFilter))
+	}()
+	
+	lazy var searchButton: UIBarButtonItem = {
+		return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchFilter))
+	}()
 
-	var cache: FantasyCache!
+	private var cache: FantasyCache
 	
-	@IBOutlet weak var clearButton: UIBarButtonItem!
-	
-	@IBAction func clearFilter(_ sender: UIBarButtonItem) {
-		clear()
-		
-		tableView.reloadData()
+	init(_ cache: FantasyCache) {
+		self.cache = cache
+		super.init(style: .plain)
 	}
 	
-	func clear() {
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	@objc func clearFilter() {
+		clear()
+
+		tableView.reloadData()
+	}
+
+	@objc func searchFilter() {
+		modalPresentationStyle = .formSheet
+
+		let playerSearchController = PlayerSearchViewController(delegate: self, cache: cache, existingPositions: filteredPositions, existingTeams: filteredTeams, existingQuery: query)
+		let navigationController = UINavigationController(rootViewController: playerSearchController)
+
+		present(navigationController, animated: true)
+	}
+
+	private func clear() {
 		clearButton.isEnabled = false
-		
+
 		searchResults = cache.getPlayers()
 		filteredPositions = Set(cache.getPositions())
 		filteredTeams = Set(cache.getTeams())
 		query = nil
 	}
-	
+
 	override func viewDidLoad() {
         super.viewDidLoad()
+
+		navigationItem.leftBarButtonItem = clearButton
+		navigationItem.rightBarButtonItem = searchButton
+		
+		tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: cellId)
 		
 		clear()
     }
 
-    // MARK: - Table view data source
-	
+    // MARK: - UITableViewDataSource
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return searchResults.count
 	}
@@ -70,51 +97,33 @@ class SearchResultsTableViewController: UITableViewController {
 		return cell
 	}
 
-    // MARK: - Navigation
-	
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		switch segue.identifier {
-		case segueToDetailController:
-			guard let playerDetailController = segue.destination as? PlayerDetailViewController,
-				let indexPath = tableView.indexPathForSelectedRow
-				else { return }
+	// MARK: - UITableViewDelegate
 
-			playerDetailController.playerStatistics = searchResults[indexPath.row]
-
-		case segueToSearchController:
-			let navigationController = segue.destination as? UINavigationController
-			if let searchController = navigationController?.topViewController as? SearchViewController {
-				searchController.delegate = self
-				searchController.cache = cache
-				searchController.existingQuery = query
-				searchController.existingPositions = filteredPositions
-				searchController.existingTeams = filteredTeams
-			}
-		default:
-			return
-		}
-    }
-	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let playerStatistics = searchResults[indexPath.row]
+		let playerDetailController = PlayerDetailViewController(playerStatistics: playerStatistics)
+		navigationController?.pushViewController(playerDetailController, animated: true)
+	}
 }
 
 extension SearchResultsTableViewController: SearchDelegate {
-	
+
 	func search(query: String?, positions: Set<String>, teams: Set<String>) {
-		
+
 		searchResults = cache.getPlayers(query: query, positions: positions, teams: teams)
-		
+
 		self.query = query
 		filteredPositions = positions
 		filteredTeams = teams
-		
+
 		tableView.reloadData()
 		clearButton.isEnabled = true
-		
+
 		dismiss(animated: true)
 	}
-	
+
 	func cancel() {
 		dismiss(animated: true)
 	}
-	
+
 }
