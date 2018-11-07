@@ -11,11 +11,11 @@
 		5901DB402171CE3E00E9AE91 /* PlayerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5901DB3F2171CE3E00E9AE91 /* PlayerDetailViewController.swift */; };
 		5913AA8C217BEEB000DF1FD5 /* ExtendedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5913AA8B217BEEB000DF1FD5 /* ExtendedTextField.swift */; };
 		593B025E216C6AEE00328633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B025D216C6AEE00328633 /* AppDelegate.swift */; };
-		593B0263216C6AEE00328633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 593B0261216C6AEE00328633 /* Main.storyboard */; };
 		593B0265216C6AEF00328633 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 593B0264216C6AEF00328633 /* Assets.xcassets */; };
 		593B0268216C6AEF00328633 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 593B0266216C6AEF00328633 /* LaunchScreen.storyboard */; };
 		593B0270216C738F00328633 /* NFLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B026F216C738F00328633 /* NFLService.swift */; };
 		593B0272216C7F2700328633 /* NFLStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B0271216C7F2700328633 /* NFLStatistics.swift */; };
+		593E63482192B745003FC9BF /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593E63472192B745003FC9BF /* SubtitleTableViewCell.swift */; };
 		5950078F216DB93A00CAC3E0 /* NFLPlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */; };
 		59500791216DD8F900CAC3E0 /* NFLWeekStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */; };
 		596E75F5216F1EAF00F8850B /* FantasyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E75F4216F1EAF00F8850B /* FantasyCache.swift */; };
@@ -36,12 +36,12 @@
 		5913AA8B217BEEB000DF1FD5 /* ExtendedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedTextField.swift; sourceTree = "<group>"; };
 		593B025A216C6AEE00328633 /* nfl-fantasy-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nfl-fantasy-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		593B025D216C6AEE00328633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		593B0262216C6AEE00328633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		593B0264216C6AEF00328633 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		593B0267216C6AEF00328633 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		593B0269216C6AEF00328633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		593B026F216C738F00328633 /* NFLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLService.swift; sourceTree = "<group>"; };
 		593B0271216C7F2700328633 /* NFLStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLStatistics.swift; sourceTree = "<group>"; };
+		593E63472192B745003FC9BF /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		5950078E216DB93A00CAC3E0 /* NFLPlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLPlayerStatistics.swift; sourceTree = "<group>"; };
 		59500790216DD8F900CAC3E0 /* NFLWeekStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFLWeekStatistics.swift; sourceTree = "<group>"; };
 		596E75F4216F1EAF00F8850B /* FantasyCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyCache.swift; sourceTree = "<group>"; };
@@ -121,11 +121,11 @@
 		5934C7EC2171D8480047EDE9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				593B0261216C6AEE00328633 /* Main.storyboard */,
 				593B0266216C6AEF00328633 /* LaunchScreen.storyboard */,
 				59FE50B82186836B00236200 /* DropdownTableViewCell.swift */,
 				5913AA8B217BEEB000DF1FD5 /* ExtendedTextField.swift */,
 				59FE50B42184680E00236200 /* SearchFieldTableViewCell.swift */,
+				593E63472192B745003FC9BF /* SubtitleTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,7 +227,6 @@
 			files = (
 				593B0268216C6AEF00328633 /* LaunchScreen.storyboard in Resources */,
 				593B0265216C6AEF00328633 /* Assets.xcassets in Resources */,
-				593B0263216C6AEE00328633 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +287,7 @@
 				59FE50B3218459A400236200 /* CheckBoxListTableViewController.swift in Sources */,
 				5913AA8C217BEEB000DF1FD5 /* ExtendedTextField.swift in Sources */,
 				59D33A1821730A35009288C5 /* SearchDelegate.swift in Sources */,
+				593E63482192B745003FC9BF /* SubtitleTableViewCell.swift in Sources */,
 				59D33A162172F5DF009288C5 /* SearchResultsTableViewController.swift in Sources */,
 				59FE50B72186498E00236200 /* PlayerSearchViewController.swift in Sources */,
 				59C7643F216F3794008B4744 /* WeekStatistics.swift in Sources */,
@@ -308,14 +308,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		593B0261216C6AEE00328633 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				593B0262216C6AEE00328633 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		593B0266216C6AEF00328633 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

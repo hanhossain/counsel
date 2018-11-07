@@ -16,20 +16,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
 		
-		let navigationController = self.window?.rootViewController as? UINavigationController
-		let searchResultsViewController = navigationController?.topViewController as? SearchResultsTableViewController
+		window = UIWindow(frame: UIScreen.main.bounds)
 		
 		let group = DispatchGroup()
 		group.enter()
-		
+
 		let cache = FantasyCache()
 		cache.loadCache {
-			searchResultsViewController?.cache = cache
-			
 			group.leave()
 		}
-		
+
 		group.wait()
+		
+		let searchResultsViewController = SearchResultsTableViewController(cache)
+		let navigationController = UINavigationController(rootViewController: searchResultsViewController)
+		window?.rootViewController = navigationController
+		
+		window?.makeKeyAndVisible()
 		
 		return true
 	}
