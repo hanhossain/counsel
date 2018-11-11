@@ -14,8 +14,8 @@ class SearchResultsTableViewController: UITableViewController {
 
 	private var searchResults = [PlayerStatistics]()
 
-	private var filteredPositions: Set<String>!
-	private var filteredTeams: Set<String>!
+	private var filteredPositions = Set<String>()
+	private var filteredTeams = Set<String>()
 
 	private var query: String? {
 		didSet {
