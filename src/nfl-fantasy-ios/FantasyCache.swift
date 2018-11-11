@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FantasyCache {
+class FantasyCache: FantasyDataSource {
 	
 	private var statsCache = [Int : PlayerStatistics]() // { id, playerStats }
 	

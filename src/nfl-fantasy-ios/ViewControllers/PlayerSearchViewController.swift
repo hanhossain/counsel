@@ -22,7 +22,7 @@ class PlayerSearchViewController: UITableViewController {
 	private var allTeams: [String]
 	
 	var delegate: SearchDelegate
-	var cache: FantasyCache
+	var cache: FantasyDataSource
 	var existingPositions: Set<String>
 	var existingTeams: Set<String>
 	var existingQuery: String?
@@ -37,7 +37,7 @@ class PlayerSearchViewController: UITableViewController {
 	
 	// MARK: - Initializers
 	
-	init(delegate: SearchDelegate, cache: FantasyCache, existingPositions: Set<String>, existingTeams: Set<String>, existingQuery: String?) {
+	init(delegate: SearchDelegate, cache: FantasyDataSource, existingPositions: Set<String>, existingTeams: Set<String>, existingQuery: String?) {
 		self.delegate = delegate
 		self.cache = cache
 		self.existingPositions = existingPositions
