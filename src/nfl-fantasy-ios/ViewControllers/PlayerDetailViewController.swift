@@ -17,6 +17,7 @@ class PlayerDetailViewController: UIViewController {
 		let lineChartView = LineChartView(frame: .zero)
 		
 		lineChartView.xAxis.axisMinimum = 1
+		lineChartView.xAxis.granularity = 1.0
 		lineChartView.leftAxis.axisMinimum = 0
 		lineChartView.xAxis.labelPosition = .bottom
 		lineChartView.rightAxis.enabled = false

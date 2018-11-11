@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let group = DispatchGroup()
 		group.enter()
 
+//		let cache: FantasyDataSource = MockFantasyCache()
 		let cache: FantasyDataSource = FantasyCache()
 		cache.loadCache {
 			group.leave()
