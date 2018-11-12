@@ -14,8 +14,10 @@ class SearchResultsTableViewController: UITableViewController {
 
 	private var searchResults = [PlayerStatistics]()
 
-	private var filteredPositions: Set<String>!
-	private var filteredTeams: Set<String>!
+	private var filteredPositions = Set<String>()
+	private var filteredTeams = Set<String>()
+	
+	private var cache: FantasyDataSource
 
 	private var query: String? {
 		didSet {
@@ -34,10 +36,8 @@ class SearchResultsTableViewController: UITableViewController {
 	lazy var searchButton: UIBarButtonItem = {
 		return UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchFilter))
 	}()
-
-	private var cache: FantasyCache
 	
-	init(_ cache: FantasyCache) {
+	init(_ cache: FantasyDataSource) {
 		self.cache = cache
 		super.init(style: .plain)
 	}
