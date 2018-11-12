@@ -13,13 +13,18 @@ class PlayerDetailViewController: UIViewController {
 
 	var playerStatistics: PlayerStatistics
 	
-	var chartView: LineChartView = {
+	lazy var chartView: LineChartView = {
 		let lineChartView = LineChartView(frame: .zero)
 		
 		lineChartView.xAxis.axisMinimum = 1
 		lineChartView.xAxis.granularity = 1.0
-		lineChartView.leftAxis.axisMinimum = 0
+		lineChartView.xAxis.drawGridLinesEnabled = false
 		lineChartView.xAxis.labelPosition = .bottom
+		
+		let min = playerStatistics.weeks.values.map { $0.points }.min { $0 < $1 } ?? 0
+		lineChartView.leftAxis.axisMinimum = min > 0 ? 0 : min
+		lineChartView.leftAxis.drawGridLinesEnabled = false
+		
 		lineChartView.rightAxis.enabled = false
 		
 		return lineChartView
