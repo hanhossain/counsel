@@ -14,10 +14,15 @@ class FantasyService {
 	
 	private var _players = [String : FantasyPlayer]()
 	
+	var delegate: FantasyServiceDelegate?
+	
 	func loadCache() {
 		let client = FantasyClient()
+		let dispatchGroup = DispatchGroup()
 		
 		for week in 1..._numberOfWeeks {
+			dispatchGroup.enter()
+			
 			client.getAdvancedResults(season: _season, week: week) { (result: Result<AdvancedResults, Error>) in
 				switch result {
 				case .success(let results):
@@ -25,8 +30,25 @@ class FantasyService {
 				case .failure(let error):
 					print(error.localizedDescription)
 				}
+				
+				dispatchGroup.leave()
 			}
 		}
+
+		if let delegate = delegate {
+			dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+				delegate.cacheDidLoad()
+			}
+		}
+	}
+	
+	func player(id: String) -> FantasyPlayer? {
+		return _players[id]
+	}
+	
+	func playersIds() -> [String] {
+		let orderedPlayers = _players.values.sorted { $0.name < $1.name }.map { $0.id }
+		return orderedPlayers
 	}
 	
 	private func storeInCache(_ results: AdvancedResults) {

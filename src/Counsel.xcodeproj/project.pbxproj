@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		59072E8922ACB374006C8B8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59072E8822ACB374006C8B8B /* AppDelegate.swift */; };
-		59072E8B22ACB374006C8B8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59072E8A22ACB374006C8B8B /* ViewController.swift */; };
 		59072E8E22ACB374006C8B8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59072E8C22ACB374006C8B8B /* Main.storyboard */; };
 		59072E9122ACB374006C8B8B /* Counsel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 59072E8F22ACB374006C8B8B /* Counsel.xcdatamodeld */; };
 		59072E9322ACB376006C8B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59072E9222ACB376006C8B8B /* Assets.xcassets */; };
@@ -22,12 +21,13 @@
 		5931945022ADB6B0008138CB /* AdvancedPlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931944F22ADB6B0008138CB /* AdvancedPlayerStatistics.swift */; };
 		5931945322ADC7FF008138CB /* FantasyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945222ADC7FF008138CB /* FantasyService.swift */; };
 		5931945522B0B78B008138CB /* FantasyPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945422B0B78B008138CB /* FantasyPlayer.swift */; };
+		5931945922B0BE11008138CB /* FantasyServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945822B0BE11008138CB /* FantasyServiceDelegate.swift */; };
+		5931945C22B0C368008138CB /* PlayerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945B22B0C368008138CB /* PlayerListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		59072E8522ACB374006C8B8B /* Counsel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counsel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59072E8822ACB374006C8B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		59072E8A22ACB374006C8B8B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		59072E8D22ACB374006C8B8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		59072E9022ACB374006C8B8B /* Counsel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Counsel.xcdatamodel; sourceTree = "<group>"; };
 		59072E9222ACB376006C8B8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -42,6 +42,8 @@
 		5931944F22ADB6B0008138CB /* AdvancedPlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedPlayerStatistics.swift; sourceTree = "<group>"; };
 		5931945222ADC7FF008138CB /* FantasyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyService.swift; sourceTree = "<group>"; };
 		5931945422B0B78B008138CB /* FantasyPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyPlayer.swift; sourceTree = "<group>"; };
+		5931945822B0BE11008138CB /* FantasyServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyServiceDelegate.swift; sourceTree = "<group>"; };
+		5931945B22B0C368008138CB /* PlayerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,10 +76,10 @@
 		59072E8722ACB374006C8B8B /* Counsel */ = {
 			isa = PBXGroup;
 			children = (
+				5931945A22B0C347008138CB /* ViewControllers */,
 				5931945122ADC7F0008138CB /* FantasyService */,
 				59072E9D22ACB538006C8B8B /* FantasyClient */,
 				59072E8822ACB374006C8B8B /* AppDelegate.swift */,
-				59072E8A22ACB374006C8B8B /* ViewController.swift */,
 				59072E8C22ACB374006C8B8B /* Main.storyboard */,
 				59072E9222ACB376006C8B8B /* Assets.xcassets */,
 				59072E9422ACB376006C8B8B /* LaunchScreen.storyboard */,
@@ -106,8 +108,17 @@
 			children = (
 				5931945222ADC7FF008138CB /* FantasyService.swift */,
 				5931945422B0B78B008138CB /* FantasyPlayer.swift */,
+				5931945822B0BE11008138CB /* FantasyServiceDelegate.swift */,
 			);
 			path = FantasyService;
+			sourceTree = "<group>";
+		};
+		5931945A22B0C347008138CB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5931945B22B0C368008138CB /* PlayerListViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,13 +192,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59072E8B22ACB374006C8B8B /* ViewController.swift in Sources */,
 				5931945522B0B78B008138CB /* FantasyPlayer.swift in Sources */,
 				59072EA122ACB57C006C8B8B /* AdvancedResults.swift in Sources */,
+				5931945922B0BE11008138CB /* FantasyServiceDelegate.swift in Sources */,
 				59072EAB22ACCDE1006C8B8B /* FantasyClientError.swift in Sources */,
 				59072E9122ACB374006C8B8B /* Counsel.xcdatamodeld in Sources */,
 				59072EA322ACB631006C8B8B /* AdvancedPlayerResult.swift in Sources */,
 				59072E8922ACB374006C8B8B /* AppDelegate.swift in Sources */,
+				5931945C22B0C368008138CB /* PlayerListViewController.swift in Sources */,
 				59072E9F22ACB54A006C8B8B /* FantasyClient.swift in Sources */,
 				59072EA922ACB991006C8B8B /* DeserializationError.swift in Sources */,
 				5931945322ADC7FF008138CB /* FantasyService.swift in Sources */,
