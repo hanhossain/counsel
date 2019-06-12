@@ -10,23 +10,31 @@ import Foundation
 
 struct AdvancedResults {
 	let quarterbacks: [AdvancedPlayerResult]?
-//	let runningBacks: [AdvancedPlayerResult]?
-//	let wideReceivers: [AdvancedPlayerResult]?
-//	let tightEnds: [AdvancedPlayerResult]?
-//	let kickers: [AdvancedPlayerResult]?
-//	let defenses: [AdvancedPlayerResult]?
-	
+	let runningBacks: [AdvancedPlayerResult]?
+	let wideReceivers: [AdvancedPlayerResult]?
+	let tightEnds: [AdvancedPlayerResult]?
+	let kickers: [AdvancedPlayerResult]?
+	let defenses: [AdvancedPlayerResult]?
+}
+
+extension AdvancedResults {
 	init(json: [String : Any]) throws {
-		if let quarterbacksJson = json["QB"] as? [[String : Any]] {
-			var quarterbacks = [AdvancedPlayerResult]()
-			
-			for quarterbackJson in quarterbacksJson {
-				let quarterback = try AdvancedPlayerResult(json: quarterbackJson)
-				quarterbacks.append(quarterback)
-			}
-			self.quarterbacks = quarterbacks
-		} else {
-			quarterbacks = nil
-		}
+		let quarterbacksJson = json["QB"] as? [[String : Any]]
+		quarterbacks = try quarterbacksJson?.map { try AdvancedPlayerResult(json: $0) }
+
+		let runningBacksJson = json["RB"] as? [[String : Any]]
+		runningBacks = try runningBacksJson?.map { try AdvancedPlayerResult(json: $0) }
+
+		let wideReceiversJson = json["WR"] as? [[String : Any]]
+		wideReceivers = try wideReceiversJson?.map { try AdvancedPlayerResult(json: $0) }
+
+		let tightEndsJson = json["TE"] as? [[String : Any]]
+		tightEnds = try tightEndsJson?.map { try AdvancedPlayerResult(json: $0) }
+
+		let kickersJson = json["K"] as? [[String : Any]]
+		kickers = try kickersJson?.map { try AdvancedPlayerResult(json: $0) }
+
+		let defensesJson = json["DEF"] as? [[String : Any]]
+		defenses = try defensesJson?.map { try AdvancedPlayerResult(json: $0) }
 	}
 }

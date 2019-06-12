@@ -18,6 +18,10 @@
 		59072EA322ACB631006C8B8B /* AdvancedPlayerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59072EA222ACB631006C8B8B /* AdvancedPlayerResult.swift */; };
 		59072EA922ACB991006C8B8B /* DeserializationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59072EA822ACB991006C8B8B /* DeserializationError.swift */; };
 		59072EAB22ACCDE1006C8B8B /* FantasyClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59072EAA22ACCDE1006C8B8B /* FantasyClientError.swift */; };
+		5931944E22ADAFDB008138CB /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931944D22ADAFDB008138CB /* Position.swift */; };
+		5931945022ADB6B0008138CB /* AdvancedPlayerStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931944F22ADB6B0008138CB /* AdvancedPlayerStatistics.swift */; };
+		5931945322ADC7FF008138CB /* FantasyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945222ADC7FF008138CB /* FantasyService.swift */; };
+		5931945522B0B78B008138CB /* FantasyPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945422B0B78B008138CB /* FantasyPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		59072EA222ACB631006C8B8B /* AdvancedPlayerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedPlayerResult.swift; sourceTree = "<group>"; };
 		59072EA822ACB991006C8B8B /* DeserializationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeserializationError.swift; sourceTree = "<group>"; };
 		59072EAA22ACCDE1006C8B8B /* FantasyClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyClientError.swift; sourceTree = "<group>"; };
+		5931944D22ADAFDB008138CB /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		5931944F22ADB6B0008138CB /* AdvancedPlayerStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedPlayerStatistics.swift; sourceTree = "<group>"; };
+		5931945222ADC7FF008138CB /* FantasyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyService.swift; sourceTree = "<group>"; };
+		5931945422B0B78B008138CB /* FantasyPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +74,7 @@
 		59072E8722ACB374006C8B8B /* Counsel */ = {
 			isa = PBXGroup;
 			children = (
+				5931945122ADC7F0008138CB /* FantasyService */,
 				59072E9D22ACB538006C8B8B /* FantasyClient */,
 				59072E8822ACB374006C8B8B /* AppDelegate.swift */,
 				59072E8A22ACB374006C8B8B /* ViewController.swift */,
@@ -85,9 +94,20 @@
 				59072EAA22ACCDE1006C8B8B /* FantasyClientError.swift */,
 				59072EA022ACB57C006C8B8B /* AdvancedResults.swift */,
 				59072EA222ACB631006C8B8B /* AdvancedPlayerResult.swift */,
+				5931944F22ADB6B0008138CB /* AdvancedPlayerStatistics.swift */,
+				5931944D22ADAFDB008138CB /* Position.swift */,
 				59072EA822ACB991006C8B8B /* DeserializationError.swift */,
 			);
 			path = FantasyClient;
+			sourceTree = "<group>";
+		};
+		5931945122ADC7F0008138CB /* FantasyService */ = {
+			isa = PBXGroup;
+			children = (
+				5931945222ADC7FF008138CB /* FantasyService.swift */,
+				5931945422B0B78B008138CB /* FantasyPlayer.swift */,
+			);
+			path = FantasyService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59072E8B22ACB374006C8B8B /* ViewController.swift in Sources */,
+				5931945522B0B78B008138CB /* FantasyPlayer.swift in Sources */,
 				59072EA122ACB57C006C8B8B /* AdvancedResults.swift in Sources */,
 				59072EAB22ACCDE1006C8B8B /* FantasyClientError.swift in Sources */,
 				59072E9122ACB374006C8B8B /* Counsel.xcdatamodeld in Sources */,
@@ -169,6 +190,9 @@
 				59072E8922ACB374006C8B8B /* AppDelegate.swift in Sources */,
 				59072E9F22ACB54A006C8B8B /* FantasyClient.swift in Sources */,
 				59072EA922ACB991006C8B8B /* DeserializationError.swift in Sources */,
+				5931945322ADC7FF008138CB /* FantasyService.swift in Sources */,
+				5931944E22ADAFDB008138CB /* Position.swift in Sources */,
+				5931945022ADB6B0008138CB /* AdvancedPlayerStatistics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
