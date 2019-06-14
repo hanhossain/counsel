@@ -26,8 +26,12 @@ class PlayerListViewController: UITableViewController, FantasyServiceDelegate {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: _cellId, for: indexPath)
 		
-		let player = _fantasyService.player(id: _players[indexPath.row])
-		cell.textLabel?.text = player?.name
+		if let player = _fantasyService.player(id: _players[indexPath.row]) {
+			cell.textLabel?.text = player.name
+			let position = player.position.rawValue
+			let team = player.team ?? .empty
+			cell.detailTextLabel?.text = "\(position) - \(team)"
+		}
 		
 		return cell
 	}
