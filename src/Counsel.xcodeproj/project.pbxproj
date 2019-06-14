@@ -80,6 +80,7 @@
 		59072E8722ACB374006C8B8B /* Counsel */ = {
 			isa = PBXGroup;
 			children = (
+				59441DBC22B3666400A3C3C1 /* Views */,
 				5931945A22B0C347008138CB /* ViewControllers */,
 				5931945122ADC7F0008138CB /* FantasyService */,
 				59072E9D22ACB538006C8B8B /* FantasyClient */,
@@ -125,6 +126,13 @@
 				59441DBA22B350C200A3C3C1 /* PlayerDetailViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		59441DBC22B3666400A3C3C1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
