@@ -24,6 +24,7 @@
 		5931945922B0BE11008138CB /* FantasyServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945822B0BE11008138CB /* FantasyServiceDelegate.swift */; };
 		5931945C22B0C368008138CB /* PlayerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945B22B0C368008138CB /* PlayerListViewController.swift */; };
 		59441DB922B34D2600A3C3C1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59441DB822B34D2600A3C3C1 /* String+Extensions.swift */; };
+		59441DBB22B350C200A3C3C1 /* PlayerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59441DBA22B350C200A3C3C1 /* PlayerDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		5931945822B0BE11008138CB /* FantasyServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyServiceDelegate.swift; sourceTree = "<group>"; };
 		5931945B22B0C368008138CB /* PlayerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListViewController.swift; sourceTree = "<group>"; };
 		59441DB822B34D2600A3C3C1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		59441DBA22B350C200A3C3C1 /* PlayerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				5931945B22B0C368008138CB /* PlayerListViewController.swift */,
+				59441DBA22B350C200A3C3C1 /* PlayerDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				59072EA322ACB631006C8B8B /* AdvancedPlayerResult.swift in Sources */,
 				59072E8922ACB374006C8B8B /* AppDelegate.swift in Sources */,
 				5931945C22B0C368008138CB /* PlayerListViewController.swift in Sources */,
+				59441DBB22B350C200A3C3C1 /* PlayerDetailViewController.swift in Sources */,
 				59441DB922B34D2600A3C3C1 /* String+Extensions.swift in Sources */,
 				59072E9F22ACB54A006C8B8B /* FantasyClient.swift in Sources */,
 				59072EA922ACB991006C8B8B /* DeserializationError.swift in Sources */,
