@@ -25,6 +25,7 @@
 		5931945C22B0C368008138CB /* PlayerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5931945B22B0C368008138CB /* PlayerListViewController.swift */; };
 		59441DB922B34D2600A3C3C1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59441DB822B34D2600A3C3C1 /* String+Extensions.swift */; };
 		59441DBB22B350C200A3C3C1 /* PlayerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59441DBA22B350C200A3C3C1 /* PlayerDetailViewController.swift */; };
+		59FA31A822B5710500EF4AED /* FantasyAdvancedStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FA31A722B5710500EF4AED /* FantasyAdvancedStatistics.swift */; };
 		6B2F5C1641FB0FFE4D830CA8 /* Pods_Counsel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8722300E144D4912F61D66EC /* Pods_Counsel.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		5931945B22B0C368008138CB /* PlayerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListViewController.swift; sourceTree = "<group>"; };
 		59441DB822B34D2600A3C3C1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		59441DBA22B350C200A3C3C1 /* PlayerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailViewController.swift; sourceTree = "<group>"; };
+		59FA31A722B5710500EF4AED /* FantasyAdvancedStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyAdvancedStatistics.swift; sourceTree = "<group>"; };
 		765E2F9F34C304A4362FD889 /* Pods-Counsel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Counsel.release.xcconfig"; path = "Pods/Target Support Files/Pods-Counsel/Pods-Counsel.release.xcconfig"; sourceTree = "<group>"; };
 		8722300E144D4912F61D66EC /* Pods_Counsel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Counsel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C72D49C8E37789E4C2627208 /* Pods-Counsel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Counsel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Counsel/Pods-Counsel.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				5931945222ADC7FF008138CB /* FantasyService.swift */,
 				5931945422B0B78B008138CB /* FantasyPlayer.swift */,
 				5931945822B0BE11008138CB /* FantasyServiceDelegate.swift */,
+				59FA31A722B5710500EF4AED /* FantasyAdvancedStatistics.swift */,
 			);
 			path = FantasyService;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5931945522B0B78B008138CB /* FantasyPlayer.swift in Sources */,
+				59FA31A822B5710500EF4AED /* FantasyAdvancedStatistics.swift in Sources */,
 				59072EA122ACB57C006C8B8B /* AdvancedResults.swift in Sources */,
 				5931945922B0BE11008138CB /* FantasyServiceDelegate.swift in Sources */,
 				59072EAB22ACCDE1006C8B8B /* FantasyClientError.swift in Sources */,
