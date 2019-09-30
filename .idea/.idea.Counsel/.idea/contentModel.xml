@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="Counsel.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="src" t="Include">
+        <e p="Counsel.Core" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Counsel.Core.csproj" t="IncludeRecursive" />
+          <e p="FantasyService.cs" t="Include" />
+          <e p="IFantasyService.cs" t="Include" />
+          <e p="MockFantasyService.cs" t="Include" />
+          <e p="Models" t="Include">
+            <e p="Player.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netstandard2.0" t="Include">
+                <e p="Counsel.Core.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Sleeper" t="Include">
+            <e p="Converters" t="Include">
+              <e p="UnixMillisecondDateTimeConverter.cs" t="Include" />
+            </e>
+            <e p="ISleeperClient.cs" t="Include" />
+            <e p="Models" t="Include">
+              <e p="Player.cs" t="Include" />
+            </e>
+            <e p="SleeperClient.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Counsel.iOS" t="IncludeRecursive">
+          <e p="AppDelegate.cs" t="Include" />
+          <e p="Assets.xcassets" t="Include">
+            <e p="AppIcon.appiconset" t="Include">
+              <e p="Contents.json" t="Include" />
+              <e p="Icon1024.png" t="Include" />
+              <e p="Icon120.png" t="Include" />
+              <e p="Icon152.png" t="Include" />
+              <e p="Icon167.png" t="Include" />
+              <e p="Icon180.png" t="Include" />
+              <e p="Icon20.png" t="Include" />
+              <e p="Icon29.png" t="Include" />
+              <e p="Icon40.png" t="Include" />
+              <e p="Icon58.png" t="Include" />
+              <e p="Icon60.png" t="Include" />
+              <e p="Icon76.png" t="Include" />
+              <e p="Icon80.png" t="Include" />
+              <e p="Icon87.png" t="Include" />
+            </e>
+          </e>
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Counsel.iOS.csproj" t="IncludeRecursive" />
+          <e p="Entitlements.plist" t="Include" />
+          <e p="Extensions" t="Include">
+            <e p="CollectionViewExtensions.cs" t="Include" />
+            <e p="TableViewExtensions.cs" t="Include" />
+          </e>
+          <e p="Info.plist" t="Include" />
+          <e p="LaunchScreen.storyboard" t="Include" />
+          <e p="LinkDescription.xml" t="Include" />
+          <e p="Main.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Pages" t="Include">
+            <e p="PlayerListPage" t="Include">
+              <e p="PlayerListViewController.cs" t="Include" />
+              <e p="SubtitleTableViewCell.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Resources" t="Include" />
+        </e>
+      </e>
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_Counsel.-1951856941.00" t="ExcludeRecursive" />
+  </component>
+</project>

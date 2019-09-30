@@ -1,0 +1,38 @@
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{39D01B60-48EC-49F9-9EA6-2AD16ACDC256}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/Counsel.Core/Sleeper/SleeperClient.cs">
+    <Files>
+      <File FileName="src/Counsel.Core/Sleeper/SleeperClient.cs" Line="16" Column="21" />
+      <File FileName="src/Counsel.iOS/AppDelegate.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Counsel" expanded="True">
+            <Node name="src" expanded="True">
+              <Node name="Counsel.Core" expanded="True">
+                <Node name="Espn" expanded="True" />
+                <Node name="Sleeper" expanded="True">
+                  <Node name="SleeperClient.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Counsel.iOS" expanded="True">
+                <Node name="Controllers" expanded="True" />
+                <Node name="Extensions" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.src.Counsel.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.701454B3-6BEB-458A-9B1F-26A7C296BD4D" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/hanhossain/Developer/nfl-fantasy-ios/src/Counsel.iOS/Pages/PlayerDetailViewController.cs" relfile="src/Counsel.iOS/Pages/PlayerDetailViewController.cs" line="43" column="1" />
+      <Breakpoint file="/Users/hanhossain/Developer/nfl-fantasy-ios/src/Counsel.iOS/Pages/PlayerListViewController.cs" relfile="src/Counsel.iOS/Pages/PlayerListViewController.cs" line="106" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
