@@ -12,6 +12,9 @@ class PlayerListViewController: UITableViewController {
     
     private let cellId = "playerListCell"
     private let fantasyService = FantasyService()
+    
+    private var players = [Player]()
+    private var sections = [(offset: Int, initial: Character)]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,64 +34,75 @@ class PlayerListViewController: UITableViewController {
                 self.title = message
             }
         }
+        
+        fantasyService.getPlayers { (result) in
+            switch (result) {
+            case .success(let players):
+                self.savePlayers(players)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func savePlayers(_ players: [String : Player]) {
+        self.players = players.values
+            .sorted(by: { (player1, player2) -> Bool in
+                if player1.lastName.uppercased() == player2.lastName.uppercased() {
+                    return player1.firstName.uppercased() < player2.firstName.uppercased()
+                }
+                
+                return player1.lastName.uppercased() < player2.lastName.uppercased()
+            })
+        
+        for (index, player) in self.players.enumerated() {
+            if var playerInitial = player.lastName.first?.uppercased().first {
+                if playerInitial.isNumber {
+                    playerInitial = "#"
+                }
+                
+                if sections.last?.initial != playerInitial {
+                    sections.append((index, playerInitial))
+                }
+            }
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        let sectionOffset = sections[section].offset
+        let exclusiveUpperBound = section < sections.count - 1 ? sections[section + 1].offset : players.count
+        return exclusiveUpperBound - sectionOffset
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        
+        let player = getPlayer(at: indexPath)
+        cell.textLabel?.text = player.fullName
+        cell.detailTextLabel?.text = "\(player.position) - \(player.team ?? "")"
 
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    private func getPlayer(at indexPath: IndexPath) -> Player {
+        let sectionOffset = sections[indexPath.section].offset
+        let playerIndex = sectionOffset + indexPath.row
+        return players[playerIndex]
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return sections.map { String($0.initial) }
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation

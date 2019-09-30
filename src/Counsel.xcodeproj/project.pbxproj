@@ -12,6 +12,9 @@
 		59271C0E2341C35000F0F769 /* ESPNSeason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59271C0D2341C35000F0F769 /* ESPNSeason.swift */; };
 		59271C102341C77600F0F769 /* CounselError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59271C0F2341C77600F0F769 /* CounselError.swift */; };
 		59271C122341CA8600F0F769 /* FantasyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59271C112341CA8600F0F769 /* FantasyService.swift */; };
+		59271C152341D1FA00F0F769 /* SleeperClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59271C142341D1FA00F0F769 /* SleeperClient.swift */; };
+		59271C172341D21600F0F769 /* SleeperPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59271C162341D21600F0F769 /* SleeperPlayer.swift */; };
+		59271C192341D6A500F0F769 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59271C182341D6A500F0F769 /* Player.swift */; };
 		599C4D952341C10C00CE9A99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599C4D942341C10C00CE9A99 /* AppDelegate.swift */; };
 		599C4D972341C10C00CE9A99 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599C4D962341C10C00CE9A99 /* SceneDelegate.swift */; };
 		599C4D9C2341C10C00CE9A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 599C4D9A2341C10C00CE9A99 /* Main.storyboard */; };
@@ -25,6 +28,9 @@
 		59271C0D2341C35000F0F769 /* ESPNSeason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESPNSeason.swift; sourceTree = "<group>"; };
 		59271C0F2341C77600F0F769 /* CounselError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounselError.swift; sourceTree = "<group>"; };
 		59271C112341CA8600F0F769 /* FantasyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FantasyService.swift; sourceTree = "<group>"; };
+		59271C142341D1FA00F0F769 /* SleeperClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleeperClient.swift; sourceTree = "<group>"; };
+		59271C162341D21600F0F769 /* SleeperPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleeperPlayer.swift; sourceTree = "<group>"; };
+		59271C182341D6A500F0F769 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		599C4D912341C10C00CE9A99 /* Counsel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counsel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		599C4D942341C10C00CE9A99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		599C4D962341C10C00CE9A99 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +63,8 @@
 		59271C132341D13600F0F769 /* Sleeper */ = {
 			isa = PBXGroup;
 			children = (
+				59271C142341D1FA00F0F769 /* SleeperClient.swift */,
+				59271C162341D21600F0F769 /* SleeperPlayer.swift */,
 			);
 			path = Sleeper;
 			sourceTree = "<group>";
@@ -91,6 +99,7 @@
 				59271C082341C22300F0F769 /* PlayerListViewController.swift */,
 				59271C0F2341C77600F0F769 /* CounselError.swift */,
 				59271C112341CA8600F0F769 /* FantasyService.swift */,
+				59271C182341D6A500F0F769 /* Player.swift */,
 			);
 			path = Counsel;
 			sourceTree = "<group>";
@@ -171,7 +180,10 @@
 				59271C0C2341C30400F0F769 /* ESPNClient.swift in Sources */,
 				59271C0E2341C35000F0F769 /* ESPNSeason.swift in Sources */,
 				59271C092341C22300F0F769 /* PlayerListViewController.swift in Sources */,
+				59271C172341D21600F0F769 /* SleeperPlayer.swift in Sources */,
+				59271C152341D1FA00F0F769 /* SleeperClient.swift in Sources */,
 				599C4D952341C10C00CE9A99 /* AppDelegate.swift in Sources */,
+				59271C192341D6A500F0F769 /* Player.swift in Sources */,
 				599C4D972341C10C00CE9A99 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
