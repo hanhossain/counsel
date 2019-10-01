@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Counsel.Core;
 using Counsel.Core.Models;
@@ -15,30 +14,35 @@ namespace Counsel.iOS.Controllers
 
 		private readonly Player _player;
 		private readonly IFantasyService _fantasyService;
-		private List<(int, double)> _points = new List<(int, double)>();
-		private bool _loaded;
+
+		private PlayerStats _playerStats;
 
 		public PlayerDetailViewController(Player player, IFantasyService fantasyService)
 		{
 			_player = player;
 			_fantasyService = fantasyService;
-			TableView.RegisterClassForCellReuse<SubtitleTableViewCell>(_cellId);
 		}
 
 		public override async void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			TableView.RegisterClassForCellReuse<SubtitleTableViewCell>(_cellId);
 
 			Title = _player.FullName;
 
-			var stats = await _fantasyService.GetStatsAsync(_player.Id);
-			if (stats.TryGetValue("pts_std", out var points))
+			if (!await _fantasyService.ContainsStatsAsync())
 			{
-				_points = points;
+				var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
+				BeginInvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
 			}
 
-			_loaded = true;
-			BeginInvokeOnMainThread(() => TableView.ReloadData());
+			_playerStats = await _fantasyService.GetStatsAsync(_player.Id);
+
+			BeginInvokeOnMainThread(() =>
+			{
+				DismissViewController(true, null);
+				TableView.ReloadData();
+			});
 		}
 
 		public override nint NumberOfSections(UITableView tableView)
@@ -48,23 +52,20 @@ namespace Counsel.iOS.Controllers
 
 		public override nint RowsInSection(UITableView tableView, nint section)
 		{
-			return _points.Any() ? _points.Count : 1;
+			return _playerStats?.Weeks.Count() ?? 0;
 		}
 
 		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
 		{
 			var cell = tableView.DequeueReusableCell<SubtitleTableViewCell>(_cellId, indexPath);
 
-			if (_points.Any())
+			if (_playerStats != null)
 			{
-				(int week, double points) = _points[indexPath.Row];
+				int week = _playerStats.Weeks[indexPath.Row];
+				double points = _playerStats.Points[indexPath.Row];
 
 				cell.TextLabel.Text = points.ToString();
 				cell.DetailTextLabel.Text = $"Week {week}";
-			}
-			else
-			{
-				cell.TextLabel.Text = _loaded ? "No data" : "Loading...";
 			}
 
 			return cell;

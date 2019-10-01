@@ -28,10 +28,10 @@ namespace Counsel.Core.Sleeper
 			return await response.Content.ReadAsAsync<Dictionary<string, Dictionary<string, double>>>();
 		}
 
-		public async Task<Dictionary<string, Dictionary<string, double>>> GetWeekStatsAsync(int season, int week)
+		public async Task<Dictionary<string, PlayerStats>> GetWeekStatsAsync(int season, int week)
 		{
 			using var response = await _client.GetAsync($"{_baseAddress}/stats/nfl/regular/{season}/{week}");
-			return await response.Content.ReadAsAsync<Dictionary<string, Dictionary<string, double>>>();
+			return await response.Content.ReadAsAsync<Dictionary<string, PlayerStats>>();
 		}
 	}
 }

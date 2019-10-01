@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Counsel.Core.Espn;
 using Counsel.Core.Models;
 using Counsel.Core.Sleeper;
-using SleeperPlayer = Counsel.Core.Sleeper.Models.Player;
+using SleeperModels = Counsel.Core.Sleeper.Models;
 
 namespace Counsel.Core
 {
@@ -16,8 +16,8 @@ namespace Counsel.Core
 		private readonly ISleeperClient _sleeperClient;
 		private readonly IEspnClient _espnClient;
 
-		private List<Dictionary<string, Dictionary<string, double>>> _stats;
-		private Dictionary<string, SleeperPlayer> _players;
+		private List<Dictionary<string, SleeperModels.PlayerStats>> _stats;
+		private Dictionary<string, SleeperModels.Player> _players;
 		private int? _season;
 		private int? _week;
 
@@ -95,7 +95,7 @@ namespace Counsel.Core
 			return (_season.Value, _week.Value);
 		}
 
-		public async Task<Dictionary<string, List<(int, double)>>> GetStatsAsync(string playerId)
+		public async Task<PlayerStats> GetStatsAsync(string playerId)
 		{
 			(int season, int week) = await GetCurrentWeekAsync();
 
@@ -120,26 +120,31 @@ namespace Counsel.Core
 				}
 			}
 
-			var result = new Dictionary<string, List<(int, double)>>();
-
-			for (int i = 0; i < _stats.Count; i++)
+			var result = new PlayerStats
 			{
-				if (_stats[i].TryGetValue(playerId, out var weekStats))
+				Weeks = Enumerable.Range(1, week).ToList(),
+				Points = _stats.Select(x =>
 				{
-					foreach (var stat in weekStats)
-					{
-						if (!result.TryGetValue(stat.Key, out var values))
-						{
-							values = new List<(int, double)>();
-						}
-
-						values.Add((i + 1, stat.Value));
-						result[stat.Key] = values;
-					}
-				}
-			}
+					x.TryGetValue(playerId, out var playerStats);
+					return playerStats?.Points ?? 0;
+				}).ToList()
+			};
 
 			return result;
+		}
+
+		public async Task<bool> ContainsStatsAsync()
+		{
+			await _lock.WaitAsync();
+
+			try
+			{
+				return _stats != null;
+			}
+			finally
+			{
+				_lock.Release();
+			}
 		}
 	}
 }

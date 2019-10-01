@@ -21,15 +21,15 @@ namespace Counsel.iOS.Controllers
 		public PlayerListViewController(IFantasyService fantasyService)
 		{
 			_fantasyService = fantasyService;
-			TableView.RegisterClassForCellReuse<SubtitleTableViewCell>(_cellId);
 		}
 
 		public override async void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			TableView.RegisterClassForCellReuse<SubtitleTableViewCell>(_cellId);
 
-			var alert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
-			BeginInvokeOnMainThread(() => PresentViewController(alert, true, null));
+			var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
+			BeginInvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
 
 			(int season, int week) = await _fantasyService.GetCurrentWeekAsync();
 			BeginInvokeOnMainThread(() => Title = $"Season: {season} - Week: {week}");

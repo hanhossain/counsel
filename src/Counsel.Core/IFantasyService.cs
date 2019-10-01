@@ -10,6 +10,8 @@ namespace Counsel.Core
 
 		Task<(int Season, int Week)> GetCurrentWeekAsync();
 
-		Task<Dictionary<string, List<(int, double)>>> GetStatsAsync(string playerId);
+		Task<PlayerStats> GetStatsAsync(string playerId);
+
+		Task<bool> ContainsStatsAsync();
 	}
 }
