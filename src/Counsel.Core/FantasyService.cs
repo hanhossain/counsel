@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Counsel.Core.Espn;
 using Counsel.Core.Models;
@@ -12,7 +11,7 @@ namespace Counsel.Core
 {
 	public class FantasyService : IFantasyService
 	{
-		private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+		private readonly AsyncLock _asyncLock = new AsyncLock();
 		private readonly ISleeperClient _sleeperClient;
 		private readonly IEspnClient _espnClient;
 
@@ -31,13 +30,11 @@ namespace Counsel.Core
 		{
 			if (_players == null)
 			{
-				await _lock.WaitAsync();
-				
-				try
+				using var lockToken = await _asyncLock.LockAsync();
+
+				if (_players == null)
 				{
-					if (_players == null)
-					{
-						var validPositions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+					var validPositions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 						{
 							"QB",
 							"RB",
@@ -46,17 +43,12 @@ namespace Counsel.Core
 							"K",
 							"DEF"
 						};
-						
-						var players = await _sleeperClient.GetPlayersAsync();
 
-						_players = players.Values
-							.Where(x => x.Active && validPositions.Contains(x.Position))
-							.ToDictionary(x => x.PlayerId, x => x);
-					}
-				}
-				finally
-				{
-					_lock.Release();
+					var players = await _sleeperClient.GetPlayersAsync();
+
+					_players = players.Values
+						.Where(x => x.Active && validPositions.Contains(x.Position))
+						.ToDictionary(x => x.PlayerId, x => x);
 				}
 			}
 
@@ -74,21 +66,14 @@ namespace Counsel.Core
 		{
 			if (_season == null || _week == null)
 			{
-				await _lock.WaitAsync();
+				using var lockToken = await _asyncLock.LockAsync();
 
-				try
+				if(_season == null || _week == null)
 				{
-					if (_season == null || _week == null)
-					{
-						var seasons = await _espnClient.GetSeasonsAsync();
-						var recentSeason = seasons.First();
-						_season = recentSeason.Id;
-						_week = recentSeason.CurrentScoringPeriod.Id;
-					}
-				}
-				finally
-				{
-					_lock.Release();
+					var seasons = await _espnClient.GetSeasonsAsync();
+					var recentSeason = seasons.First();
+					_season = recentSeason.Id;
+					_week = recentSeason.CurrentScoringPeriod.Id;
 				}
 			}
 
@@ -101,22 +86,15 @@ namespace Counsel.Core
 
 			if (_stats == null)
 			{
-				await _lock.WaitAsync();
+				using var lockToken = await _asyncLock.LockAsync();
 
-				try
+				if (_stats == null)
 				{
-					if (_stats == null)
-					{
-						var tasks = Enumerable.Range(0, week)
-							.Select(x => _sleeperClient.GetWeekStatsAsync(season, x + 1))
-							.ToList();
+					var tasks = Enumerable.Range(0, week)
+						.Select(x => _sleeperClient.GetWeekStatsAsync(season, x + 1))
+						.ToList();
 
-						_stats = (await Task.WhenAll(tasks)).ToList();
-					}
-				}
-				finally
-				{
-					_lock.Release();
+					_stats = (await Task.WhenAll(tasks)).ToList();
 				}
 			}
 
@@ -135,16 +113,8 @@ namespace Counsel.Core
 
 		public async Task<bool> ContainsStatsAsync()
 		{
-			await _lock.WaitAsync();
-
-			try
-			{
-				return _stats != null;
-			}
-			finally
-			{
-				_lock.Release();
-			}
+			using var lockToken = await _asyncLock.LockAsync();
+			return _stats != null;
 		}
 	}
 }
