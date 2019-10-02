@@ -7,6 +7,6 @@ namespace Counsel.Core.Models
 	{
 		public List<int> Weeks { get; set; }
 
-		public List<double> Points { get; set; }
+		public List<(double Points, double Projected)> Points { get; set; }
 	}
 }

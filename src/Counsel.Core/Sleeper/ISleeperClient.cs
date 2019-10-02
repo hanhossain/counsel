@@ -11,5 +11,7 @@ namespace Counsel.Core.Sleeper
 		Task<Dictionary<string, Dictionary<string, double>>> GetSeasonStatsAsync(int season);
 
 		Task<Dictionary<string, PlayerStats>> GetWeekStatsAsync(int season, int week);
+
+		Task<Dictionary<string, PlayerStats>> GetProjectedWeekStatsAsync(int season, int week);
 	}
 }

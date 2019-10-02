@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Counsel.Core.Sleeper.Models;
@@ -31,6 +32,12 @@ namespace Counsel.Core.Sleeper
 		public async Task<Dictionary<string, PlayerStats>> GetWeekStatsAsync(int season, int week)
 		{
 			using var response = await _client.GetAsync($"{_baseAddress}/stats/nfl/regular/{season}/{week}");
+			return await response.Content.ReadAsAsync<Dictionary<string, PlayerStats>>();
+		}
+
+		public async Task<Dictionary<string, PlayerStats>> GetProjectedWeekStatsAsync(int season, int week)
+		{
+			using var response = await _client.GetAsync($"{_baseAddress}/projections/nfl/regular/{season}/{week}");
 			return await response.Content.ReadAsAsync<Dictionary<string, PlayerStats>>();
 		}
 	}

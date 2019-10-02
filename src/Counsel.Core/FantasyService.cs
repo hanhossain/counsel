@@ -16,6 +16,7 @@ namespace Counsel.Core
 		private readonly IEspnClient _espnClient;
 
 		private List<Dictionary<string, SleeperModels.PlayerStats>> _stats;
+		private List<Dictionary<string, SleeperModels.PlayerStats>> _projectedStats;
 		private Dictionary<string, SleeperModels.Player> _players;
 		private int? _season;
 		private int? _week;
@@ -98,13 +99,28 @@ namespace Counsel.Core
 				}
 			}
 
+			if (_projectedStats == null)
+			{
+				using var lockToken = await _asyncLock.LockAsync();
+
+				if (_projectedStats == null)
+				{
+					var tasks = Enumerable.Range(0, week)
+						.Select(x => _sleeperClient.GetProjectedWeekStatsAsync(season, x + 1))
+						.ToList();
+
+					_projectedStats = (await Task.WhenAll(tasks)).ToList();
+				}
+			}
+
 			var result = new PlayerStats
 			{
 				Weeks = Enumerable.Range(1, week).ToList(),
-				Points = _stats.Select(x =>
+				Points = _stats.Zip(_projectedStats, (stats, projected) =>
 				{
-					x.TryGetValue(playerId, out var playerStats);
-					return playerStats?.Points ?? 0;
+					stats.TryGetValue(playerId, out var playerStats);
+					projected.TryGetValue(playerId, out var playerProjected);
+					return (playerStats?.Points ?? 0, playerProjected?.Points ?? 0);
 				}).ToList()
 			};
 

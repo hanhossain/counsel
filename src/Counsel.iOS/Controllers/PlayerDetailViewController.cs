@@ -62,9 +62,9 @@ namespace Counsel.iOS.Controllers
 			if (_playerStats != null)
 			{
 				int week = _playerStats.Weeks[indexPath.Row];
-				double points = _playerStats.Points[indexPath.Row];
+				(double points, double projectedPoints) = _playerStats.Points[indexPath.Row];
 
-				cell.TextLabel.Text = points.ToString();
+				cell.TextLabel.Text = $"{points} ({projectedPoints} projected)";
 				cell.DetailTextLabel.Text = $"Week {week}";
 			}
 
