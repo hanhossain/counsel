@@ -125,9 +125,10 @@ namespace Counsel.Core
 			};
 
 			// calculated stats requires at least one week to have passed
+			// and do not use the present week
 			if (week > 1)
 			{
-				double[] finishedPoints = result.Points.Select(x => x.Points).ToArray().AsSpan(0..^2).ToArray();
+				double[] finishedPoints = result.Points.Select(x => x.Points).ToArray().AsSpan(0..^1).ToArray();
 
 				result.Average = finishedPoints.Average();
 				result.Max = finishedPoints.Max();
