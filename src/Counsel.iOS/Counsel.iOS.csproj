@@ -158,7 +158,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Counsel.Core\Counsel.Core.csproj">
-        <Project>{D66A6937-2862-4EF7-ACAA-6111E87766E6}</Project>
+        <Project>{2FBE9BA3-AC13-488F-B0D1-691108F80DC4}</Project>
         <Name>Counsel.Core</Name>
       </ProjectReference>
     </ItemGroup>
