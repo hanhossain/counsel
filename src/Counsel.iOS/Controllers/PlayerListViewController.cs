@@ -75,8 +75,8 @@ namespace Counsel.iOS.Controllers
 				return 0;
 			}
 
-			var sectionOffset = _sections[(int)section].Offset;
-			var exclusiveUpperBound = section < _sections.Count - 1
+			int sectionOffset = _sections[(int)section].Offset;
+			int exclusiveUpperBound = section < _sections.Count - 1
 				? _sections[(int)section + 1].Offset
 				: _players.Count;
 
@@ -109,7 +109,7 @@ namespace Counsel.iOS.Controllers
 
 		private Player GetPlayer(NSIndexPath indexPath)
 		{
-			var playerIndex = _sections[indexPath.Section].Offset + indexPath.Row;
+			int playerIndex = _sections[indexPath.Section].Offset + indexPath.Row;
 			var player = _players[playerIndex];
 			return player;
 		}

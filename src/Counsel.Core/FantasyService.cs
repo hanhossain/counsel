@@ -121,9 +121,21 @@ namespace Counsel.Core
 					stats.TryGetValue(playerId, out var playerStats);
 					projected.TryGetValue(playerId, out var playerProjected);
 					return (playerStats?.Points ?? 0, playerProjected?.Points ?? 0);
-				}).ToList()
+				}).ToList(),
 			};
 
+			// calculated stats requires at least one week to have passed
+			if (week > 1)
+			{
+				double[] finishedPoints = result.Points.Select(x => x.Points).ToArray().AsSpan(0..^2).ToArray();
+
+				result.Average = finishedPoints.Average();
+				result.Max = finishedPoints.Max();
+				result.Min = finishedPoints.Min();
+				result.Range = result.Max - result.Min;
+				result.PopStdDev = Math.Sqrt(finishedPoints.Sum(x => Math.Pow(x - result.Average, 2)) / finishedPoints.Length);
+			}
+			
 			return result;
 		}
 
