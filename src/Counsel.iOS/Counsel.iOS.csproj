@@ -156,6 +156,9 @@
         <Compile Include="Controllers\PlayerListViewController.cs" />
         <Compile Include="Views\SubtitleTableViewCell.cs" />
         <Compile Include="Views\RightDetailTableViewCell.cs" />
+        <Compile Include="Controllers\SearchViewController.cs" />
+        <Compile Include="Views\PaddedTextField.cs" />
+        <Compile Include="ISearchDelegate.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Counsel.Core\Counsel.Core.csproj">

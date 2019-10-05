@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Counsel.Core;
 using Counsel.Core.Models;
 using Counsel.iOS.Views;
@@ -9,14 +10,15 @@ using UIKit;
 
 namespace Counsel.iOS.Controllers
 {
-	public sealed class PlayerListViewController : UITableViewController
+	public sealed class PlayerListViewController : UITableViewController, ISearchDelegate
 	{
 		private const string _cellId = "playerListCell";
 
 		private readonly IFantasyService _fantasyService;
 		private readonly List<(char Initial, int Offset)> _sections = new List<(char, int)>();
-		
+
 		private List<Player> _players = new List<Player>();
+		private UIBarButtonItem _resetButton;
 
 		public PlayerListViewController(IFantasyService fantasyService)
 		{
@@ -28,35 +30,28 @@ namespace Counsel.iOS.Controllers
 			base.ViewDidLoad();
 			TableView.RegisterClassForCellReuse<SubtitleTableViewCell>(_cellId);
 
-			var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
-			BeginInvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
+			var searchButton = new UIBarButtonItem(UIBarButtonSystemItem.Search);
+			searchButton.Clicked += SearchButton_Clicked;
 
-			(int season, int week) = await _fantasyService.GetCurrentWeekAsync();
-			BeginInvokeOnMainThread(() => Title = $"Season: {season} - Week: {week}");
+			NavigationItem.RightBarButtonItem = searchButton;
 
-			var players = await _fantasyService.GetPlayersAsync();
-			_players = players.Values
-				.OrderBy(x => x.LastName)
-				.ThenBy(x => x.FirstName)
-				.ToList();
-
-			for (int i = 0; i < _players.Count; i++)
+			_resetButton = new UIBarButtonItem()
 			{
-				var player = _players[i];
-				char playerInitial = player.LastName.First();
+				Title = "Reset"
+			};
+			_resetButton.Clicked += async (s, e) =>
+			{
+				await LoadAllPlayersAsync();
+				InvokeOnMainThread(() => TableView.ReloadData());
+			};
 
-				if (char.IsNumber(playerInitial))
-				{
-					playerInitial = '#';
-				}
+			var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
+			InvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
 
-				if (_sections.Count == 0 || playerInitial != _sections[_sections.Count - 1].Initial)
-				{
-					_sections.Add((playerInitial, i));
-				}
-			}
+			await LoadCurrentWeekAsync();
+			await LoadAllPlayersAsync();
 
-			BeginInvokeOnMainThread(() =>
+			InvokeOnMainThread(() =>
 			{
 				DismissViewController(true, null);
 				TableView.ReloadData();
@@ -112,6 +107,69 @@ namespace Counsel.iOS.Controllers
 			int playerIndex = _sections[indexPath.Section].Offset + indexPath.Row;
 			var player = _players[playerIndex];
 			return player;
+		}
+
+		private async Task LoadCurrentWeekAsync()
+		{
+			(int season, int week) = await _fantasyService.GetCurrentWeekAsync();
+			BeginInvokeOnMainThread(() => Title = $"Season: {season} - Week: {week}");
+		}
+
+		private async Task LoadAllPlayersAsync()
+		{
+			var players = await _fantasyService.GetPlayersAsync();
+			LoadPlayers(players);
+
+			InvokeOnMainThread(() => NavigationItem.SetLeftBarButtonItem(null, true));
+		}
+
+		private void LoadPlayers(Dictionary<string, Player> players)
+		{
+			_players = players.Values
+				.OrderBy(x => x.LastName)
+				.ThenBy(x => x.FirstName)
+				.ToList();
+
+			LoadSections();
+		}
+
+		private void LoadSections()
+		{
+			_sections.Clear();
+
+			for (int i = 0; i < _players.Count; i++)
+			{
+				var player = _players[i];
+				char playerInitial = player.LastName.First();
+
+				if (char.IsNumber(playerInitial))
+				{
+					playerInitial = '#';
+				}
+
+				if (_sections.Count == 0 || playerInitial != _sections[_sections.Count - 1].Initial)
+				{
+					_sections.Add((playerInitial, i));
+				}
+			}
+		}
+
+		private void SearchButton_Clicked(object sender, EventArgs e)
+		{
+			var navController = new UINavigationController(new SearchViewController(this));
+			PresentViewController(navController, true, null);
+		}
+
+		public async Task OnSearchAsync(string playerName)
+		{
+			var players = await _fantasyService.SearchPlayersAsync(playerName);
+			LoadPlayers(players);
+
+			InvokeOnMainThread(() =>
+			{
+				NavigationItem.SetLeftBarButtonItem(_resetButton, true);
+				TableView.ReloadData();
+			});
 		}
 	}
 }

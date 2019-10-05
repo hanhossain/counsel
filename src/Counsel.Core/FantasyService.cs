@@ -145,5 +145,21 @@ namespace Counsel.Core
 			using var lockToken = await _asyncLock.LockAsync();
 			return _stats != null;
 		}
+
+		public async Task<Dictionary<string, Player>> SearchPlayersAsync(string playerName)
+		{
+			using var lockToken = await _asyncLock.LockAsync();
+			return _players.Values
+				.Where(x => x.FullName.Contains(playerName, StringComparison.OrdinalIgnoreCase))
+				.Select(x => new Player()
+				{
+					FirstName = x.FirstName,
+					LastName = x.LastName,
+					Id = x.PlayerId,
+					Position = x.Position,
+					Team = x.Team
+				})
+				.ToDictionary(x => x.Id, x => x);
+		}
 	}
 }

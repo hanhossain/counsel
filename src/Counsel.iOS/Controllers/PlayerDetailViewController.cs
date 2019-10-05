@@ -35,12 +35,12 @@ namespace Counsel.iOS.Controllers
 			if (!await _fantasyService.ContainsStatsAsync())
 			{
 				var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
-				BeginInvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
+				InvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
 			}
 
 			_playerStats = await _fantasyService.GetStatsAsync(_player.Id);
 
-			BeginInvokeOnMainThread(() =>
+			InvokeOnMainThread(() =>
 			{
 				DismissViewController(true, null);
 				TableView.ReloadData();
