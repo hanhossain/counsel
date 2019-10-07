@@ -1,4 +1,5 @@
-﻿using Counsel.Core.Models;
+﻿using System.Linq;
+using Counsel.Core.Models;
 using Counsel.iOS.Graphing;
 using UIKit;
 
@@ -23,9 +24,14 @@ namespace Counsel.iOS.Controllers
 			doneButton.Clicked += DoneButton_Clicked;
 			NavigationItem.RightBarButtonItem = doneButton;
 
-			var chartView = new LineChartView()
+			var entries = _playerStats.Weeks.Zip(_playerStats.Points, (week, points) => new ChartEntry()
 			{
-				//BackgroundColor = UIColor.SystemTealColor
+				X = week,
+				Y = points.Points
+			}).ToList();
+
+			var chartView = new LineChartView(entries)
+			{
 				BackgroundColor = UIColor.Clear
 			};
 

@@ -16,20 +16,15 @@ namespace Counsel.iOS.Graphing
 
 		private IEnumerable<ChartEntry> _entries;
 
-		public LineChartView()
+		public LineChartView(IEnumerable<ChartEntry> entries)
 		{
-			// TODO: This is temporary while I test out mock data
-			_entries = Enumerable.Range(1, 10).Select(x => new ChartEntry()
-			{
-				X = x,
-				Y = x
-			}).ToList();
+			_entries = entries ?? throw new ArgumentNullException(nameof(entries));
 
-			SetupXAxis();
-			SetupYAxis();
+			var yAxisTick = SetupYAxis();
+			SetupXAxis(yAxisTick);
 		}
 
-		private void SetupXAxis()
+		private void SetupXAxis(UIView yAxisTick)
 		{
 			// setup axis line
 			_xAxisView = new UIView()
@@ -41,7 +36,7 @@ namespace Counsel.iOS.Graphing
 			_xAxisView.HeightAnchor.ConstraintEqualTo(1).Active = true;
 			_xAxisView.LeadingAnchor.ConstraintEqualTo(LeadingAnchor, Padding).Active = true;
 			_xAxisView.TrailingAnchor.ConstraintEqualTo(TrailingAnchor, -Padding).Active = true;
-			_xAxisView.BottomAnchor.ConstraintEqualTo(BottomAnchor, -Padding).Active = true;
+			_xAxisView.CenterYAnchor.ConstraintEqualTo(yAxisTick.CenterYAnchor).Active = true;
 
 			_xAxisView.TranslatesAutoresizingMaskIntoConstraints = false;
 
@@ -68,7 +63,7 @@ namespace Counsel.iOS.Graphing
 			stackView.TranslatesAutoresizingMaskIntoConstraints = false;
 
 			// add labels
-			for (int i = 0; i < ticks.Length; i++)
+			for (int i = 1; i < ticks.Length; i++)
 			{
 				var tick = ticks[i];
 				var label = new UILabel()
@@ -84,8 +79,9 @@ namespace Counsel.iOS.Graphing
 			}
 		}
 
-		private void SetupYAxis()
+		private UIView SetupYAxis()
 		{
+			// setup axis line
 			_yAxisView = new UIView()
 			{
 				BackgroundColor = UIColor.SystemGrayColor
@@ -100,23 +96,45 @@ namespace Counsel.iOS.Graphing
 
 			_yAxisView.TranslatesAutoresizingMaskIntoConstraints = false;
 
-			int yMin = _entries.Min(x => (int)Math.Floor(x.Y));
-			if (yMin > 0)
-			{
-				yMin = 0;
-			}
-
-			int yMax = _entries.Max(x => (int)Math.Ceiling(x.Y));
-			if (yMax < 0)
-			{
-				yMax = 0;
-			}
-
-
 			// setup axis ticks
-			int segmentCount = 11;
+			double min = _entries.Min(x => Math.Floor(x.Y));
+			if (min > 0)
+			{
+				min = 0;
+			}
 
-			var ticks = Enumerable.Range(0, segmentCount).Select(x => new TickView(UILayoutConstraintAxis.Horizontal)
+			double max = _entries.Max(x => Math.Ceiling(x.Y));
+			if (max < 0)
+			{
+				max = 0;
+			}
+
+			double range = max - min;
+
+			int increment = range switch
+			{
+				double r when r <= 10 => 1,
+				double r when r <= 20 => 2,
+				_ => 5
+			};
+
+			int axisMin = (int)Math.Floor(min / increment);
+			int axisMax = (int)Math.Ceiling(max / increment);
+
+			var values = new List<int>();
+
+			for (int i = axisMin; i <= axisMax; i++)
+			{
+				values.Add(i * increment);
+			}
+
+			// if all values are 0, we want to add a few more ticks so the chart doesn't look super weird
+			if (axisMin == 0 && axisMax == 0)
+			{
+				values.AddRange(new int[] { 1, 2, 3, 4, 5 });
+			}
+			
+			var ticks = values.Select(x => new TickView(UILayoutConstraintAxis.Horizontal)
 			{
 				BackgroundColor = UIColor.SystemGrayColor
 			}).ToArray();
@@ -135,13 +153,22 @@ namespace Counsel.iOS.Graphing
 
 			stackView.TranslatesAutoresizingMaskIntoConstraints = false;
 
+			UIView yAxisTick = null;
+
 			// add labels
 			for (int i = 0; i < ticks.Length; i++)
 			{
 				var tick = ticks[i];
+				int labelValue = values[^(i + 1)];
+
+				if (labelValue == 0)
+				{
+					yAxisTick = tick;
+				}
+
 				var label = new UILabel()
 				{
-					Text = (ticks.Length - i - 1).ToString(),
+					Text = labelValue.ToString(),
 					Font = UIFont.PreferredCaption2
 				};
 
@@ -150,6 +177,8 @@ namespace Counsel.iOS.Graphing
 				label.TrailingAnchor.ConstraintEqualTo(tick.LeadingAnchor, -4).Active = true;
 				label.TranslatesAutoresizingMaskIntoConstraints = false;
 			}
+
+			return yAxisTick;
 		}
 
 		public class TickView : UIView

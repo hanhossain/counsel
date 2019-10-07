@@ -125,16 +125,15 @@ namespace Counsel.Core
 			};
 
 			// calculated stats requires at least one week to have passed
-			// and do not use the present week
 			if (week > 1)
 			{
-				double[] finishedPoints = result.Points.Select(x => x.Points).ToArray().AsSpan(0..^1).ToArray();
+				var points = result.Points.Select(x => x.Points).ToList();
 
-				result.Average = finishedPoints.Average();
-				result.Max = finishedPoints.Max();
-				result.Min = finishedPoints.Min();
+				result.Average = points.Average();
+				result.Max = points.Max();
+				result.Min = points.Min();
 				result.Range = result.Max - result.Min;
-				result.PopStdDev = Math.Sqrt(finishedPoints.Sum(x => Math.Pow(x - result.Average, 2)) / finishedPoints.Length);
+				result.PopStdDev = Math.Sqrt(points.Sum(x => Math.Pow(x - result.Average, 2)) / points.Count);
 			}
 			
 			return result;
