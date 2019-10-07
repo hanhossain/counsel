@@ -133,12 +133,23 @@
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
             <Visible>false</Visible>
         </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Contents.json" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph.png" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph%402x.png" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph%403x.png" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph%402x-1.png" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph%403x-1.png" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph-1.png" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph-2.png" />
+        <ImageAsset Include="Assets.xcassets\Graph.imageset\Graph%402x-2.png" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Resources\" />
         <Folder Include="Extensions\" />
         <Folder Include="Controllers\" />
         <Folder Include="Views\" />
+        <Folder Include="Assets.xcassets\Graph.imageset\" />
+        <Folder Include="Graphing\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -159,6 +170,13 @@
         <Compile Include="Controllers\SearchViewController.cs" />
         <Compile Include="Views\PaddedTextField.cs" />
         <Compile Include="ISearchDelegate.cs" />
+        <Compile Include="Controllers\GraphViewController.cs" />
+        <Compile Include="Graphing\LineChartView.cs" />
+        <Compile Include="Graphing\DataPointView.cs" />
+        <Compile Include="Extensions\CGContextExtensions.cs" />
+        <Compile Include="Graphing\ChartEntry.cs" />
+        <Compile Include="Graphing\LineData.cs" />
+        <Compile Include="Extensions\UIViewExtensions.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Counsel.Core\Counsel.Core.csproj">

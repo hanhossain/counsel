@@ -32,6 +32,13 @@ namespace Counsel.iOS.Controllers
 
 			Title = _player.FullName;
 
+			var graphButton = new UIBarButtonItem()
+			{
+				Image = UIImage.FromBundle("Graph")
+			};
+			graphButton.Clicked += GraphButton_Clicked;
+			NavigationItem.RightBarButtonItem = graphButton;
+
 			if (!await _fantasyService.ContainsStatsAsync())
 			{
 				var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
@@ -111,6 +118,13 @@ namespace Counsel.iOS.Controllers
 				1 => "Raw stats",
 				_ => throw new ArgumentException("Invalid section", nameof(section))
 			};
+		}
+
+		private void GraphButton_Clicked(object sender, EventArgs e)
+		{
+			var graphViewController = new GraphViewController(_playerStats);
+			var navController = new UINavigationController(graphViewController);
+			PresentViewController(navController, true, null);
 		}
 	}
 }
