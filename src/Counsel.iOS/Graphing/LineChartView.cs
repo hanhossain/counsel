@@ -2,200 +2,205 @@
 using System.Collections.Generic;
 using System.Linq;
 using CoreGraphics;
+using Foundation;
 using UIKit;
 
 namespace Counsel.iOS.Graphing
 {
 	public class LineChartView : UIView
 	{
-		private const int Padding = 16;
+		private const int AxisOffset = 20;
 		private const int TickSize = 10;
 
-		private UIView _xAxisView;
-		private UIView _yAxisView;
-
 		private IEnumerable<ChartEntry> _entries;
+		private readonly UIStringAttributes _axisStringAttributes = new UIStringAttributes()
+		{
+			ForegroundColor = UIColor.SystemGrayColor,
+			Font = UIFont.PreferredCaption2
+		};
 
 		public LineChartView(IEnumerable<ChartEntry> entries)
 		{
 			_entries = entries ?? throw new ArgumentNullException(nameof(entries));
-
-			var yAxisTick = SetupYAxis();
-			SetupXAxis(yAxisTick);
 		}
 
-		private void SetupXAxis(UIView yAxisTick)
+		public override void LayoutSubviews()
 		{
-			// setup axis line
-			_xAxisView = new UIView()
-			{
-				BackgroundColor = UIColor.SystemGrayColor
-			};
-			AddSubview(_xAxisView);
+			base.LayoutSubviews();
 
-			_xAxisView.HeightAnchor.ConstraintEqualTo(1).Active = true;
-			_xAxisView.LeadingAnchor.ConstraintEqualTo(LeadingAnchor, Padding).Active = true;
-			_xAxisView.TrailingAnchor.ConstraintEqualTo(TrailingAnchor, -Padding).Active = true;
-			_xAxisView.CenterYAnchor.ConstraintEqualTo(yAxisTick.CenterYAnchor).Active = true;
-
-			_xAxisView.TranslatesAutoresizingMaskIntoConstraints = false;
-
-			// setup axis ticks
-			int segmentCount = _entries.Max(x => (int)Math.Ceiling(x.X)) + 1;
-
-			var ticks = Enumerable.Range(0, segmentCount).Select(x => new TickView(UILayoutConstraintAxis.Vertical)
-			{
-				BackgroundColor = UIColor.SystemGrayColor
-			}).ToArray();
-
-			var stackView = new UIStackView(ticks)
-			{
-				Axis = UILayoutConstraintAxis.Horizontal,
-				Distribution = UIStackViewDistribution.EqualSpacing
-			};
-			AddSubview(stackView);
-
-			stackView.HeightAnchor.ConstraintEqualTo(TickSize).Active = true;
-			stackView.LeadingAnchor.ConstraintEqualTo(_xAxisView.LeadingAnchor).Active = true;
-			stackView.TrailingAnchor.ConstraintEqualTo(_xAxisView.TrailingAnchor).Active = true;
-			stackView.CenterYAnchor.ConstraintEqualTo(_xAxisView.CenterYAnchor).Active = true;
-
-			stackView.TranslatesAutoresizingMaskIntoConstraints = false;
-
-			// add labels
-			for (int i = 1; i < ticks.Length; i++)
-			{
-				var tick = ticks[i];
-				var label = new UILabel()
-				{
-					Text = i.ToString(),
-					Font = UIFont.PreferredCaption2
-				};
-
-				AddSubview(label);
-				label.CenterXAnchor.ConstraintEqualTo(tick.CenterXAnchor).Active = true;
-				label.TopAnchor.ConstraintEqualTo(tick.BottomAnchor, 4).Active = true;
-				label.TranslatesAutoresizingMaskIntoConstraints = false;
-			}
+			SetNeedsDisplay();
 		}
 
-		private UIView SetupYAxis()
+		public override void Draw(CGRect rect)
 		{
-			// setup axis line
-			_yAxisView = new UIView()
+			// get max, min, and range values
+			int xMax = (int)Math.Ceiling(_entries.Max(x => x.X));
+			int xMin = (int)Math.Floor(_entries.Min(x => x.Y));
+			int xRange = xMax - xMin;
+
+			var xValues = new List<int>();
+			for (int x = xMin; x <= xMax; x++)
 			{
-				BackgroundColor = UIColor.SystemGrayColor
-			};
-
-			AddSubview(_yAxisView);
-
-			_yAxisView.WidthAnchor.ConstraintEqualTo(1).Active = true;
-			_yAxisView.TopAnchor.ConstraintEqualTo(TopAnchor, Padding).Active = true;
-			_yAxisView.BottomAnchor.ConstraintEqualTo(BottomAnchor, -Padding).Active = true;
-			_yAxisView.LeadingAnchor.ConstraintEqualTo(LeadingAnchor, Padding).Active = true;
-
-			_yAxisView.TranslatesAutoresizingMaskIntoConstraints = false;
-
-			// setup axis ticks
-			double min = _entries.Min(x => Math.Floor(x.Y));
-			if (min > 0)
-			{
-				min = 0;
+				xValues.Add(x);
 			}
 
-			double max = _entries.Max(x => Math.Ceiling(x.Y));
-			if (max < 0)
+			int yMax = (int)Math.Ceiling(_entries.Max(x => x.Y));
+			int yMin = (int)Math.Floor(_entries.Min(x => x.Y));
+
+			// always show the axis
+			if (yMax < 0)
 			{
-				max = 0;
+				yMax = 0;
 			}
 
-			double range = max - min;
-
-			int increment = range switch
+			if (yMin > 0)
 			{
-				double r when r <= 10 => 1,
-				double r when r <= 20 => 2,
+				yMin = 0;
+			}
+
+			int yRange = yMax - yMin;
+			int yStep = yRange switch
+			{
+				int r when r <= 10 => 1,
+				int r when r <= 20 => 2,
 				_ => 5
 			};
 
-			int axisMin = (int)Math.Floor(min / increment);
-			int axisMax = (int)Math.Ceiling(max / increment);
+			// update min, max, and range with correct values for yStep
+			yMax = yStep * (int)Math.Ceiling(yMax / (double)yStep);
+			yMin = yStep * (int)Math.Floor(yMin / (double)yStep);
+			yRange = yMax - yMin;
 
-			var values = new List<int>();
-
-			for (int i = axisMin; i <= axisMax; i++)
+			var yValues = new List<int>();
+			for (int y = yMin; y <= yMax; y += yStep)
 			{
-				values.Add(i * increment);
+				yValues.Add(y);
 			}
 
-			// if all values are 0, we want to add a few more ticks so the chart doesn't look super weird
-			if (axisMin == 0 && axisMax == 0)
+			if (yValues.All(x => x == 0))
 			{
-				values.AddRange(new int[] { 1, 2, 3, 4, 5 });
-			}
-			
-			var ticks = values.Select(x => new TickView(UILayoutConstraintAxis.Horizontal)
-			{
-				BackgroundColor = UIColor.SystemGrayColor
-			}).ToArray();
-
-			var stackView = new UIStackView(ticks)
-			{
-				Axis = UILayoutConstraintAxis.Vertical,
-				Distribution = UIStackViewDistribution.EqualSpacing
-			};
-			AddSubview(stackView);
-
-			stackView.WidthAnchor.ConstraintEqualTo(TickSize).Active = true;
-			stackView.TopAnchor.ConstraintEqualTo(_yAxisView.TopAnchor).Active = true;
-			stackView.BottomAnchor.ConstraintEqualTo(_yAxisView.BottomAnchor).Active = true;
-			stackView.CenterXAnchor.ConstraintEqualTo(_yAxisView.CenterXAnchor).Active = true;
-
-			stackView.TranslatesAutoresizingMaskIntoConstraints = false;
-
-			UIView yAxisTick = null;
-
-			// add labels
-			for (int i = 0; i < ticks.Length; i++)
-			{
-				var tick = ticks[i];
-				int labelValue = values[^(i + 1)];
-
-				if (labelValue == 0)
-				{
-					yAxisTick = tick;
-				}
-
-				var label = new UILabel()
-				{
-					Text = labelValue.ToString(),
-					Font = UIFont.PreferredCaption2
-				};
-
-				AddSubview(label);
-				label.CenterYAnchor.ConstraintEqualTo(tick.CenterYAnchor).Active = true;
-				label.TrailingAnchor.ConstraintEqualTo(tick.LeadingAnchor, -4).Active = true;
-				label.TranslatesAutoresizingMaskIntoConstraints = false;
+				yValues = new List<int>() { 0, 1, 2, 3, 4, 5 };
+				yMax = 5;
+				yMin = 0;
+				yRange = yMax - yMin;
 			}
 
-			return yAxisTick;
+			var chartSize = new CGSize(rect.Width - AxisOffset * 2, rect.Height - AxisOffset * 2);
+
+			var transform = new CGAffineTransform(chartSize.Width / xRange, 0, 0, -chartSize.Height / yRange, AxisOffset, rect.Height - AxisOffset);
+
+			DrawXAxis(xValues, transform, rect);
+			DrawYAxis(yValues, transform, rect);
+
+			DrawXLabels(xValues, transform);
+			DrawYLabels(yValues, transform);
 		}
 
-		public class TickView : UIView
+		private void DrawXAxis(IEnumerable<int> values, CGAffineTransform transform, CGRect rect)
 		{
-			private readonly UILayoutConstraintAxis _axis;
+			using var context = UIGraphics.GetCurrentContext();
 
-			public TickView(UILayoutConstraintAxis axis)
+			context.AddLines(new[] { new CGPoint(AxisOffset, rect.Height - AxisOffset), new CGPoint(rect.Width - AxisOffset, rect.Height - AxisOffset) });
+
+			var topTransform = CGAffineTransform.MakeTranslation(0, -TickSize / 2);
+			var bottomTransform = CGAffineTransform.MakeTranslation(0, TickSize / 2);
+
+			foreach (int x in values)
 			{
-				_axis = axis;
+				// we don't need a tick at the y axis since we have that drawn
+				if (x == 0)
+				{
+					continue;
+				}
+
+				var point = new CGPoint(x, 0);
+				var transformedPoint = transform.TransformPoint(point);
+
+				var top = topTransform.TransformPoint(transformedPoint);
+				var bottom = bottomTransform.TransformPoint(transformedPoint);
+
+				context.AddLines(new[] { top, bottom });
 			}
 
-			public override CGSize IntrinsicContentSize => _axis switch
+			UIColor.SystemGrayColor.SetStroke();
+
+			context.SetLineWidth(1);
+			context.StrokePath();
+		}
+
+		private void DrawYAxis(IEnumerable<int> values, CGAffineTransform transform, CGRect rect)
+		{
+			using var context = UIGraphics.GetCurrentContext();
+
+			context.AddLines(new[] { new CGPoint(AxisOffset, AxisOffset), new CGPoint(AxisOffset, rect.Height - AxisOffset) });
+
+			var leadingTransform = CGAffineTransform.MakeTranslation(-TickSize / 2, 0);
+			var trailingTransform = CGAffineTransform.MakeTranslation(TickSize / 2, 0);
+
+			foreach (int y in values)
 			{
-				UILayoutConstraintAxis.Horizontal => new CGSize(TickSize, 1),
-				UILayoutConstraintAxis.Vertical => new CGSize(1, TickSize),
-				_ => throw new NotImplementedException()
-			};
+				// we don't need a tick at the x axis since we have that drawn
+				if (y == 0)
+				{
+					continue;
+				}
+
+				var point = new CGPoint(0, y);
+				var transformedPoint = transform.TransformPoint(point);
+
+				var leading = leadingTransform.TransformPoint(transformedPoint);
+				var trailing = trailingTransform.TransformPoint(transformedPoint);
+				context.AddLines(new[] { leading, trailing });
+			}
+
+			UIColor.SystemGrayColor.SetStroke();
+
+			context.SetLineWidth(1);
+			context.StrokePath();
+		}
+
+		private void DrawXLabels(IEnumerable<int> values, CGAffineTransform transform)
+		{
+			foreach (int x in values)
+			{
+				// don't draw the 0 label
+				if (x == 0)
+				{
+					continue;
+				}
+
+				var label = (NSString)x.ToString();
+				var labelSize = label.GetSizeUsingAttributes(_axisStringAttributes);
+
+				var point = new CGPoint(x, 0);
+				var transformedPoint = transform.TransformPoint(point);
+				var xLabelTransform = CGAffineTransform.MakeTranslation(-labelSize.Width / 2, TickSize / 2 + 3);
+				var labelPoint = xLabelTransform.TransformPoint(transformedPoint);
+
+				label.DrawString(labelPoint, _axisStringAttributes);
+			}
+		}
+
+		private void DrawYLabels(IEnumerable<int> values, CGAffineTransform transform)
+		{
+			foreach (int y in values)
+			{
+				// don't draw the 0 label
+				if (y == 0)
+				{
+					continue;
+				}
+
+				var label = (NSString)y.ToString();
+				var labelSize = label.GetSizeUsingAttributes(_axisStringAttributes);
+
+				var point = new CGPoint(0, y);
+				var transformedPoint = transform.TransformPoint(point);
+				var labelTransform = CGAffineTransform.MakeTranslation(-TickSize / 2 - labelSize.Width - 3, -labelSize.Height / 2);
+				var labelPoint = labelTransform.TransformPoint(transformedPoint);
+
+				label.DrawString(labelPoint, _axisStringAttributes);
+			}
 		}
 	}
 }
