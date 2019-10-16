@@ -11,6 +11,7 @@ namespace Counsel.iOS.Graphing
 	{
 		private const int AxisOffset = 20;
 		private const int TickSize = 10;
+		private const int PointSize = 10;
 
 		private IEnumerable<IEnumerable<(ChartEntry Entry, DataPointView View)>> _entries;
 		private IEnumerable<LineData> _lines;
@@ -28,7 +29,7 @@ namespace Counsel.iOS.Graphing
 				.Select(line => line.Entries
 					.Select(entry => (entry, new DataPointView()
 					{
-						Size = 10,
+						Size = PointSize,
 						Color = line.Color
 					}))
 					.ToList())
@@ -113,23 +114,14 @@ namespace Counsel.iOS.Graphing
 
 		private void UpdateDataPoints(CGAffineTransform transform)
 		{
-			bool shouldUpdateLayout = false;
-
-			// update data points if needed
-
 			foreach (var (entry, view) in _entries.SelectMany(x => x))
 			{
-				var calculatedPoint = transform.TransformPoint(entry.Point);
-				if (!view.Frame.Location.IsEqualTo(calculatedPoint))
+				double shift = -PointSize / 2.0;
+				var calculatedPoint = transform.TransformPoint(entry.Point).Translate(shift, shift);
+				if (!view.Point.IsEqualTo(calculatedPoint))
 				{
-					view.Frame = new CGRect(calculatedPoint, new CGSize(10, 10));
-					shouldUpdateLayout = true;
+					view.Point = calculatedPoint;
 				}
-			}
-
-			if (shouldUpdateLayout)
-			{
-				SetNeedsLayout();
 			}
 		}
 

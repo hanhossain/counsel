@@ -1,5 +1,4 @@
-﻿using System;
-using CoreGraphics;
+﻿using CoreGraphics;
 using UIKit;
 
 namespace Counsel.iOS.Graphing
@@ -11,20 +10,27 @@ namespace Counsel.iOS.Graphing
 			BackgroundColor = UIColor.Clear;
 		}
 
-		//public CGPoint Point
-		//{
-		//	get => Frame.Location;
-		//	set
-		//	{
-		//		Frame = new CGRect(value, new CGSize(Size, Size));
-		//		// TODO: does this need to be set needs layout instead?
-		//		//SetNeedsDisplay();
-		//	}
-		//}
+		public CGPoint Point
+		{
+			get => Frame.Location;
+			set
+			{
+				Frame = new CGRect(value, Frame.Size);
+				SetNeedsDisplay();
+			}
+		}
 
 		public UIColor Color { get; set; } = UIColor.SystemRedColor;
 
-		public double Size { get; set; }
+		public double Size
+		{
+			get => Frame.Height;
+			set
+			{
+				Frame = new CGRect(Frame.Location, new CGSize(value, value));
+				SetNeedsDisplay();
+			}
+		}
 
 		public override void Draw(CGRect rect)
 		{

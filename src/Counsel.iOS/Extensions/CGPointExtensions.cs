@@ -9,5 +9,10 @@ namespace CoreGraphics
 			bool yEqual = Math.Abs(point.Y - targetPoint.Y) < 0.01;
 			return xEqual && yEqual;
 		}
+
+		public static CGPoint Translate(this CGPoint point, double dx, double dy)
+		{
+			return new CGPoint(point.X + dx, point.Y + dy);
+		}
 	}
 }
