@@ -12,30 +12,43 @@ namespace Counsel.iOS.Graphing
 		private const int AxisOffset = 20;
 		private const int TickSize = 10;
 
-		private IEnumerable<ChartEntry> _entries;
+		private IEnumerable<IEnumerable<(ChartEntry Entry, DataPointView View)>> _entries;
+		private IEnumerable<LineData> _lines;
+
 		private readonly UIStringAttributes _axisStringAttributes = new UIStringAttributes()
 		{
 			ForegroundColor = UIColor.SystemGrayColor,
 			Font = UIFont.PreferredCaption2
 		};
 
-		public LineChartView(IEnumerable<ChartEntry> entries)
+		public LineChartView(params LineData[] lines)
 		{
-			_entries = entries ?? throw new ArgumentNullException(nameof(entries));
+			_lines = lines ?? throw new ArgumentNullException(nameof(lines));
+			_entries = lines
+				.Select(line => line.Entries
+					.Select(entry => (entry, new DataPointView()
+					{
+						Size = 10,
+						Color = line.Color
+					}))
+					.ToList())
+				.ToList();
+
+			var views = _entries.SelectMany(x => x.Select(y => y.View)).ToArray();
+			AddSubviews(views);
 		}
 
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
-
 			SetNeedsDisplay();
 		}
 
 		public override void Draw(CGRect rect)
 		{
 			// get max, min, and range values
-			int xMax = (int)Math.Ceiling(_entries.Max(x => x.X));
-			int xMin = (int)Math.Floor(_entries.Min(x => x.Y));
+			int xMax = (int)Math.Ceiling(_entries.SelectMany(x => x).Max(x => x.Entry.X));
+			int xMin = (int)Math.Floor(_entries.SelectMany(x => x).Min(x => x.Entry.X));
 			int xRange = xMax - xMin;
 
 			var xValues = new List<int>();
@@ -44,8 +57,8 @@ namespace Counsel.iOS.Graphing
 				xValues.Add(x);
 			}
 
-			int yMax = (int)Math.Ceiling(_entries.Max(x => x.Y));
-			int yMin = (int)Math.Floor(_entries.Min(x => x.Y));
+			int yMax = (int)Math.Ceiling(_entries.SelectMany(x => x).Max(x => x.Entry.Y));
+			int yMin = (int)Math.Floor(_entries.SelectMany(x => x).Min(x => x.Entry.Y));
 
 			// always show the axis
 			if (yMax < 0)
@@ -94,6 +107,30 @@ namespace Counsel.iOS.Graphing
 
 			DrawXLabels(xValues, transform);
 			DrawYLabels(yValues, transform);
+
+			UpdateDataPoints(transform);
+		}
+
+		private void UpdateDataPoints(CGAffineTransform transform)
+		{
+			bool shouldUpdateLayout = false;
+
+			// update data points if needed
+
+			foreach (var (entry, view) in _entries.SelectMany(x => x))
+			{
+				var calculatedPoint = transform.TransformPoint(entry.Point);
+				if (!view.Frame.Location.IsEqualTo(calculatedPoint))
+				{
+					view.Frame = new CGRect(calculatedPoint, new CGSize(10, 10));
+					shouldUpdateLayout = true;
+				}
+			}
+
+			if (shouldUpdateLayout)
+			{
+				SetNeedsLayout();
+			}
 		}
 
 		private void DrawXAxis(IEnumerable<int> values, CGAffineTransform transform, CGRect rect)

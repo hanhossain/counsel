@@ -30,7 +30,13 @@ namespace Counsel.iOS.Controllers
 				Y = points.Points
 			}).ToList();
 
-			var chartView = new LineChartView(entries)
+			var lineData = new LineData()
+			{
+				Entries = entries,
+				Color = UIColor.SystemRedColor
+			};
+
+			var chartView = new LineChartView(lineData)
 			{
 				BackgroundColor = UIColor.Clear
 			};

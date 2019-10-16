@@ -11,7 +11,20 @@ namespace Counsel.iOS.Graphing
 			BackgroundColor = UIColor.Clear;
 		}
 
-		public CGColor Color { get; set; } = UIColor.SystemRedColor.CGColor;
+		//public CGPoint Point
+		//{
+		//	get => Frame.Location;
+		//	set
+		//	{
+		//		Frame = new CGRect(value, new CGSize(Size, Size));
+		//		// TODO: does this need to be set needs layout instead?
+		//		//SetNeedsDisplay();
+		//	}
+		//}
+
+		public UIColor Color { get; set; } = UIColor.SystemRedColor;
+
+		public double Size { get; set; }
 
 		public override void Draw(CGRect rect)
 		{
@@ -19,7 +32,7 @@ namespace Counsel.iOS.Graphing
 
 			context.AddCircle(rect.GetMidX(), rect.GetMidY(), rect.Height / 2);
 			context.SetLineWidth(0);
-			context.SetFillColor(Color);
+			context.SetFillColor(Color.CGColor);
 			context.DrawPath(CGPathDrawingMode.Fill);
 		}
 	}

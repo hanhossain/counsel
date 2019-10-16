@@ -176,6 +176,7 @@
         <Compile Include="Extensions\CGContextExtensions.cs" />
         <Compile Include="Graphing\ChartEntry.cs" />
         <Compile Include="Graphing\LineData.cs" />
+        <Compile Include="Extensions\CGPointExtensions.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Counsel.Core\Counsel.Core.csproj">
