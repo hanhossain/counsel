@@ -24,19 +24,27 @@ namespace Counsel.iOS.Controllers
 			doneButton.Clicked += DoneButton_Clicked;
 			NavigationItem.RightBarButtonItem = doneButton;
 
-			var entries = _playerStats.Weeks.Zip(_playerStats.Points, (week, points) => new ChartEntry()
-			{
-				X = week,
-				Y = points.Points
-			}).ToList();
-
 			var lineData = new LineData()
 			{
-				Entries = entries,
+				Entries = _playerStats.Weeks.Zip(_playerStats.Points, (week, points) => new ChartEntry()
+				{
+					X = week,
+					Y = points.Points
+				}).ToList(),
 				Color = UIColor.SystemRedColor
 			};
 
-			var chartView = new LineChartView(lineData)
+			var projectedLineData = new LineData()
+			{
+				Entries = _playerStats.Weeks.Zip(_playerStats.Points, (week, points) => new ChartEntry()
+				{
+					X = week,
+					Y = points.Projected
+				}).ToList(),
+				Color = UIColor.SystemTealColor
+			};
+
+			var chartView = new LineChartView(lineData, projectedLineData)
 			{
 				BackgroundColor = UIColor.Clear
 			};

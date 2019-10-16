@@ -13,8 +13,7 @@ namespace Counsel.iOS.Graphing
 		private const int TickSize = 10;
 		private const int PointSize = 10;
 
-		private IEnumerable<IEnumerable<(ChartEntry Entry, DataPointView View)>> _entries;
-		private IEnumerable<LineData> _lines;
+		private readonly IEnumerable<IEnumerable<(ChartEntry Entry, DataPointView View)>> _entries;
 
 		private readonly UIStringAttributes _axisStringAttributes = new UIStringAttributes()
 		{
@@ -24,8 +23,7 @@ namespace Counsel.iOS.Graphing
 
 		public LineChartView(params LineData[] lines)
 		{
-			_lines = lines ?? throw new ArgumentNullException(nameof(lines));
-			_entries = lines
+			_entries = lines?
 				.Select(line => line.Entries
 					.Select(entry => (entry, new DataPointView()
 					{
@@ -33,9 +31,9 @@ namespace Counsel.iOS.Graphing
 						Color = line.Color
 					}))
 					.ToList())
-				.ToList();
+				.ToList() ?? throw new ArgumentNullException(nameof(lines));
 
-			var views = _entries.SelectMany(x => x.Select(y => y.View)).ToArray();
+			var views = _entries.SelectMany(x => x.Select(y => y.View)).Reverse().ToArray();
 			AddSubviews(views);
 		}
 
