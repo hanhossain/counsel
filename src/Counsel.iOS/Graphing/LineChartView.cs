@@ -13,6 +13,7 @@ namespace Counsel.iOS.Graphing
 		private const int TickSize = 10;
 		private const int PointSize = 10;
 
+		private readonly IEnumerable<LineData> _lines;
 		private readonly IEnumerable<IEnumerable<(ChartEntry Entry, DataPointView View)>> _entries;
 
 		private readonly UIStringAttributes _axisStringAttributes = new UIStringAttributes()
@@ -23,7 +24,8 @@ namespace Counsel.iOS.Graphing
 
 		public LineChartView(params LineData[] lines)
 		{
-			_entries = lines?
+			_lines = lines ?? throw new ArgumentNullException(nameof(lines));
+			_entries = lines
 				.Select(line => line.Entries
 					.Select(entry => (entry, new DataPointView()
 					{
@@ -48,6 +50,12 @@ namespace Counsel.iOS.Graphing
 			// get max, min, and range values
 			int xMax = (int)Math.Ceiling(_entries.SelectMany(x => x).Max(x => x.Entry.X));
 			int xMin = (int)Math.Floor(_entries.SelectMany(x => x).Min(x => x.Entry.X));
+
+			if (xMin > 0)
+			{
+				xMin = 0;
+			}
+
 			int xRange = xMax - xMin;
 
 			var xValues = new List<int>();
@@ -108,6 +116,8 @@ namespace Counsel.iOS.Graphing
 			DrawYLabels(yValues, transform);
 
 			UpdateDataPoints(transform);
+
+			DrawLines(transform);
 		}
 
 		private void UpdateDataPoints(CGAffineTransform transform)
@@ -227,6 +237,20 @@ namespace Counsel.iOS.Graphing
 				var labelPoint = labelTransform.TransformPoint(transformedPoint);
 
 				label.DrawString(labelPoint, _axisStringAttributes);
+			}
+		}
+
+		private void DrawLines(CGAffineTransform transform)
+		{
+			using var context = UIGraphics.GetCurrentContext();
+
+			foreach (var line in _lines.Reverse())
+			{
+				var points = line.Entries.Select(x => transform.TransformPoint(x.Point)).ToArray();
+				context.AddLines(points);
+				line.Color.SetStroke();
+				context.SetLineWidth(1);
+				context.StrokePath();
 			}
 		}
 	}
