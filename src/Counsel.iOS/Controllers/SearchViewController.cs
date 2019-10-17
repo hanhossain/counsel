@@ -1,14 +1,17 @@
 ﻿using System;
 using Counsel.iOS.Views;
+using Foundation;
 using UIKit;
 
 namespace Counsel.iOS.Controllers
 {
-	public class SearchViewController : UIViewController
+	public class SearchViewController : UITableViewController
 	{
+		private const string _searchCellId = "searchCell";
+
 		private readonly ISearchDelegate _searchDelegate;
 
-		private PaddedTextField _playerField;
+		private Func<string> _getPlayerName;
 
 		public SearchViewController(ISearchDelegate searchDelegate)
 		{
@@ -18,10 +21,8 @@ namespace Counsel.iOS.Controllers
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-
+			TableView.RegisterClassForCellReuse<TextFieldTableViewCell>(_searchCellId);
 			Title = "Search";
-
-			View.BackgroundColor = UIColor.SystemBackgroundColor;
 
 			var cancelButton = new UIBarButtonItem(UIBarButtonSystemItem.Cancel);
 			cancelButton.Clicked += CancelButton_Clicked;
@@ -30,35 +31,32 @@ namespace Counsel.iOS.Controllers
 			var doneButton = new UIBarButtonItem(UIBarButtonSystemItem.Done);
 			doneButton.Clicked += DoneButton_Clicked;
 			NavigationItem.RightBarButtonItem = doneButton;
+		}
 
-			var playerLabel = new UILabel()
-			{
-				Text = "Player name",
-				Font = UIFont.PreferredBody
-			};
-			View.AddSubview(playerLabel);
+		public override nint NumberOfSections(UITableView tableView)
+		{
+			return 1;
+		}
 
-			_playerField = new PaddedTextField()
-			{
-				Padding = new UIEdgeInsets(10, 10, 10, 10),
-				Font = UIFont.PreferredBody,
-				Layer =
-				{
-					BackgroundColor = UIColor.SecondarySystemBackgroundColor.CGColor,
-					CornerRadius = 5
-				}
-			};
-			View.AddSubview(_playerField);
+		public override string TitleForHeader(UITableView tableView, nint section)
+		{
+			return "Search";
+		}
 
-			playerLabel.LeadingAnchor.ConstraintEqualTo(View.SafeAreaLayoutGuide.LeadingAnchor, 16).Active = true;
-			playerLabel.BottomAnchor.ConstraintEqualTo(_playerField.TopAnchor, -8).Active = true;
+		public override nint RowsInSection(UITableView tableView, nint section)
+		{
+			return 1;
+		}
 
-			_playerField.CenterYAnchor.ConstraintEqualTo(View.CenterYAnchor).Active = true;
-			_playerField.LeadingAnchor.ConstraintEqualTo(View.SafeAreaLayoutGuide.LeadingAnchor, 16).Active = true;
-			_playerField.TrailingAnchor.ConstraintEqualTo(View.SafeAreaLayoutGuide.TrailingAnchor, -16).Active = true;
+		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+		{
+			var cell = tableView.DequeueReusableCell<TextFieldTableViewCell>(_searchCellId, indexPath);
 
-			playerLabel.TranslatesAutoresizingMaskIntoConstraints = false;
-			_playerField.TranslatesAutoresizingMaskIntoConstraints = false;
+			cell.TextField.Placeholder = "Player name";
+
+			_getPlayerName = () => cell.TextField.Text;
+
+			return cell;
 		}
 
 		private void CancelButton_Clicked(object sender, EventArgs e)
@@ -68,7 +66,7 @@ namespace Counsel.iOS.Controllers
 
 		private async void DoneButton_Clicked(object sender, EventArgs e)
 		{
-			string playerName = _playerField.Text;
+			string playerName = _getPlayerName?.Invoke();
 
 			if (!string.IsNullOrWhiteSpace(playerName))
 			{
