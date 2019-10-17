@@ -57,6 +57,31 @@ namespace Counsel.iOS.Controllers
 			chartView.HeightAnchor.ConstraintEqualTo(chartView.WidthAnchor).Active = true;
 
 			chartView.TranslatesAutoresizingMaskIntoConstraints = false;
+
+			var pointsLabelView = new UILabel()
+			{
+				Text = "Points",
+				TextColor = UIColor.SystemRedColor,
+				TranslatesAutoresizingMaskIntoConstraints = false
+			};
+
+			View.AddSubview(pointsLabelView);
+
+			pointsLabelView.CenterXAnchor.ConstraintEqualTo(chartView.CenterXAnchor).Active = true;
+			pointsLabelView.TopAnchor.ConstraintEqualTo(chartView.BottomAnchor, 16).Active = true;
+
+
+			var projectedPointsLabelView = new UILabel()
+			{
+				Text = "Projected points",
+				TextColor = UIColor.SystemTealColor,
+				TranslatesAutoresizingMaskIntoConstraints = false
+			};
+
+			View.AddSubview(projectedPointsLabelView);
+
+			projectedPointsLabelView.TopAnchor.ConstraintEqualTo(pointsLabelView.BottomAnchor, 8).Active = true;
+			projectedPointsLabelView.CenterXAnchor.ConstraintEqualTo(pointsLabelView.CenterXAnchor).Active = true;
 		}
 
 		private void DoneButton_Clicked(object sender, System.EventArgs e)
