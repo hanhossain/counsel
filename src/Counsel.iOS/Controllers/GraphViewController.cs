@@ -54,12 +54,7 @@ namespace Counsel.iOS.Controllers
 			chartView.LeadingAnchor.ConstraintEqualTo(View.SafeAreaLayoutGuide.LeadingAnchor, 16).Active = true;
 			chartView.TrailingAnchor.ConstraintEqualTo(View.SafeAreaLayoutGuide.TrailingAnchor, -16).Active = true;
 			chartView.TopAnchor.ConstraintEqualTo(View.SafeAreaLayoutGuide.TopAnchor, 16).Active = true;
-
-			var optionalHeightConstaint = chartView.HeightAnchor.ConstraintEqualTo(chartView.WidthAnchor);
-			optionalHeightConstaint.Priority = 750;
-			optionalHeightConstaint.Active = true;
-
-			chartView.BottomAnchor.ConstraintLessThanOrEqualTo(View.SafeAreaLayoutGuide.BottomAnchor).Active = true;
+			chartView.HeightAnchor.ConstraintEqualTo(chartView.WidthAnchor).Active = true;
 
 			chartView.TranslatesAutoresizingMaskIntoConstraints = false;
 		}
