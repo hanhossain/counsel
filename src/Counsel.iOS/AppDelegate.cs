@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using Counsel.Core;
 using Counsel.Core.Espn;
+using Counsel.Core.Nfl;
 using Counsel.Core.Sleeper;
 using Counsel.iOS.Controllers;
 using Foundation;
@@ -24,7 +25,8 @@ namespace Counsel.iOS
 			HttpClient httpClient = new HttpClient();
 			ISleeperClient sleeperClient = new SleeperClient(httpClient);
 			IEspnClient espnClient = new EspnClient(httpClient);
-			IFantasyService fantasyService = new FantasyService(sleeperClient, espnClient);
+			INflClient nflClient = new NflClient(httpClient);
+			IFantasyService fantasyService = new FantasyService(sleeperClient, espnClient, nflClient);
 
 			Window = new UIWindow(UIScreen.MainScreen.Bounds)
 			{

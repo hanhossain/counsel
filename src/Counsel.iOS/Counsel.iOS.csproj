@@ -178,6 +178,7 @@
         <Compile Include="Graphing\LineData.cs" />
         <Compile Include="Extensions\CGPointExtensions.cs" />
         <Compile Include="Views\TextFieldTableViewCell.cs" />
+        <Compile Include="Controllers\WeekDetailViewController.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Counsel.Core\Counsel.Core.csproj">

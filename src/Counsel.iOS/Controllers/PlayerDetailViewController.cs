@@ -77,7 +77,7 @@ namespace Counsel.iOS.Controllers
 		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
 		{
 			UITableViewCell cell = indexPath.Section == 0
-				? TableView.DequeueReusableCell<RightDetailTableViewCell>(_calculatedDetailCellId, indexPath)
+				? tableView.DequeueReusableCell<RightDetailTableViewCell>(_calculatedDetailCellId, indexPath)
 				: (UITableViewCell) tableView.DequeueReusableCell<SubtitleTableViewCell>(_rawDetailCellId, indexPath);
 
 			if (_playerStats != null)
@@ -108,6 +108,18 @@ namespace Counsel.iOS.Controllers
 			}
 
 			return cell;
+		}
+
+		public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+		{
+			// only continue if a 'raw stats' row is selected
+			if (indexPath.Section == 1)
+			{
+				var weekDetailController = new WeekDetailViewController(_fantasyService, _player, _playerStats, _playerStats.Weeks[indexPath.Row]);
+				NavigationController.PushViewController(weekDetailController, true);
+			}
+
+			tableView.DeselectRow(indexPath, true);
 		}
 
 		public override string TitleForHeader(UITableView tableView, nint section)

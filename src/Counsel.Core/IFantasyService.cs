@@ -15,5 +15,7 @@ namespace Counsel.Core
 		Task<bool> ContainsStatsAsync();
 
 		Task<Dictionary<string, Player>> SearchPlayersAsync(string playerName);
+
+		Task<List<Player>> GetOpponentsAsync(string playerId, int season, int week);
 	}
 }

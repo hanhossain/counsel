@@ -4,6 +4,8 @@ namespace Counsel.Core.Models
 {
 	public class PlayerStats
 	{
+		public int Season { get; set; }
+
 		public List<int> Weeks { get; set; }
 
 		public List<(double Points, double Projected)> Points { get; set; }
