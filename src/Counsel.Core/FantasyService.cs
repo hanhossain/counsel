@@ -121,7 +121,8 @@ namespace Counsel.Core
 					projected.TryGetValue(playerId, out var playerProjected);
 					return (playerStats?.Points ?? 0, playerProjected?.Points ?? 0);
 				}).ToList(),
-				Season = season
+				Season = season,
+				PlayerId = playerId
 			};
 
 			// calculated stats requires at least one week to have passed
@@ -161,7 +162,7 @@ namespace Counsel.Core
 				.ToDictionary(x => x.Id, x => x);
 		}
 
-		public async Task<List<Player>> GetOpponentsAsync(string playerId, int season, int week)
+		public async Task<Dictionary<string, List<Player>>> GetOpponentsAsync(string playerId, int season, int week)
 		{
 			using var lockToken = await _asyncLock.LockAsync();
 
@@ -192,8 +193,6 @@ namespace Counsel.Core
 			var opposingPlayers = allOnOpposingTeam.Where(x => opposingPosition.Contains(x.Position));
 
 			return opposingPlayers
-				.OrderBy(x => x.LastName)
-				.ThenBy(x => x.FirstName)
 				.Select(x => new Player()
 				{
 					FirstName = x.FirstName,
@@ -202,7 +201,12 @@ namespace Counsel.Core
 					Position = x.Position,
 					Team = x.Team
 				})
-				.ToList();
+				.GroupBy(x => x.Position)
+				.ToDictionary(
+					x => x.Key,
+					x => x.OrderBy(y => y.LastName)
+						.ThenBy(y => y.FirstName)
+						.ToList());
 		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Counsel.Core;
 using Counsel.Core.Models;
 using Counsel.iOS.Views;
@@ -17,7 +19,9 @@ namespace Counsel.iOS.Controllers
 		private readonly PlayerStats _playerStats;
 		private readonly int _week;
 
-		private List<Player> _opponents = new List<Player>();
+		private Dictionary<string, List<Player>> _opponents = new Dictionary<string, List<Player>>();
+		private List<string> _positions = new List<string>();
+		private Dictionary<string, PlayerStats> _opponentStats = new Dictionary<string, PlayerStats>();
 
 		public WeekDetailViewController(IFantasyService fantasyService, Player player, PlayerStats playerStats, int week)
 		{
@@ -30,36 +34,57 @@ namespace Counsel.iOS.Controllers
 		public override async void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-			Title = $"{_player.FullName} - Week: {_week}";
-			TableView.RegisterClassForCellReuse<SubtitleTableViewCell>(_cellId);
+			TableView.RegisterClassForCellReuse<RightDetailTableViewCell>(_cellId);
+			Title = $"Week: {_week} - {_player.Team}";
 
 			_opponents = await _fantasyService.GetOpponentsAsync(_player.Id, _playerStats.Season, _week);
+			_positions = _opponents.Keys.OrderBy(x => x).ToList();
 
-			InvokeOnMainThread(() => TableView.ReloadData());
+			var opponentStats = await Task.WhenAll(_opponents.Values
+				.SelectMany(x => x)
+				.Select(x => _fantasyService.GetStatsAsync(x.Id)));
+
+			_opponentStats = opponentStats.ToDictionary(x => x.PlayerId, x => x);
+
+			string opponentTeam = _opponents.Values.SelectMany(x => x).FirstOrDefault()?.Team;
+
+			InvokeOnMainThread(() =>
+			{
+				Title = $"Week: {_week} - {_player.Team} vs {opponentTeam}";
+				TableView.ReloadData();
+			});
 		}
 
 		public override nint NumberOfSections(UITableView tableView)
 		{
-			return 1;
+			return _positions.Count;
 		}
 
 		public override nint RowsInSection(UITableView tableView, nint section)
 		{
-			return _opponents.Count;
+			string position = _positions[(int)section];
+			return _opponents[position].Count;
 		}
 
 		public override string TitleForHeader(UITableView tableView, nint section)
 		{
-			return "Opponents";
+			return _positions[(int)section];
 		}
 
 		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
 		{
-			var cell = tableView.DequeueReusableCell<SubtitleTableViewCell>(_cellId, indexPath);
+			var cell = tableView.DequeueReusableCell<RightDetailTableViewCell>(_cellId, indexPath);
 
-			var opponent = _opponents[indexPath.Row];
+			string position = _positions[indexPath.Section];
+			var opponent = _opponents[position][indexPath.Row];
+
 			cell.TextLabel.Text = opponent.FullName;
-			cell.DetailTextLabel.Text = $"{opponent.Position} - {opponent.Team}";
+
+			var opponentStats = _opponentStats[opponent.Id];
+
+			int index = opponentStats.Weeks.IndexOf(_week);
+			cell.DetailTextLabel.Text = opponentStats.Points[index].Points.ToString();
+
 			return cell;
 		}
 	}

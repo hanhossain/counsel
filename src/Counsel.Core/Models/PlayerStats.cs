@@ -19,5 +19,7 @@ namespace Counsel.Core.Models
 		public double Range { get; set; }
 
 		public double PopStdDev { get; set; }
+
+		public string PlayerId { get; set; }
 	}
 }
