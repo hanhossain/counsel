@@ -130,11 +130,12 @@ namespace Counsel.Core
 			{
 				var points = result.Points.Select(x => x.Points).ToList();
 
-				result.Average = points.Average();
+				result.Mean = points.Average();
+				result.Median = GetMedian(points);
 				result.Max = points.Max();
 				result.Min = points.Min();
 				result.Range = result.Max - result.Min;
-				result.PopStdDev = Math.Sqrt(points.Sum(x => Math.Pow(x - result.Average, 2)) / points.Count);
+				result.PopStdDev = Math.Sqrt(points.Sum(x => Math.Pow(x - result.Mean, 2)) / points.Count);
 			}
 			
 			return result;
@@ -207,6 +208,27 @@ namespace Counsel.Core
 					x => x.OrderBy(y => y.LastName)
 						.ThenBy(y => y.FirstName)
 						.ToList());
+		}
+
+		private static double GetMedian(List<double> values)
+		{
+			if (!values.Any())
+			{
+				throw new InvalidOperationException($"{nameof(values)} contains no elements");
+			}
+
+			var sorted = values.OrderBy(x => x).ToList();
+			int middleIndex = sorted.Count / 2;
+			double middleValue = sorted[middleIndex];
+
+			if (sorted.Count % 2 == 0)
+			{
+				double otherMiddle = sorted[middleIndex + 1];
+
+				middleValue = (middleValue + otherMiddle) / 2.0;
+			}
+
+			return middleValue;
 		}
 	}
 }

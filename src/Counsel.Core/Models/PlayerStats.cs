@@ -10,7 +10,9 @@ namespace Counsel.Core.Models
 
 		public List<(double Points, double Projected)> Points { get; set; }
 
-		public double Average { get; set; }
+		public double Mean { get; set; }
+
+		public double Median { get; set; }
 
 		public double Max { get; set; }
 
