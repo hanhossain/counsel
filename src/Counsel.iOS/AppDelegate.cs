@@ -1,10 +1,16 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
 using Counsel.Core;
 using Counsel.Core.Espn;
 using Counsel.Core.Nfl;
 using Counsel.Core.Sleeper;
 using Counsel.iOS.Controllers;
 using Foundation;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using UIKit;
 
 namespace Counsel.iOS
@@ -22,6 +28,10 @@ namespace Counsel.iOS
         {
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method
+
+			var settings = GetSettings();
+			AppCenter.Start(settings["AppCenterSecret"], typeof(Analytics), typeof(Crashes));
+
 			HttpClient httpClient = new HttpClient();
 			ISleeperClient sleeperClient = new SleeperClient(httpClient);
 			IEspnClient espnClient = new EspnClient(httpClient);
@@ -35,7 +45,7 @@ namespace Counsel.iOS
 
             Window.MakeKeyAndVisible();
 
-            return true;
+			return true;
         }
 
         public override void OnResignActivation(UIApplication application)
@@ -68,6 +78,13 @@ namespace Counsel.iOS
         {
             // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
         }
+
+		private static Dictionary<string, string> GetSettings()
+		{
+			// TODO: use the microsoft way from Microsoft.Extensions.Configuration
+			string json = File.ReadAllText("config.json");
+			return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+		}
     }
 }
 
