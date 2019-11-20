@@ -46,6 +46,7 @@ namespace Counsel.Core.Sleeper.Models
 
 		public string Status { get; set; }
 
+		[JsonConverter(typeof(TrimmedStringConverter))]
 		[JsonProperty("gsis_id")]
 		public string GsisId { get; set; }
 

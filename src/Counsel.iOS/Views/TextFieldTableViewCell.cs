@@ -17,6 +17,7 @@ namespace Counsel.iOS.Views
 
 			AddSubview(TextField);
 
+			// TODO: find broken constraint
 			TextField.TopAnchor.ConstraintEqualTo(TopAnchor).Active = true;
 			TextField.BottomAnchor.ConstraintEqualTo(BottomAnchor).Active = true;
 			TextField.LeadingAnchor.ConstraintEqualTo(LeadingAnchor).Active = true;
