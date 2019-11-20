@@ -68,7 +68,7 @@ namespace Counsel.iOS.Controllers
 
 			return (int)section switch
 			{
-				0 => _playerStats.Weeks.Any() ? 5 : 0,
+				0 => _playerStats.Weeks.Any() ? 6 : 0,
 				1 => _playerStats.Weeks.Count,
 				_ => throw new ArgumentException("Invalid section", nameof(section))
 			};
@@ -86,11 +86,12 @@ namespace Counsel.iOS.Controllers
 				{
 					(string label, double stat) = indexPath.Row switch
 					{
-						0 => ("Average", _playerStats.Average),
-						1 => ("Max", _playerStats.Max),
-						2 => ("Min", _playerStats.Min),
-						3 => ("Range", _playerStats.Range),
-						4 => ("Std Dev", _playerStats.PopStdDev),
+						0 => ("Mean", _playerStats.Mean),
+						1 => ("Median", _playerStats.Median),
+						2 => ("Max", _playerStats.Max),
+						3 => ("Min", _playerStats.Min),
+						4 => ("Range", _playerStats.Range),
+						5 => ("Std Dev", _playerStats.PopStdDev),
 						_ => throw new ArgumentException("Invalid indexPath", nameof(indexPath))
 					};
 
