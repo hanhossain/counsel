@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using Counsel.Core;
+using Counsel.Core.Database;
 using Counsel.Core.Espn;
 using Counsel.Core.Nfl;
 using Counsel.iOS.Controllers;
@@ -16,7 +17,7 @@ namespace Counsel.iOS
 	[Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
-        // class-level declarations
+		private DatabaseContext _context;
 
         public override UIWindow Window { get; set; }
 
@@ -29,7 +30,10 @@ namespace Counsel.iOS
 			HttpClient httpClient = new HttpClient();
 			IEspnClient espnClient = new EspnClient(httpClient);
 			INflClient nflClient = new NflClient(httpClient);
-			IFantasyService fantasyService = new FantasyService(espnClient, nflClient);
+
+			_context = new DatabaseContext();
+			IFantasyDatabase fantasyDatabase = new FantasyDatabase(_context);
+			IFantasyService fantasyService = new FantasyService(fantasyDatabase, espnClient, nflClient);
 
 			Window = new UIWindow(UIScreen.MainScreen.Bounds)
 			{
@@ -69,7 +73,8 @@ namespace Counsel.iOS
 
         public override void WillTerminate(UIApplication application)
         {
-            // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
+			// Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
+			_context?.Dispose();
         }
     }
 }

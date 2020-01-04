@@ -12,7 +12,9 @@ namespace Counsel.Core
 	{
 		private static readonly HashSet<string> _offensivePositions = new HashSet<string>() { "QB", "RB", "WR", "TE", "K" };
 		private static readonly HashSet<string> _defensivePositions = new HashSet<string>() { "DEF" };
+
 		private readonly AsyncLock _asyncLock = new AsyncLock();
+		private readonly Database.IFantasyDatabase _fantasyDatabase;
 		private readonly IEspnClient _espnClient;
 		private readonly INflClient _nflClient;
 
@@ -23,8 +25,9 @@ namespace Counsel.Core
 		private int? _season;
 		private int? _week;
 
-		public FantasyService(IEspnClient espnClient, INflClient nflClient)
+		public FantasyService(Database.IFantasyDatabase fantasyDatabase, IEspnClient espnClient, INflClient nflClient)
 		{
+			_fantasyDatabase = fantasyDatabase;
 			_espnClient = espnClient;
 			_nflClient = nflClient;
 		}
@@ -33,51 +36,30 @@ namespace Counsel.Core
 		{
 			(int season, int week) = await GetCurrentWeekAsync();
 
-			//if (_players == null)
-			//{
-			//	using var lockToken = await _asyncLock.LockAsync();
-
-			//	if (_players == null)
-			//	{
-			//		var validPositions = _offensivePositions.Union(_defensivePositions).ToHashSet();
-
-			//		var tasks = Enumerable.Range(1, 17).Select(x => _nflClient.GetAdvancedStatsAsync(season, x)).ToList();
-
-			//		Dictionary<string, List<NflAdvancedStats>>[] advancedSeasonStats = await Task.WhenAll(tasks);
-
-			//		var a = advancedSeasonStats.SelectMany(x => x.Values.SelectMany(y => y));
-
-			//		//var players = await _sleeperClient.GetPlayersAsync();
-
-			//		_players = players.Values
-			//			.Where(x => x.Active && validPositions.Contains(x.Position))
-			//			.ToDictionary(x => x.PlayerId, x => x);
-			//	}
-			//}
-
-			//return _players.Values.Select(x => new Player()
-			//{
-			//	Id = x.PlayerId,
-			//	FirstName = x.FirstName,
-			//	LastName = x.LastName,
-			//	Position = x.Position,
-			//	Team = x.Team
-			//}).ToDictionary(x => x.Id, x => x);
-
-			return new Dictionary<string, Player>()
+			if (!await _fantasyDatabase.PlayersExistAsync())
 			{
+				var tasks = Enumerable.Range(1, week)
+					.Select(x => _nflClient.GetAdvancedStatsAsync(season, x))
+					.ToList();
+
+				var advancedSeasonStats = await Task.WhenAll(tasks);
+
+				foreach (var advancedWeekStats in advancedSeasonStats)
 				{
-					"KC",
-					new Player()
-					{
-						Id = "KC",
-						FirstName = "Kansas City",
-						LastName = "Chiefs",
-						Position = "DEF",
-						Team = "KC"
-					}
+					await _fantasyDatabase.UpdatePlayersAsync(advancedWeekStats.Values.SelectMany(x => x));
 				}
-			};
+			}
+
+			var players = await _fantasyDatabase.GetPlayersAsync();
+
+			return players.Select(x => new Player()
+			{
+				Id = x.Id,
+				FirstName = x.FirstName,
+				LastName = x.LastName,
+				Position = x.Position,
+				Team = x.Team
+			}).ToDictionary(x => x.Id, x => x);
 		}
 
 		public async Task<(int Season, int Week)> GetCurrentWeekAsync()
