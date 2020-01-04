@@ -195,10 +195,5 @@
     <ItemGroup>
       <LinkDescription Include="LinkDescription.xml" />
     </ItemGroup>
-    <ItemGroup>
-      <BundleResource Include="config.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </BundleResource>
-    </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
