@@ -4,6 +4,8 @@ namespace Counsel.Core.Nfl
 {
 	public class NflAdvancedStats
 	{
+		public string Id { get; set; }
+
 		[JsonConverter(typeof(NflOptionalStringConverter))]
 		public string GsisPlayerId { get; set; }
 

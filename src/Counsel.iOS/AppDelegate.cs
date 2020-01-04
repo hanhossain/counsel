@@ -2,7 +2,6 @@
 using Counsel.Core;
 using Counsel.Core.Espn;
 using Counsel.Core.Nfl;
-using Counsel.Core.Sleeper;
 using Counsel.iOS.Controllers;
 using Foundation;
 using Microsoft.AppCenter;
@@ -28,10 +27,9 @@ namespace Counsel.iOS
 			AppCenter.Start("1027be9a-cbb5-4e32-9e97-4cb0b6aeae26", typeof(Analytics), typeof(Crashes));
 
 			HttpClient httpClient = new HttpClient();
-			ISleeperClient sleeperClient = new SleeperClient(httpClient);
 			IEspnClient espnClient = new EspnClient(httpClient);
 			INflClient nflClient = new NflClient(httpClient);
-			IFantasyService fantasyService = new FantasyService(sleeperClient, espnClient, nflClient);
+			IFantasyService fantasyService = new FantasyService(espnClient, nflClient);
 
 			Window = new UIWindow(UIScreen.MainScreen.Bounds)
 			{

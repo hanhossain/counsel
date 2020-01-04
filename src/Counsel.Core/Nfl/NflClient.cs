@@ -18,5 +18,11 @@ namespace Counsel.Core.Nfl
 			using var response = await _client.GetAsync($"https://api.fantasy.nfl.com/v1/players/advanced?season={season}&week={week}&format=json&count=1000");
 			return await response.Content.ReadAsAsync<Dictionary<string, List<NflAdvancedStats>>>();
 		}
+
+		public async Task<NflStats> GetStatsAsync(int season, int week)
+		{
+			using var response = await _client.GetAsync($"https://api.fantasy.nfl.com/v1/players/stats?season={season}&week={week}");
+			return await response.Content.ReadAsAsync<NflStats>();
+		}
 	}
 }
