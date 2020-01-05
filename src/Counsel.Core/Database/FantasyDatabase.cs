@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Counsel.Core.Nfl;
@@ -71,6 +72,15 @@ namespace Counsel.Core.Database
 				.OrderBy(x => x.Season)
 				.ThenBy(x => x.Week)
 				.ToListAsync();
+		}
+
+		public async Task<IEnumerable<Player>> SearchPlayersAsync(string query)
+		{
+			var players = await _context.Players.ToListAsync();
+
+			return players
+				.Where(x => $"{x.FirstName} {x.LastName}".Contains(query, StringComparison.OrdinalIgnoreCase))
+				.ToList();
 		}
 	}
 }

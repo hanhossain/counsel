@@ -117,20 +117,18 @@ namespace Counsel.Core
 
 		public async Task<Dictionary<string, Player>> SearchPlayersAsync(string playerName)
 		{
-			//using var lockToken = await _asyncLock.LockAsync();
-			//return _players.Values
-			//	.Where(x => x.FullName.Contains(playerName, StringComparison.OrdinalIgnoreCase))
-			//	.Select(x => new Player()
-			//	{
-			//		FirstName = x.FirstName,
-			//		LastName = x.LastName,
-			//		Id = x.PlayerId,
-			//		Position = x.Position,
-			//		Team = x.Team
-			//	})
-			//	.ToDictionary(x => x.Id, x => x);
+			var players = await _fantasyDatabase.SearchPlayersAsync(playerName);
 
-			throw new NotImplementedException();
+			return players
+				.Select(x => new Player()
+				{
+					FirstName = x.FirstName,
+					LastName = x.LastName,
+					Id = x.Id,
+					Position = x.Position,
+					Team = x.Team
+				})
+				.ToDictionary(x => x.Id, x => x);
 		}
 
 		public async Task<Dictionary<string, List<Player>>> GetOpponentsAsync(string playerId, int season, int week)

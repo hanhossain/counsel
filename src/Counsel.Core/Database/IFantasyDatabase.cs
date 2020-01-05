@@ -14,5 +14,7 @@ namespace Counsel.Core.Database
 		Task<IEnumerable<Player>> GetPlayersAsync();
 
 		Task<IEnumerable<Statistics>> GetStatisticsAsync(string playerId);
+
+		Task<IEnumerable<Player>> SearchPlayersAsync(string query);
 	}
 }
