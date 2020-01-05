@@ -48,6 +48,7 @@ namespace Counsel.iOS.Controllers
 			var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
 			InvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
 
+			await _fantasyService.UpdateAsync();
 			await LoadCurrentWeekAsync();
 			await LoadAllPlayersAsync();
 

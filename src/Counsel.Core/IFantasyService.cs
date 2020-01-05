@@ -6,6 +6,8 @@ namespace Counsel.Core
 {
 	public interface IFantasyService
 	{
+		Task UpdateAsync();
+
 		Task<Dictionary<string, Player>> GetPlayersAsync();
 
 		Task<(int Season, int Week)> GetCurrentWeekAsync();

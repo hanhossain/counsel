@@ -21,22 +21,35 @@ namespace Counsel.Core.Database
 			return await _context.Players.AnyAsync();
 		}
 
-		public async Task UpdatePlayersAsync(IEnumerable<NflAdvancedStats> players)
+		public async Task UpdatePlayersAsync(int season, int week, IEnumerable<NflAdvancedStats> advancedStats, IDictionary<string, NflPlayerStats> weekStats)
 		{
-			foreach (var player in players)
+			foreach (var playerAdvancedStats in advancedStats)
 			{
-				if (!await _context.Players.AnyAsync(x => x.Id == player.Id))
+				if (!await _context.Players.AnyAsync(x => x.Id == playerAdvancedStats.Id))
 				{
 					var dbPlayer = new Player()
 					{
-						Id = player.Id,
-						FirstName = player.FirstName,
-						LastName = player.LastName,
-						Team = player.Team,
-						Position = player.Position
+						Id = playerAdvancedStats.Id,
+						FirstName = playerAdvancedStats.FirstName,
+						LastName = playerAdvancedStats.LastName,
+						Team = playerAdvancedStats.Team,
+						Position = playerAdvancedStats.Position
 					};
 
 					_context.Players.Add(dbPlayer);
+
+					if (weekStats.TryGetValue(playerAdvancedStats.Id, out var playerWeekStats))
+					{
+						var dbStatistics = new Statistics()
+						{
+							PlayerId = playerAdvancedStats.Id,
+							OpponentTeam = playerAdvancedStats.OpponentTeam,
+							Season = season,
+							Week = week
+						};
+
+						_context.Statistics.Add(dbStatistics);
+					}
 				}
 			}
 

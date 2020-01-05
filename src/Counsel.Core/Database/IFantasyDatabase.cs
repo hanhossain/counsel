@@ -9,7 +9,7 @@ namespace Counsel.Core.Database
 		// TODO: update this with season + week
 		Task<bool> PlayersExistAsync();
 
-		Task UpdatePlayersAsync(IEnumerable<NflAdvancedStats> players);
+		Task UpdatePlayersAsync(int season, int week, IEnumerable<NflAdvancedStats> advancedStats, IDictionary<string, NflPlayerStats> weekStats);
 
 		Task<IEnumerable<Player>> GetPlayersAsync();
 	}

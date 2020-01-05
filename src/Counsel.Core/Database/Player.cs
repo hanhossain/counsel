@@ -1,4 +1,6 @@
-﻿namespace Counsel.Core.Database
+﻿using System.Collections.Generic;
+
+namespace Counsel.Core.Database
 {
 	public class Player
 	{
@@ -11,5 +13,7 @@
 		public string Team { get; set; }
 
 		public string Position { get; set; }
+
+		public IEnumerable<Statistics> Statistics { get; set; }
 	}
 }

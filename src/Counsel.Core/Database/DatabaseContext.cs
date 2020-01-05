@@ -8,6 +8,8 @@ namespace Counsel.Core.Database
 	{
 		public DbSet<Player> Players { get; set; }
 
+		public DbSet<Statistics> Statistics { get; set; }
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			// needed for ios
@@ -22,6 +24,12 @@ namespace Counsel.Core.Database
 				"database.db");
 
 			optionsBuilder.UseSqlite($"Filename={databasePath}");
+		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Statistics>()
+				.HasKey(x => new { x.Season, x.Week, x.PlayerId });
 		}
 	}
 }

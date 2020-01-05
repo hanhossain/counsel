@@ -10,18 +10,11 @@ namespace Counsel.Core
 {
 	public class FantasyService : IFantasyService
 	{
-		private static readonly HashSet<string> _offensivePositions = new HashSet<string>() { "QB", "RB", "WR", "TE", "K" };
-		private static readonly HashSet<string> _defensivePositions = new HashSet<string>() { "DEF" };
-
 		private readonly AsyncLock _asyncLock = new AsyncLock();
 		private readonly Database.IFantasyDatabase _fantasyDatabase;
 		private readonly IEspnClient _espnClient;
 		private readonly INflClient _nflClient;
 
-		private Dictionary<(int Season, int Week), List<NflAdvancedStats>> _advancedSeasonStats;
-
-		private List<Dictionary<string, PlayerStats>> _stats;
-		private Dictionary<string, Player> _players;
 		private int? _season;
 		private int? _week;
 
@@ -32,24 +25,38 @@ namespace Counsel.Core
 			_nflClient = nflClient;
 		}
 
-		public async Task<Dictionary<string, Player>> GetPlayersAsync()
+		public async Task UpdateAsync()
 		{
 			(int season, int week) = await GetCurrentWeekAsync();
 
 			if (!await _fantasyDatabase.PlayersExistAsync())
 			{
-				var tasks = Enumerable.Range(1, week)
+				var advancedSeasonTasks = Enumerable.Range(1, week)
 					.Select(x => _nflClient.GetAdvancedStatsAsync(season, x))
 					.ToList();
 
-				var advancedSeasonStats = await Task.WhenAll(tasks);
+				var advancedSeasonStats = await Task.WhenAll(advancedSeasonTasks);
 
-				foreach (var advancedWeekStats in advancedSeasonStats)
+				var statsTasks = Enumerable.Range(1, week)
+					.Select(x => _nflClient.GetStatsAsync(season, x))
+					.ToList();
+
+				var seasonStats = await Task.WhenAll(statsTasks);
+
+				foreach (var (advancedWeekStats, weekStats) in advancedSeasonStats.Zip(seasonStats, (x, y) => (x, y)))
 				{
-					await _fantasyDatabase.UpdatePlayersAsync(advancedWeekStats.Values.SelectMany(x => x));
+					var a = weekStats.Players.ToDictionary(x => x.Id, x => x);
+					await _fantasyDatabase.UpdatePlayersAsync(
+						season,
+						week,
+						advancedWeekStats.Values.SelectMany(x => x),
+						weekStats.Players.ToDictionary(x => x.Id, x => x));
 				}
 			}
+		}
 
+		public async Task<Dictionary<string, Player>> GetPlayersAsync()
+		{
 			var players = await _fantasyDatabase.GetPlayersAsync();
 
 			return players.Select(x => new Player()
