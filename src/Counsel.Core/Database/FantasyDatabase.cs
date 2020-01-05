@@ -37,19 +37,21 @@ namespace Counsel.Core.Database
 					};
 
 					_context.Players.Add(dbPlayer);
+				}
 
-					if (weekStats.TryGetValue(playerAdvancedStats.Id, out var playerWeekStats))
+				if (weekStats.TryGetValue(playerAdvancedStats.Id, out var playerWeekStats))
+				{
+					var dbStatistics = new Statistics()
 					{
-						var dbStatistics = new Statistics()
-						{
-							PlayerId = playerAdvancedStats.Id,
-							OpponentTeam = playerAdvancedStats.OpponentTeam,
-							Season = season,
-							Week = week
-						};
+						PlayerId = playerAdvancedStats.Id,
+						OpponentTeam = playerAdvancedStats.OpponentTeam,
+						Season = season,
+						Week = week,
+						Points = playerWeekStats.WeekPoints,
+						ProjectedPoints = playerWeekStats.WeekProjectedPoints
+					};
 
-						_context.Statistics.Add(dbStatistics);
-					}
+					_context.Statistics.Add(dbStatistics);
 				}
 			}
 
@@ -59,6 +61,16 @@ namespace Counsel.Core.Database
 		public async Task<IEnumerable<Player>> GetPlayersAsync()
 		{
 			return await _context.Players.ToListAsync();
+		}
+
+		public async Task<IEnumerable<Statistics>> GetStatisticsAsync(string playerId)
+		{
+			var weeks = _context.Statistics.Select(x => x.Week).Distinct().ToList();
+			return await _context.Statistics
+				.Where(x => x.PlayerId == playerId)
+				.OrderBy(x => x.Season)
+				.ThenBy(x => x.Week)
+				.ToListAsync();
 		}
 	}
 }

@@ -12,5 +12,7 @@ namespace Counsel.Core.Database
 		Task UpdatePlayersAsync(int season, int week, IEnumerable<NflAdvancedStats> advancedStats, IDictionary<string, NflPlayerStats> weekStats);
 
 		Task<IEnumerable<Player>> GetPlayersAsync();
+
+		Task<IEnumerable<Statistics>> GetStatisticsAsync(string playerId);
 	}
 }

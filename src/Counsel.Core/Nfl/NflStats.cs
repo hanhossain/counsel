@@ -5,9 +5,9 @@ namespace Counsel.Core.Nfl
 {
 	public class NflStats
 	{
-		public string Season { get; set; }
+		public int Season { get; set; }
 
-		public string Week { get; set; }
+		public int Week { get; set; }
 
 		public List<NflPlayerStats> Players { get; set; }
 	}

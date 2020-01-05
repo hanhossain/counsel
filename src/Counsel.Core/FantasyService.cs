@@ -45,10 +45,9 @@ namespace Counsel.Core
 
 				foreach (var (advancedWeekStats, weekStats) in advancedSeasonStats.Zip(seasonStats, (x, y) => (x, y)))
 				{
-					var a = weekStats.Players.ToDictionary(x => x.Id, x => x);
 					await _fantasyDatabase.UpdatePlayersAsync(
-						season,
-						week,
+						weekStats.Season,
+						weekStats.Week,
 						advancedWeekStats.Values.SelectMany(x => x),
 						weekStats.Players.ToDictionary(x => x.Id, x => x));
 				}
@@ -89,73 +88,31 @@ namespace Counsel.Core
 
 		public async Task<PlayerStats> GetStatsAsync(string playerId)
 		{
-			//(int season, int week) = await GetCurrentWeekAsync();
+			var statistics = await _fantasyDatabase.GetStatisticsAsync(playerId);
+			var result = new PlayerStats()
+			{
+				Weeks = statistics.Select(x => x.Week).ToList(),
+				Season = statistics.First().Season,
+				Points = statistics.Select(x => (x.Points, x.ProjectedPoints)).ToList(),
+				PlayerId = playerId
+			};
 
-			//if (_stats == null)
-			//{
-			//	using var lockToken = await _asyncLock.LockAsync();
+			var (_, week) = await GetCurrentWeekAsync();
 
-			//	if (_stats == null)
-			//	{
-			//		var tasks = Enumerable.Range(0, week)
-			//			.Select(x => _sleeperClient.GetWeekStatsAsync(season, x + 1))
-			//			.ToList();
+			// calculated stats requires at least one week to have passed
+			if (week > 1)
+			{
+				var points = result.Points.Select(x => x.Points).ToList();
 
-			//		_stats = (await Task.WhenAll(tasks)).ToList();
-			//	}
-			//}
+				result.Mean = points.Average();
+				result.Median = GetMedian(points);
+				result.Max = points.Max();
+				result.Min = points.Min();
+				result.Range = result.Max - result.Min;
+				result.PopStdDev = Math.Sqrt(points.Sum(x => Math.Pow(x - result.Mean, 2)) / points.Count);
+			}
 
-			//if (_projectedStats == null)
-			//{
-			//	using var lockToken = await _asyncLock.LockAsync();
-
-			//	if (_projectedStats == null)
-			//	{
-			//		var tasks = Enumerable.Range(0, week)
-			//			.Select(x => _sleeperClient.GetProjectedWeekStatsAsync(season, x + 1))
-			//			.ToList();
-
-			//		_projectedStats = (await Task.WhenAll(tasks)).ToList();
-			//	}
-			//}
-
-			//var result = new PlayerStats
-			//{
-			//	Weeks = Enumerable.Range(1, week).ToList(),
-			//	Points = _stats.Zip(_projectedStats, (stats, projected) =>
-			//	{
-			//		stats.TryGetValue(playerId, out var playerStats);
-			//		projected.TryGetValue(playerId, out var playerProjected);
-			//		return (playerStats?.Points ?? 0, playerProjected?.Points ?? 0);
-			//	}).ToList(),
-			//	Season = season,
-			//	PlayerId = playerId
-			//};
-
-			//// calculated stats requires at least one week to have passed
-			//if (week > 1)
-			//{
-			//	var points = result.Points.Select(x => x.Points).ToList();
-
-			//	result.Mean = points.Average();
-			//	result.Median = GetMedian(points);
-			//	result.Max = points.Max();
-			//	result.Min = points.Min();
-			//	result.Range = result.Max - result.Min;
-			//	result.PopStdDev = Math.Sqrt(points.Sum(x => Math.Pow(x - result.Mean, 2)) / points.Count);
-			//}
-
-			//return result;
-
-			throw new NotImplementedException();
-		}
-
-		public async Task<bool> ContainsStatsAsync()
-		{
-			//using var lockToken = await _asyncLock.LockAsync();
-			//return _stats != null;
-
-			throw new NotImplementedException();
+			return result;
 		}
 
 		public async Task<Dictionary<string, Player>> SearchPlayersAsync(string playerName)

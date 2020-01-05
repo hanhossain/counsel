@@ -39,12 +39,6 @@ namespace Counsel.iOS.Controllers
 			graphButton.Clicked += GraphButton_Clicked;
 			NavigationItem.RightBarButtonItem = graphButton;
 
-			if (!await _fantasyService.ContainsStatsAsync())
-			{
-				var loadingAlert = UIAlertController.Create("Loading...", null, UIAlertControllerStyle.Alert);
-				InvokeOnMainThread(() => PresentViewController(loadingAlert, true, null));
-			}
-
 			_playerStats = await _fantasyService.GetStatsAsync(_player.Id);
 
 			InvokeOnMainThread(() =>
