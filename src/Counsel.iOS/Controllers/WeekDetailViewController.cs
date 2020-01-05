@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Counsel.Core;
 using Counsel.Core.Models;
 using Counsel.iOS.Views;
@@ -19,9 +18,8 @@ namespace Counsel.iOS.Controllers
 		private readonly PlayerStats _playerStats;
 		private readonly int _week;
 
-		private Dictionary<string, List<Player>> _opponents = new Dictionary<string, List<Player>>();
+		private Dictionary<string, List<(Player Player, double Points)>> _opponents = new Dictionary<string, List<(Player Player, double Points)>>();
 		private List<string> _positions = new List<string>();
-		private Dictionary<string, PlayerStats> _opponentStats = new Dictionary<string, PlayerStats>();
 
 		public WeekDetailViewController(IFantasyService fantasyService, Player player, PlayerStats playerStats, int week)
 		{
@@ -40,13 +38,7 @@ namespace Counsel.iOS.Controllers
 			_opponents = await _fantasyService.GetOpponentsAsync(_player.Id, _playerStats.Season, _week);
 			_positions = _opponents.Keys.OrderBy(x => x).ToList();
 
-			var opponentStats = await Task.WhenAll(_opponents.Values
-				.SelectMany(x => x)
-				.Select(x => _fantasyService.GetStatsAsync(x.Id)));
-
-			_opponentStats = opponentStats.ToDictionary(x => x.PlayerId, x => x);
-
-			string opponentTeam = _opponents.Values.SelectMany(x => x).FirstOrDefault()?.Team;
+			string opponentTeam = _opponents.Values.FirstOrDefault()?.FirstOrDefault().Player?.Team;
 
 			InvokeOnMainThread(() =>
 			{
@@ -76,14 +68,10 @@ namespace Counsel.iOS.Controllers
 			var cell = tableView.DequeueReusableCell<RightDetailTableViewCell>(_cellId, indexPath);
 
 			string position = _positions[indexPath.Section];
-			var opponent = _opponents[position][indexPath.Row];
+			var (player, points) = _opponents[position][indexPath.Row];
 
-			cell.TextLabel.Text = opponent.FullName;
-
-			var opponentStats = _opponentStats[opponent.Id];
-
-			int index = opponentStats.Weeks.IndexOf(_week);
-			cell.DetailTextLabel.Text = opponentStats.Points[index].Points.ToString();
+			cell.TextLabel.Text = player.FullName;
+			cell.DetailTextLabel.Text = points.ToString();
 
 			return cell;
 		}

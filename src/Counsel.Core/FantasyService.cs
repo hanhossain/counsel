@@ -131,53 +131,25 @@ namespace Counsel.Core
 				.ToDictionary(x => x.Id, x => x);
 		}
 
-		public async Task<Dictionary<string, List<Player>>> GetOpponentsAsync(string playerId, int season, int week)
+		public async Task<Dictionary<string, List<(Player Player, double Points)>>> GetOpponentsAsync(string playerId, int season, int week)
 		{
-			//using var lockToken = await _asyncLock.LockAsync();
+			var opposingPlayers = await _fantasyDatabase.GetOpposingPlayersAsync(season, week, playerId);
 
-			//var key = (season, week);
-
-			//if (!_advancedStats.TryGetValue(key, out var advancedWeekStats))
-			//{
-			//	var advancedStatsResponse = await _nflClient.GetAdvancedStatsAsync(season, week);
-			//	advancedWeekStats = advancedStatsResponse.Values.SelectMany(x => x).ToList();
-			//	_advancedStats[key] = advancedWeekStats;
-			//}
-
-			//// get player stats
-			//var player = _players[playerId];
-			//var isDefensivePlayer = _defensivePositions.Contains(player.Position);
-
-			//var playerAdvancedStats = isDefensivePlayer
-			//	? advancedWeekStats.Single(x => x.FirstName == player.FirstName && x.LastName == player.LastName && x.Team == player.Team)
-			//	: advancedWeekStats.Single(x => x.GsisPlayerId == player.GsisId);
-
-			//// get opp team
-			//var opposingTeam = playerAdvancedStats.OpponentTeam.TrimStart('@');
-
-			//// get all players on opposing team
-			//var allOnOpposingTeam = _players.Values.Where(x => x.Team == opposingTeam);
-
-			//var opposingPosition = isDefensivePlayer ? _offensivePositions : _defensivePositions;
-			//var opposingPlayers = allOnOpposingTeam.Where(x => opposingPosition.Contains(x.Position));
-
-			//return opposingPlayers
-			//	.Select(x => new Player()
-			//	{
-			//		FirstName = x.FirstName,
-			//		LastName = x.LastName,
-			//		Id = x.PlayerId,
-			//		Position = x.Position,
-			//		Team = x.Team
-			//	})
-			//	.GroupBy(x => x.Position)
-			//	.ToDictionary(
-			//		x => x.Key,
-			//		x => x.OrderBy(y => y.LastName)
-			//			.ThenBy(y => y.FirstName)
-			//			.ToList());
-
-			throw new NotImplementedException();
+			return opposingPlayers
+				.Select(x => (Player: new Player()
+				{
+					FirstName = x.Player.FirstName,
+					LastName = x.Player.LastName,
+					Id = x.Player.Id,
+					Position = x.Player.Position,
+					Team = x.Player.Team
+				}, x.Points))
+				.GroupBy(x => x.Player.Position)
+				.ToDictionary(
+					x => x.Key,
+					x => x.OrderBy(y => y.Player.LastName)
+						.ThenBy(y => y.Player.FirstName)
+						.ToList());
 		}
 
 		private static double GetMedian(List<double> values)

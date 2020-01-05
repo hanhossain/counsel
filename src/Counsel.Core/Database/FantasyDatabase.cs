@@ -45,7 +45,7 @@ namespace Counsel.Core.Database
 					var dbStatistics = new Statistics()
 					{
 						PlayerId = playerAdvancedStats.Id,
-						OpponentTeam = playerAdvancedStats.OpponentTeam,
+						OpponentTeam = playerAdvancedStats.OpponentTeam.TrimStart('@'),
 						Season = season,
 						Week = week,
 						Points = playerWeekStats.WeekPoints,
@@ -81,6 +81,33 @@ namespace Counsel.Core.Database
 			return players
 				.Where(x => $"{x.FirstName} {x.LastName}".Contains(query, StringComparison.OrdinalIgnoreCase))
 				.ToList();
+		}
+
+		public async Task<IEnumerable<(Player Player, double Points)>> GetOpposingPlayersAsync(int season, int week, string playerId)
+		{
+			string opposingTeam = await _context.Statistics
+				.Where(x => x.Season == season && x.Week == week && x.PlayerId == playerId)
+				.Select(x => x.OpponentTeam)
+				.FirstOrDefaultAsync() ?? string.Empty;
+
+			string position = await _context.Players
+				.Where(x => x.Id == playerId)
+				.Select(x => x.Position)
+				.FirstAsync();
+
+			var playerQuery = _context.Players.Where(x => x.Team == opposingTeam);
+			playerQuery = position == "DEF"
+				? playerQuery.Where(x => x.Position != "DEF")
+				: playerQuery.Where(x => x.Position == "DEF");
+
+			var players = await playerQuery.ToListAsync();
+
+			var playerIds = players.Select(x => x.Id).ToList();
+			var points = await _context.Statistics
+				.Where(x => playerIds.Contains(x.PlayerId) && x.Season == season && x.Week == week)
+				.ToDictionaryAsync(x => x.PlayerId, x => x.Points);
+
+			return players.Select(x => (x, points.TryGetValue(x.Id, out double p) ? p : 0)).ToList();
 		}
 	}
 }
